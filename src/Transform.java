@@ -17,9 +17,9 @@ public class Transform {
 	}
 
 	public static void main(String[] args) throws TransformerFactoryConfigurationError, TransformerException, IOException {
-		String sourceXMLFile = "V2.xml";
+		String sourceXMLFile = "CityGML_v2.gml";
 		String sourceXSLFile = "Transform.xsl";
-		String outputXMLFile = "V3_Transformed.xml";
+		String outputXMLFile = "CityGML_v3_Transformed.gml";
 
 		if ((args.length >= 5) && (args[2] != null) && (!args[1].equals(""))) {
 			sourceXMLFile = args[2];
@@ -33,7 +33,7 @@ public class Transform {
 			outputXMLFile = args[4];
 		}
 
-		String outputXMLFile_tmp = "tmp.xml";
+		String outputXMLFile_tmp = "Tmp.gml";
 
 		Source xmlInput = new StreamSource(new File(sourceXMLFile));
 		Source xsl = new StreamSource(new File(sourceXSLFile));
