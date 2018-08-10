@@ -7,6 +7,8 @@ This project is still in early developement und is subject to changes.
 ### How to run
 The program can be executed by running the `Run.bat` file (in Windows).
 
+The result is by default saved in [CityGML_v3_Transformed.gml](CityGML_v3_Transformed.gml).
+
 ### Command line
 Alternatively, the program can also be executed using the command line:
 ```batch
