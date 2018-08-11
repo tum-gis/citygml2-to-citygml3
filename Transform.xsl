@@ -193,7 +193,7 @@
         </gml:Solid>
     </xsl:template>
 
-	<!--Transform externalReference -->
+	<!--Transform externalReference-->
 	<xsl:template match="*[local-name()='externalReference']">
 		<externalReference>
 			<ExternalReference>
@@ -205,7 +205,7 @@
 		</externalReference>
 	</xsl:template>
 
-	<!--Transform generic string attributes -->
+	<!--Transform generic string attributes-->
 	<xsl:template match="gen:stringAttribute">
 		<genericAttribute>
 			<gen:StringAttribute>
@@ -219,7 +219,7 @@
 		</genericAttribute>
 	</xsl:template>
 	
-	<!--Transform generic integer attributes -->
+	<!--Transform generic integer attributes-->
 	<xsl:template match="gen:intAttribute">
 		<genericAttribute>
 			<gen:IntAttribute>
@@ -233,7 +233,7 @@
 		</genericAttribute>
 	</xsl:template>
 	
-	<!--Transform generic double attributes -->
+	<!--Transform generic double attributes-->
 	<xsl:template match="gen:doubleAttribute">
 		<genericAttribute>
 			<gen:DoubleAttribute>
@@ -247,7 +247,7 @@
 		</genericAttribute>
 	</xsl:template>
 	
-	<!--Transform generic date attributes -->
+	<!--Transform generic date attributes-->
 	<xsl:template match="gen:dateAttribute">
 		<genericAttribute>
 			<gen:DateAttribute>
@@ -261,7 +261,7 @@
 		</genericAttribute>
 	</xsl:template>
 	
-	<!--Transform generic uri attributes -->
+	<!--Transform generic uri attributes-->
 	<xsl:template match="gen:uriAttribute">
 		<genericAttribute>
 			<gen:UriAttribute>
@@ -275,7 +275,7 @@
 		</genericAttribute>
 	</xsl:template>
 	
-	<!--Transform generic measure attributes -->
+	<!--Transform generic measure attributes-->
 	<xsl:template match="gen:measureAttribute">
 		<genericAttribute>
 			<gen:MeasureAttribute>
@@ -288,6 +288,20 @@
 				</gen:value>
 			</gen:MeasureAttribute>
 		</genericAttribute>
+	</xsl:template>
+
+	<!--Transform bldg:measuredHeight -->
+	<xsl:template match="bldg:measuredHeight">
+		<bldg:heightAboveGround>
+			<con:HeightAboveGround>
+				<con:heightReference>highestRoofEdge</con:heightReference>
+				<con:lowReference>lowestGroundPoint</con:lowReference>
+				<con:status>measured</con:status>
+				<con:value>
+					<xsl:apply-templates select="@*|node()"/>
+				</con:value>
+			</con:HeightAboveGround>
+		</bldg:heightAboveGround>
 	</xsl:template>
     
 </xsl:stylesheet>
