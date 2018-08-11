@@ -192,5 +192,102 @@
             <xsl:apply-templates select="@*|node()"/>
         </gml:Solid>
     </xsl:template>
+
+	<!--Transform externalReference -->
+	<xsl:template match="*[local-name()='externalReference']">
+		<externalReference>
+			<ExternalReference>
+				<targetResource>
+					<xsl:value-of select="concat('urn:adv:oid:', *[local-name()='externalObject']/*[local-name()='name'])" />
+				</targetResource>
+				<informationSystem>http://repository.gdi-de.org/schemas/adv/citygml/fdv/art.htm#_9100</informationSystem>
+			</ExternalReference>
+		</externalReference>
+	</xsl:template>
+
+	<!--Transform generic string attributes -->
+	<xsl:template match="gen:stringAttribute">
+		<genericAttribute>
+			<gen:StringAttribute>
+				<gen:name>
+					<xsl:value-of select="@name"/>
+				</gen:name>
+				<gen:value>
+					<xsl:value-of select="gen:value"/>
+				</gen:value>
+			</gen:StringAttribute>
+		</genericAttribute>
+	</xsl:template>
+	
+	<!--Transform generic integer attributes -->
+	<xsl:template match="gen:intAttribute">
+		<genericAttribute>
+			<gen:IntAttribute>
+				<gen:name>
+					<xsl:value-of select="@name"/>
+				</gen:name>
+				<gen:value>
+					<xsl:value-of select="gen:value"/>
+				</gen:value>
+			</gen:IntAttribute>
+		</genericAttribute>
+	</xsl:template>
+	
+	<!--Transform generic double attributes -->
+	<xsl:template match="gen:doubleAttribute">
+		<genericAttribute>
+			<gen:DoubleAttribute>
+				<gen:name>
+					<xsl:value-of select="@name"/>
+				</gen:name>
+				<gen:value>
+					<xsl:value-of select="gen:value"/>
+				</gen:value>
+			</gen:DoubleAttribute>
+		</genericAttribute>
+	</xsl:template>
+	
+	<!--Transform generic date attributes -->
+	<xsl:template match="gen:dateAttribute">
+		<genericAttribute>
+			<gen:DateAttribute>
+				<gen:name>
+					<xsl:value-of select="@name"/>
+				</gen:name>
+				<gen:value>
+					<xsl:value-of select="gen:value"/>
+				</gen:value>
+			</gen:DateAttribute>
+		</genericAttribute>
+	</xsl:template>
+	
+	<!--Transform generic uri attributes -->
+	<xsl:template match="gen:uriAttribute">
+		<genericAttribute>
+			<gen:UriAttribute>
+				<gen:name>
+					<xsl:value-of select="@name"/>
+				</gen:name>
+				<gen:value>
+					<xsl:value-of select="gen:value"/>
+				</gen:value>
+			</gen:UriAttribute>
+		</genericAttribute>
+	</xsl:template>
+	
+	<!--Transform generic measure attributes -->
+	<xsl:template match="gen:measureAttribute">
+		<genericAttribute>
+			<gen:MeasureAttribute>
+				<gen:name>
+					<xsl:value-of select="@name"/>
+				</gen:name>
+				<gen:value>
+				 	<xsl:copy-of select="gen:value/@*" />
+					<xsl:value-of select="gen:value"/>
+				</gen:value>
+			</gen:MeasureAttribute>
+		</genericAttribute>
+	</xsl:template>
     
 </xsl:stylesheet>
