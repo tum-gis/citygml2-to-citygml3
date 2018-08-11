@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
+
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
@@ -21,16 +22,16 @@ public class Transform {
 		String sourceXSLFile = "Transform.xsl";
 		String outputXMLFile = "CityGML_v3_Transformed.gml";
 
-		if ((args.length >= 5) && (args[2] != null) && (!args[1].equals(""))) {
-			sourceXMLFile = args[2];
+		if ((args.length >= 3) && (args[0] != null) && (!args[0].equals(""))) {
+			sourceXMLFile = args[0];
 		}
 
-		if ((args.length >= 5) && (args[3] != null) && (!args[2].equals(""))) {
-			sourceXSLFile = args[3];
+		if ((args.length >= 3) && (args[1] != null) && (!args[1].equals(""))) {
+			sourceXSLFile = args[1];
 		}
 
-		if ((args.length >= 5) && (args[4] != null) && (!args[3].equals(""))) {
-			outputXMLFile = args[4];
+		if ((args.length >= 3) && (args[2] != null) && (!args[2].equals(""))) {
+			outputXMLFile = args[2];
 		}
 
 		String outputXMLFile_tmp = "Tmp.gml";
