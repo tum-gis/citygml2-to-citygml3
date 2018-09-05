@@ -1,4 +1,4 @@
-# CityGML2-to-CityGML3
+# CityGML-2.0-to-3.0
 
 A small Java program used to transform CityGML v2.0 files to CityGML v3.0.
 
