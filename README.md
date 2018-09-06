@@ -1,6 +1,6 @@
 # citygml2-to-citygml3
 
-A small Java program used to transform CityGML v2.0 files to CityGML v3.0.
+A small Java program used to transform CityGML v2.0 to CityGML v3.0 files.
 
 This project is still in early developement und is subject to changes.
 
