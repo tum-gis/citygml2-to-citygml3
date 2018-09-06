@@ -18,8 +18,8 @@ where
 
 | Arguments        | Description           | Default  |
 | ------------- |:-------------| -----|
-| `SourceXMLFile`      | The location of the source CityGML v2.0 file | `CityGML_v2.gml` |
+| `SourceXMLFile`      | The location of the source CityGML v2.0 file | `input/CityGML_v2.gml` |
 | `XSLFile`      | The location of the XSL file used for transformation | `Transform.xsl` |
-| `OutputXMLFile`      | The location of the transformed CityGML v3.0 file | `CityGML_v3_Transformed.gml` |
+| `OutputXMLFile`      | The location of the transformed CityGML v3.0 file | `output/CityGML_v3_Transformed.gml` |
 
-For reference, the [CityGML_v3.gml](CityGML_v3.gml) can be used as an example of how the transformed file should look like.
+For reference, the [CityGML_v3.gml](output/CityGML_v3.gml) can be used as an example of how the transformed file should look like.
