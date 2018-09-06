@@ -198,11 +198,25 @@
 		<externalReference>
 			<ExternalReference>
 				<targetResource>
-					<xsl:value-of select="concat('urn:adv:oid:', *[local-name()='externalObject']/*[local-name()='name'])" />
+					<xsl:value-of select="concat('urn:adv:oid:', *[local-name()='externalObject']/*[local-name()='name'])"/>
 				</targetResource>
 				<informationSystem>http://repository.gdi-de.org/schemas/adv/citygml/fdv/art.htm#_9100</informationSystem>
 			</ExternalReference>
 		</externalReference>
+	</xsl:template>
+	
+	<!--Transform creationDate-->
+	<xsl:template match="*[local-name()='creationDate']">
+		<creationDate>
+			<xsl:choose>
+				<xsl:when test="contains(text(), 'T')">
+					<xsl:value-of select="text()" />
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="concat(text(), 'T00:00:00')" />
+				</xsl:otherwise>
+			</xsl:choose>
+		</creationDate>
 	</xsl:template>
 
 	<!--Transform generic string attributes-->
