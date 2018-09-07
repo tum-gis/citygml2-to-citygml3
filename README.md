@@ -2,7 +2,7 @@
 
 A small Java program used to transform CityGML v2.0 to CityGML v3.0 files.
 
-This project is still in early developement und subject to changes.
+This project is still in early developement und subject to change.
 
 ### How to run
 The program can be executed by running the `Run.bat` file (in Windows).
@@ -24,9 +24,41 @@ where
 
 For reference, the [CityGML_v3.gml](output/CityGML_v3.gml) can be used as an example of how the transformed file should look like.
 
-### Notes
-Currently, only the `Building` module is supported.
+### Namespaces
+The namespaces in CityGML documents v2.0 and v3.0 are given by default as follows:
+
+| Namespace prefix        | Module |       Namespace URI in CityGML v2.0           |      Namespace URI in CityGML v3.0  |
+| ------------- |------|-------------| -----|
+| `xmlns:app` | Appearance | `http://www.opengis.net/citygml/appearance/2.0` | `http://www.opengis.net/citygml/appearance/3.0` |
+| `xmlns:brid` | Bridge | `http://www.opengis.net/citygml/bridge/2.0` | `http://www.opengis.net/citygml/bridge/3.0` |
+| `xmlns:bldg` | Building | `http://www.opengis.net/citygml/building/2.0` | `http://www.opengis.net/citygml/building/3.0` |
+| `xmlns:frn` | City Furniture | `http://www.opengis.net/citygml/cityfurniture/2.0` | `http://www.opengis.net/citygml/cityfurniture/3.0` |
+| `xmlns:grp` | City Object Group | `http://www.opengis.net/citygml/cityobjectgroup/2.0` | `http://www.opengis.net/citygml/cityobjectgroup/3.0` |
+| **`xmlns:con`** | **Construction** |  | **`http://www.opengis.net/citygml/construction/3.0`** |
+| `xmlns:core` | Core | `http://www.opengis.net/citygml/2.0` | `http://www.opengis.net/citygml/3.0` |
+| **`xmlns:dyn`** | **Dynamizer** |  | **`http://www.opengis.net/citygml/dynamizer/3.0`** |
+| `xmlns:gen` | Generics | `http://www.opengis.net/citygml/generics/2.0` | `http://www.opengis.net/citygml/generics/3.0` |
+| `xmlns:luse` | LandUse | `http://www.opengis.net/citygml/landuse/2.0` | `http://www.opengis.net/citygml/landuse/3.0` |
+| `xmlns:dem` | Relief | `http://www.opengis.net/citygml/relief/2.0` | `http://www.opengis.net/citygml/relief/3.0` |
+| `xmlns:tran` | Transportation | `http://www.opengis.net/citygml/transportation/2.0` | `http://www.opengis.net/citygml/transportation/3.0` |
+| `xmlns:tun` | Tunnel | `http://www.opengis.net/citygml/tunnel/2.0` | `http://www.opengis.net/citygml/tunnel/3.0` |
+| `xmlns:veg` | Vegetation | `http://www.opengis.net/citygml/vegetation/2.0` | `http://www.opengis.net/citygml/vegetation/3.0` |
+| **`xmlns:vers`** | **Versioning** |  | **`http://www.opengis.net/citygml/versioning/3.0`** |
+| `xmlns:wtr` | WaterBody | `http://www.opengis.net/citygml/waterbody/2.0` | `http://www.opengis.net/citygml/waterbody/3.0` |
+| **`xmlns:tsml`** | **TimeseriesML** |  | **`http://www.opengis.net/tsml/1.0`** |
+| `xmlns:sos` | Sensor Observation Service | `http://www.opengis.net/sos/2.0` | `http://www.opengis.net/sos/2.0` |
+| `xmlns:xAL` | eXtensible Address Language | `urn:oasis:names:tc:ciq:xsdschema:xAL:2.0` | `urn:oasis:names:tc:ciq:xsdschema:xAL:2.0` |
+| `xmlns:xlink` | XLink | `http://www.w3.org/1999/xlink` | `http://www.w3.org/1999/xlink` |
+| `xmlns:xsi` | XML Schema Instance | `http://www.w3.org/2001/XMLSchema-instance` | `http://www.w3.org/2001/XMLSchema-instance` |
+| `xmlns:gml` | Geography Markup Language | `http://www.opengis.net/gml` | `http://www.opengis.net/gml/3.2` |
+| `xmlns` | Default namespace | `http://www.opengis.net/citygml/2.0` | `http://www.opengis.net/citygml/3.0` |
+
+The **bold namespaces** listed in the table above are new in CityGMl v3.0 compared to v2.0.
+
+Note that the XML schemata for CityGML 3.0 are still in active development and subject to change. For the latest XSD files, please refer to the [OGC CityGML 3.0 Encodings GitHub page](https://github.com/opengeospatial/CityGML-3.0Encodings).
+
+### Other Notes
+Currently, only the Building module is supported.
 
 The implementation was tested on a limited number of samples provide in CityGML 3.0 and thus that may not solve all use cases.
 
-Also note that the XML schemata for CityGML 3.0 are still in active development and might change in the near future. For the latest XSD files, please refer to the [OGC CityGML 3.0 Encodings GitHub page](https://github.com/opengeospatial/CityGML-3.0Encodings).
