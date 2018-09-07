@@ -25,7 +25,17 @@ where
 For reference, the [CityGML_v3.gml](output/CityGML_v3.gml) can be used as an example of how the transformed file should look like.
 
 ### Namespaces
-The namespaces in CityGML documents v2.0 and v3.0 are given by default as follows:
+To produce the best results, the input CityGML document must satisfy the following conditions:
+
+1. It must be encoded in CityGML v2.0;
+
+2. All namespaces and schemata must be declared in the root element (i.e. `CityModel`) and nowhere else (e.g. local namespaces in elements other than the root are not recommended);
+
+3. Namespace prefixes and URIs as well as schema locations must correspond to the values allowed by the tool. 
+
+Please ensure to check the namespaces and schemata of your CityGML documents accordingly before executing the tool.
+
+The list of allowed namespaces in CityGML v2.0 as well as in v3.0 are selected by default as follows:
 
 | Namespace prefix        | Module |       Namespace URI in CityGML v2.0           |      Namespace URI in CityGML v3.0  |
 | ------------- |------|-------------| -----|
@@ -40,6 +50,7 @@ The namespaces in CityGML documents v2.0 and v3.0 are given by default as follow
 | `xmlns:gen` | Generics | `http://www.opengis.net/citygml/generics/2.0` | `http://www.opengis.net/citygml/generics/3.0` |
 | `xmlns:luse` | LandUse | `http://www.opengis.net/citygml/landuse/2.0` | `http://www.opengis.net/citygml/landuse/3.0` |
 | `xmlns:dem` | Relief | `http://www.opengis.net/citygml/relief/2.0` | `http://www.opengis.net/citygml/relief/3.0` |
+| `xmlns:tex` | Textured Surface | `http://www.opengis.net/citygml/texturedsurface/2.0` | `http://www.opengis.net/citygml/texturedsurface/2.0` |
 | `xmlns:tran` | Transportation | `http://www.opengis.net/citygml/transportation/2.0` | `http://www.opengis.net/citygml/transportation/3.0` |
 | `xmlns:tun` | Tunnel | `http://www.opengis.net/citygml/tunnel/2.0` | `http://www.opengis.net/citygml/tunnel/3.0` |
 | `xmlns:veg` | Vegetation | `http://www.opengis.net/citygml/vegetation/2.0` | `http://www.opengis.net/citygml/vegetation/3.0` |

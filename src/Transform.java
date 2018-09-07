@@ -18,9 +18,21 @@ public class Transform {
 	}
 
 	public static void main(String[] args) throws TransformerFactoryConfigurationError, TransformerException, IOException {
-		String sourceXMLFile = "input/CityGML_v2_extended.gml";
+//		String sourceXMLFile = "input/Berlin_Test.gml";
+//		String sourceXSLFile = "Transform.xsl";
+//		String outputXMLFile = "output/Berlin_Test_Transformed.gml";
+		
+//		String sourceXMLFile = "input/London_LOD2.gml";
+//		String sourceXSLFile = "Transform.xsl";
+//		String outputXMLFile = "output/London_LOD2_Transformed.gml";
+		
+//		String sourceXMLFile = "C:\\Users\\SNguyen\\Downloads\\export_manhatten_150k.gml";
+//		String sourceXSLFile = "Transform.xsl";
+//		String outputXMLFile = "C:\\\\Users\\\\SNguyen\\\\Downloads\\export_manhatten_150k_Transformed.gml";
+		
+		String sourceXMLFile = "input/Berlin_LOD2_Small_0.gml";
 		String sourceXSLFile = "Transform.xsl";
-		String outputXMLFile = "output/CityGML_v3_extended_Transformed.gml";
+		String outputXMLFile = "output/Berlin_LOD2_Small_0_Transformed.gml";
 
 		if ((args.length >= 3) && (args[0] != null) && (!args[0].equals(""))) {
 			sourceXMLFile = args[0];
@@ -52,10 +64,11 @@ public class Transform {
 		String line = null;
 		boolean found = false;
 		
-		String xsdLocation ="https://raw.githubusercontent.com/opengeospatial/CityGML-3.0Encodings/master/CityGML/Schema/";
-
+		//String xsdLocation ="https://raw.githubusercontent.com/opengeospatial/CityGML-3.0Encodings/master/CityGML/Schema/";
+		String xsdLocation ="http://localhost/xsds//";
+		
 		while ((line = bReader.readLine()) != null) {
-			if ((!found) && (line.trim().startsWith("<CityModel"))) {
+			if ((!found) && (line.trim().contains("<CityModel"))) {
 				found = true;
 				line = "<CityModel gml:id=\"cm1\" "
 						+ "xmlns:app=\"http://www.opengis.net/citygml/appearance/3.0\" "
@@ -69,6 +82,7 @@ public class Transform {
 						+ "xmlns:gen=\"http://www.opengis.net/citygml/generics/3.0\" "
 						+ "xmlns:luse=\"http://www.opengis.net/citygml/landuse/3.0\" "
 						+ "xmlns:dem=\"http://www.opengis.net/citygml/relief/3.0\" "
+						+ "xmlns:tex=\"http://www.opengis.net/citygml/texturedsurface/2.0\" "
 						+ "xmlns:tran=\"http://www.opengis.net/citygml/transportation/3.0\" "
 						+ "xmlns:tun=\"http://www.opengis.net/citygml/tunnel/3.0\" "
 						+ "xmlns:veg=\"http://www.opengis.net/citygml/vegetation/3.0\" "
@@ -93,6 +107,7 @@ public class Transform {
 						+ "http://www.opengis.net/citygml/generics/3.0 " + xsdLocation + "generics.xsd "
 						+ "http://www.opengis.net/citygml/landuse/3.0 " + xsdLocation + "landUse.xsd "
 						+ "http://www.opengis.net/citygml/relief/3.0 " + xsdLocation + "relief.xsd "
+						+ "http://www.opengis.net/citygml/texturedsurface/2.0 " + "http://schemas.opengis.net/citygml/texturedsurface/2.0/texturedSurface.xsd "
 						+ "http://www.opengis.net/citygml/transportation/3.0 " + xsdLocation + "transportation.xsd "
 						+ "http://www.opengis.net/citygml/tunnel/3.0 " + xsdLocation + "tunnel.xsd "
 						+ "http://www.opengis.net/citygml/vegetation/3.0 " + xsdLocation + "vegetation.xsd "

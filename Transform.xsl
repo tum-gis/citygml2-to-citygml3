@@ -1,22 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet 
     version="2.0" 
+    xmlns:app="http://www.opengis.net/citygml/appearance/2.0" 
+    xmlns:brid="http://www.opengis.net/citygml/bridge/2.0" 
+	xmlns:bldg="http://www.opengis.net/citygml/building/2.0" 
+	xmlns:frn="http://www.opengis.net/citygml/cityfurniture/2.0" 
+	xmlns:grp="http://www.opengis.net/citygml/cityobjectgroup/2.0" 
+	xmlns:con="http://www.opengis.net/citygml/construction/3.0" 
+	xmlns:core="http://www.opengis.net/citygml/2.0" 
+	xmlns:dyn="http://www.opengis.net/citygml/dynamizer/3.0" 
+	xmlns:gen="http://www.opengis.net/citygml/generics/2.0" 
+	xmlns:luse="http://www.opengis.net/citygml/landuse/2.0" 
+	xmlns:dem="http://www.opengis.net/citygml/relief/2.0" 
+	xmlns:tex="http://www.opengis.net/citygml/texturedsurface/2.0" 
+	xmlns:tran="http://www.opengis.net/citygml/transportation/2.0" 
+	xmlns:tun="http://www.opengis.net/citygml/tunnel/2.0" 
+	xmlns:veg="http://www.opengis.net/citygml/vegetation/2.0" 
+	xmlns:vers="http://www.opengis.net/citygml/versioning/3.0" 
+	xmlns:wtr="http://www.opengis.net/citygml/waterbody/2.0" 
+	xmlns:tsml="http://www.opengis.net/tsml/1.0" 
+	xmlns:sos="http://www.opengis.net/sos/2.0" 
+	xmlns:xAL="urn:oasis:names:tc:ciq:xsdschema:xAL:2.0" 
+	xmlns:xlink="http://www.w3.org/1999/xlink" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:gml="http://www.opengis.net/gml" 
+	xmlns="http://www.opengis.net/citygml/2.0" 
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-    xmlns:xalan="http://xml.apache.org/xslt" 
-    xmlns:xlink="http://www.w3.org/1999/xlink" 
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-    xmlns:xAL="urn:oasis:names:tc:ciq:xsdschema:xAL:2.0" 
-    xmlns:con="http://www.opengis.net/citygml/construction/3.0" 
-    
-    xmlns="http://www.opengis.net/citygml/2.0" 
-    xmlns:bldg="http://www.opengis.net/citygml/building/2.0" 
-    xmlns:gml="http://www.opengis.net/gml" 
-    xmlns:gen="http://www.opengis.net/citygml/generics/2.0" 
-    xsi:schemaLocation="http://www.opengis.net/citygml/2.0 http://schemas.opengis.net/citygml/2.0/cityGMLBase.xsd http://www.opengis.net/citygml/building/2.0 http://schemas.opengis.net/citygml/building/2.0/building.xsd http://www.opengis.net/citygml/generics/2.0 http://schemas.opengis.net/citygml/generics/2.0/generics.xsd"
-    
-
-    
->
+    xmlns:xalan="http://xml.apache.org/xslt">
     
     <!-- 
     exclude-result-prefixes="xalan xlink xsi xAl bldg gml gen con"
