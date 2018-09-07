@@ -18,21 +18,9 @@ public class Transform {
 	}
 
 	public static void main(String[] args) throws TransformerFactoryConfigurationError, TransformerException, IOException {
-//		String sourceXMLFile = "input/Berlin_Test.gml";
-//		String sourceXSLFile = "Transform.xsl";
-//		String outputXMLFile = "output/Berlin_Test_Transformed.gml";
-		
-//		String sourceXMLFile = "input/London_LOD2.gml";
-//		String sourceXSLFile = "Transform.xsl";
-//		String outputXMLFile = "output/London_LOD2_Transformed.gml";
-		
-//		String sourceXMLFile = "C:\\Users\\SNguyen\\Downloads\\export_manhatten_150k.gml";
-//		String sourceXSLFile = "Transform.xsl";
-//		String outputXMLFile = "C:\\\\Users\\\\SNguyen\\\\Downloads\\export_manhatten_150k_Transformed.gml";
-		
-		String sourceXMLFile = "input/Berlin_LOD2_Small_0.gml";
+		String sourceXMLFile = "input/CityGML_v2_extended.gml";
 		String sourceXSLFile = "Transform.xsl";
-		String outputXMLFile = "output/Berlin_LOD2_Small_0_Transformed.gml";
+		String outputXMLFile = "output/CityGML_v3_extended_Transformed.gml";
 
 		if ((args.length >= 3) && (args[0] != null) && (!args[0].equals(""))) {
 			sourceXMLFile = args[0];
@@ -64,8 +52,7 @@ public class Transform {
 		String line = null;
 		boolean found = false;
 		
-		//String xsdLocation ="https://raw.githubusercontent.com/opengeospatial/CityGML-3.0Encodings/master/CityGML/Schema/";
-		String xsdLocation ="http://localhost/xsds//";
+		String xsdLocation ="https://raw.githubusercontent.com/opengeospatial/CityGML-3.0Encodings/master/CityGML/Schema/";
 		
 		while ((line = bReader.readLine()) != null) {
 			if ((!found) && (line.trim().contains("<CityModel"))) {
