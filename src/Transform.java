@@ -18,9 +18,9 @@ public class Transform {
 	}
 
 	public static void main(String[] args) throws TransformerFactoryConfigurationError, TransformerException, IOException {
-		String sourceXMLFile = "input/CityGML_v2.gml";
+		String sourceXMLFile = "input/CityGML_v2_extended.gml";
 		String sourceXSLFile = "Transform.xsl";
-		String outputXMLFile = "output/CityGML_v3_Transformed.gml";
+		String outputXMLFile = "output/CityGML_v3_extended_Transformed.gml";
 
 		if ((args.length >= 3) && (args[0] != null) && (!args[0].equals(""))) {
 			sourceXMLFile = args[0];
@@ -35,6 +35,8 @@ public class Transform {
 		}
 
 		String outputXMLFile_tmp = "Tmp.gml";
+		
+		System.out.println("Transforming...");
 
 		Source xmlInput = new StreamSource(new File(sourceXMLFile));
 		Source xsl = new StreamSource(new File(sourceXSLFile));
@@ -49,6 +51,8 @@ public class Transform {
 
 		String line = null;
 		boolean found = false;
+		
+		String xsdLocation ="https://raw.githubusercontent.com/opengeospatial/CityGML-3.0Encodings/master/CityGML/Schema/";
 
 		while ((line = bReader.readLine()) != null) {
 			if ((!found) && (line.trim().startsWith("<CityModel"))) {
@@ -78,22 +82,22 @@ public class Transform {
 						+ "xmlns:gml=\"http://www.opengis.net/gml/3.2\" "
 						+ "xmlns=\"http://www.opengis.net/citygml/3.0\" "
 						+ "xsi:schemaLocation=\""
-						+ "http://www.opengis.net/citygml/3.0 ./cityGMLBase.xsd "
-						+ "http://www.opengis.net/citygml/appearance/3.0 ./appearance.xsd "
-						+ "http://www.opengis.net/citygml/bridge/3.0 ./bridge.xsd "
-						+ "http://www.opengis.net/citygml/building/3.0 ../xsds/building.xsd "
-						+ "http://www.opengis.net/citygml/cityfurniture/3.0 ./cityFurniture.xsd "
-						+ "http://www.opengis.net/citygml/cityobjectgroup/3.0 ./cityObjectGroup.xsd "
-						+ "http://www.opengis.net/citygml/construction/3.0 ./construction.xsd "
-						+ "http://www.opengis.net/citygml/dynamizer/3.0 ./dynamizer.xsd "
-						+ "http://www.opengis.net/citygml/generics/3.0 ./generics.xsd "
-						+ "http://www.opengis.net/citygml/landuse/3.0 ./landUse.xsd "
-						+ "http://www.opengis.net/citygml/relief/3.0 ./relief.xsd "
-						+ "http://www.opengis.net/citygml/transportation/3.0 ./transportation.xsd "
-						+ "http://www.opengis.net/citygml/tunnel/3.0 ./tunnel.xsd "
-						+ "http://www.opengis.net/citygml/vegetation/3.0 ./vegetation.xsd "
-						+ "http://www.opengis.net/citygml/versioning/3.0 ./versioning.xsd "
-						+ "http://www.opengis.net/citygml/waterbody/3.0 ./waterBody.xsd "
+						+ "http://www.opengis.net/citygml/3.0 " + xsdLocation + "cityGMLBase.xsd "
+						+ "http://www.opengis.net/citygml/appearance/3.0 " + xsdLocation + "appearance.xsd "
+						+ "http://www.opengis.net/citygml/bridge/3.0 " + xsdLocation + "bridge.xsd "
+						+ "http://www.opengis.net/citygml/building/3.0 " + xsdLocation + "building.xsd "
+						+ "http://www.opengis.net/citygml/cityfurniture/3.0 " + xsdLocation + "cityFurniture.xsd "
+						+ "http://www.opengis.net/citygml/cityobjectgroup/3.0 " + xsdLocation + "cityObjectGroup.xsd "
+						+ "http://www.opengis.net/citygml/construction/3.0 " + xsdLocation + "construction.xsd "
+						+ "http://www.opengis.net/citygml/dynamizer/3.0 " + xsdLocation + "dynamizer.xsd "
+						+ "http://www.opengis.net/citygml/generics/3.0 " + xsdLocation + "generics.xsd "
+						+ "http://www.opengis.net/citygml/landuse/3.0 " + xsdLocation + "landUse.xsd "
+						+ "http://www.opengis.net/citygml/relief/3.0 " + xsdLocation + "relief.xsd "
+						+ "http://www.opengis.net/citygml/transportation/3.0 " + xsdLocation + "transportation.xsd "
+						+ "http://www.opengis.net/citygml/tunnel/3.0 " + xsdLocation + "tunnel.xsd "
+						+ "http://www.opengis.net/citygml/vegetation/3.0 " + xsdLocation + "vegetation.xsd "
+						+ "http://www.opengis.net/citygml/versioning/3.0 " + xsdLocation + "versioning.xsd "
+						+ "http://www.opengis.net/citygml/waterbody/3.0 " + xsdLocation + "waterBody.xsd "
 						+ "http://www.opengis.net/tsml/1.0 http://schemas.opengis.net/tsml/1.0/timeseriesML.xsd "
 						+ "http://www.opengis.net/sos/2.0 http://schemas.opengis.net/sos/2.0/sosGetObservation.xsd "
 						+ "urn:oasis:names:tc:ciq:xsdschema:xAL:2.0 http://schemas.opengis.net/citygml/xAL/xAL.xsd\">";
@@ -106,5 +110,8 @@ public class Transform {
 		bReader.close();
 		bWriter.close();
 		Files.delete(outputXMLTmp.toPath());
+		
+		System.out.println("Transformation done!\n"
+				+ "File output: " + outputXMLFile);
 	}
 }

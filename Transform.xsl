@@ -114,28 +114,51 @@
     Remove bldg of bldg:lod2Solid
     All other children and attributes will be copied before/after bldg:boundedBy and bldg:lod2Solid depending on whichever comes first-->
     <xsl:template match="bldg:Building">
-        <xsl:copy>
-            <xsl:copy-of select="@*"/>
-            <xsl:apply-templates select="(bldg:boundedBy|bldg:lod2Solid)[1]/preceding-sibling::node()[name()!='bldg:boundedBy' and name()!='bldg:lod2Solid']"/>
-            <bldg:buildingSpace>
-                <con:ConstructionSpace>
-                    <xsl:attribute name="gml:id">
-                        <xsl:value-of select="concat('csl_', generate-id())" />
+	<xsl:copy>
+		<xsl:copy-of select="@*" />
+		<xsl:apply-templates select="(bldg:boundedBy|bldg:lod2Solid)[1]/preceding-sibling::node()[name()!='bldg:boundedBy' and name()!='bldg:lod2Solid' and name()!='bldg:measuredHeight']" />
+		<bldg:buildingSpace>
+			<con:ConstructionSpace>
+				<xsl:attribute name="gml:id">
+                        <xsl:value-of
+					select="concat('csl_', generate-id())" />
                     </xsl:attribute>
-                    <xsl:for-each select="bldg:boundedBy">
-                        <boundary>
-                            <xsl:apply-templates select="@*|node()" />
-                        </boundary>
-                    </xsl:for-each>
-                    <xsl:for-each select="bldg:lod2Solid">
-                        <lod2Solid>
-                            <xsl:apply-templates select="@*|node()" />
-                        </lod2Solid>
-                    </xsl:for-each>
-                </con:ConstructionSpace>
-            </bldg:buildingSpace>
-            <xsl:apply-templates select="(bldg:boundedBy|bldg:lod2Solid)[1]/following-sibling::node()[name()!='bldg:boundedBy' and name()!='bldg:lod2Solid']"/>
-        </xsl:copy>
+				<xsl:for-each select="bldg:lod2Solid">
+					<lod2Solid>
+						<xsl:apply-templates select="@*|node()" />
+					</lod2Solid>
+				</xsl:for-each>
+				<xsl:for-each select="bldg:boundedBy">
+					<boundary>
+						<xsl:apply-templates select="@*|node()" />
+					</boundary>
+				</xsl:for-each>
+			</con:ConstructionSpace>
+		</bldg:buildingSpace>
+		
+		<!-- Transform the rest -->
+		<xsl:apply-templates select="(bldg:boundedBy|bldg:lod2Solid)[1]/following-sibling::node()[name()!='bldg:boundedBy' and name()!='bldg:lod2Solid' and name()!='bldg:measuredHeight']" />
+		
+		<!--Transform bldg:measuredHeight -->
+		<xsl:if test="bldg:measuredHeight">
+			<bldg:heightAboveGround>
+				<con:HeightAboveGround>
+					<con:heightReference>highestRoofEdge</con:heightReference>
+					<con:lowReference>lowestGroundPoint</con:lowReference>
+					<con:status>measured</con:status>
+					<con:value>
+						<xsl:if test="bldg:measuredHeight/@uom">
+							<xsl:attribute name="uom">
+			                        <xsl:value-of
+								select="bldg:measuredHeight/@uom" />
+			                    </xsl:attribute>
+						</xsl:if>
+						<xsl:value-of select="bldg:measuredHeight/text()" />
+					</con:value>
+				</con:HeightAboveGround>
+			</bldg:heightAboveGround>
+		</xsl:if>
+	</xsl:copy>
     </xsl:template>
 
     <!--Change namespace bldg of WallSurface to con-->
@@ -302,20 +325,6 @@
 				</gen:value>
 			</gen:MeasureAttribute>
 		</genericAttribute>
-	</xsl:template>
-
-	<!--Transform bldg:measuredHeight -->
-	<xsl:template match="bldg:measuredHeight">
-		<bldg:heightAboveGround>
-			<con:HeightAboveGround>
-				<con:heightReference>highestRoofEdge</con:heightReference>
-				<con:lowReference>lowestGroundPoint</con:lowReference>
-				<con:status>measured</con:status>
-				<con:value>
-					<xsl:apply-templates select="@*|node()"/>
-				</con:value>
-			</con:HeightAboveGround>
-		</bldg:heightAboveGround>
 	</xsl:template>
     
 </xsl:stylesheet>

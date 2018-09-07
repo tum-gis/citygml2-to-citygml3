@@ -33,6 +33,25 @@
             <bldg:roofType>3100</bldg:roofType>
             <bldg:buildingSpace>
                 <con:ConstructionSpace gml:id="cs1">
+                	<lod2Solid>
+                        <gml:Solid gml:id="s1">
+                            <gml:exterior>
+                                <gml:Shell>
+                                    <gml:surfaceMember xlink:href="#DEBY_LOD2_5744682_1e36b54e-2518-4afe-a2b4-a59ddff93581_poly"/>
+                                    <gml:surfaceMember xlink:href="#DEBY_LOD2_5744682_26de5877-57e7-429d-9b9a-274b8ed6aac5_poly"/>
+                                    <gml:surfaceMember xlink:href="#DEBY_LOD2_5744682_314d7d2e-1551-4946-80a4-12e463d59de5_poly"/>
+                                    <gml:surfaceMember xlink:href="#DEBY_LOD2_5744682_392cb098-6e22-4334-9853-1e8225966156_poly"/>
+                                    <gml:surfaceMember xlink:href="#DEBY_LOD2_5744682_44e7c68d-da01-4f80-b1a4-9bbde8305c77_poly"/>
+                                    <gml:surfaceMember xlink:href="#DEBY_LOD2_5744682_58e93bde-fd64-4fec-9626-5824c2e94f0e_poly"/>
+                                    <gml:surfaceMember xlink:href="#DEBY_LOD2_5744682_5e13d1c8-7fb5-479f-9794-7b9e1f89ca1e_poly"/>
+                                    <gml:surfaceMember xlink:href="#DEBY_LOD2_5744682_6a1b5359-d4e4-4d80-aeb8-ad63625a56dc_poly"/>
+                                    <gml:surfaceMember xlink:href="#DEBY_LOD2_5744682_80ce6c2a-8724-4a2a-89e4-881da9530ecc_poly"/>
+                                    <gml:surfaceMember xlink:href="#DEBY_LOD2_5744682_887068cb-0fcb-45f3-b436-d1a1bdef047f_poly"/>
+                                    <gml:surfaceMember xlink:href="#DEBY_LOD2_5744682_dd1b367c-c6d8-4eb2-abe6-0accb0fa91b8_poly"/>
+                                </gml:Shell>
+                            </gml:exterior>
+                        </gml:Solid>
+                    </lod2Solid>
                     <boundary>
                         <con:RoofSurface gml:id="DEBY_LOD2_5744682_5e13d1c8-7fb5-479f-9794-7b9e1f89ca1e">
                             <lod2MultiSurface>
@@ -220,25 +239,6 @@
                             </lod2MultiSurface>
                         </con:GroundSurface>
                     </boundary>
-                    <lod2Solid>
-                        <gml:Solid gml:id="s1">
-                            <gml:exterior>
-                                <gml:Shell>
-                                    <gml:surfaceMember xlink:href="#DEBY_LOD2_5744682_1e36b54e-2518-4afe-a2b4-a59ddff93581_poly"/>
-                                    <gml:surfaceMember xlink:href="#DEBY_LOD2_5744682_26de5877-57e7-429d-9b9a-274b8ed6aac5_poly"/>
-                                    <gml:surfaceMember xlink:href="#DEBY_LOD2_5744682_314d7d2e-1551-4946-80a4-12e463d59de5_poly"/>
-                                    <gml:surfaceMember xlink:href="#DEBY_LOD2_5744682_392cb098-6e22-4334-9853-1e8225966156_poly"/>
-                                    <gml:surfaceMember xlink:href="#DEBY_LOD2_5744682_44e7c68d-da01-4f80-b1a4-9bbde8305c77_poly"/>
-                                    <gml:surfaceMember xlink:href="#DEBY_LOD2_5744682_58e93bde-fd64-4fec-9626-5824c2e94f0e_poly"/>
-                                    <gml:surfaceMember xlink:href="#DEBY_LOD2_5744682_5e13d1c8-7fb5-479f-9794-7b9e1f89ca1e_poly"/>
-                                    <gml:surfaceMember xlink:href="#DEBY_LOD2_5744682_6a1b5359-d4e4-4d80-aeb8-ad63625a56dc_poly"/>
-                                    <gml:surfaceMember xlink:href="#DEBY_LOD2_5744682_80ce6c2a-8724-4a2a-89e4-881da9530ecc_poly"/>
-                                    <gml:surfaceMember xlink:href="#DEBY_LOD2_5744682_887068cb-0fcb-45f3-b436-d1a1bdef047f_poly"/>
-                                    <gml:surfaceMember xlink:href="#DEBY_LOD2_5744682_dd1b367c-c6d8-4eb2-abe6-0accb0fa91b8_poly"/>
-                                </gml:Shell>
-                            </gml:exterior>
-                        </gml:Solid>
-                    </lod2Solid>
                 </con:ConstructionSpace>
             </bldg:buildingSpace>
             <bldg:address>
@@ -269,4 +269,3 @@
         </bldg:Building>
     </cityObjectMember>
 </CityModel>
-
