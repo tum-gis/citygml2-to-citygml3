@@ -1,4 +1,6 @@
+@echo off
 java -jar Transform.jar
+pause
 # Or use your own arguments
 # java -jar Transform.jar SourceXMLFile XSLFile OutputXMLFile
 # Example
