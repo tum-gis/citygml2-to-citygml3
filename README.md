@@ -68,6 +68,21 @@ The **bold namespaces** listed in the table above are new in CityGMl v3.0 compar
 
 Note that the XML schemata for CityGML 3.0 are still in active development and subject to change. For the latest XSD files, please refer to the [OGC CityGML 3.0 Encodings GitHub page](https://github.com/opengeospatial/CityGML-3.0Encodings).
 
+### Supported CityGML feature types and elements
+The list of supported CityGML v3.0 feature types and elements in the current implementation is shown as follows (note that this list may change in the future):
+
++ `gml:name`
++ `creationDate`
++ `externalReference`
++ `core:appearance` (both `app:ParameterizedTexture` and `app:X3DMaterial`)
++ `genericAttribute` (`gen:StringAttribute`, `gen:intAttribute`, `gen:doubleAttribute`, `gen:dateAttribut`, `gen:uriAttribute` and `gen:measureAttribute`)
++ `bldg:function`
++ `bldg:roofType`
++ `bldg:buildingSpace` and `con:ConstructionSpace`
++ `bldg:heightAboveGround`
+
+
+
 ### Other Notes
 Currently, only the Building module is supported.
 
