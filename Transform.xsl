@@ -6,7 +6,7 @@ Developer:
 Son H. Nguyen (son.nguyen@tum.de)
 
 With support regarding CityGML encodings from
-Thomas H. Kolbe (thomas.kolbe.tum.de)
+Thomas H. Kolbe (thomas.kolbe@tum.de)
 Tatjana Kutzner (kutzner@tum.de)
 
 MIT License
