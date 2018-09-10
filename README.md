@@ -2,7 +2,7 @@
 
 A small Java program used to transform CityGML v2.0 to CityGML v3.0 files.
 
-This project is still in early developement und subject to change.
+This project is still in early developement and subject to change.
 
 ### How to run
 The program can be executed by running the `Run.bat` file (in Windows).
