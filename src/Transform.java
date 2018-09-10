@@ -37,6 +37,7 @@ public class Transform {
 		String outputXMLFile_tmp = "Tmp.gml";
 		
 		System.out.println("Transforming...");
+		long startTime = System.nanoTime();
 
 		Source xmlInput = new StreamSource(new File(sourceXMLFile));
 		Source xsl = new StreamSource(new File(sourceXSLFile));
@@ -52,7 +53,7 @@ public class Transform {
 		String line = null;
 		boolean found = false;
 		
-		String xsdLocation ="https://raw.githubusercontent.com/opengeospatial/CityGML-3.0Encodings/master/CityGML/Schema/";
+		 String xsdLocation ="https://raw.githubusercontent.com/opengeospatial/CityGML-3.0Encodings/master/CityGML/Schema/";
 		
 		while ((line = bReader.readLine()) != null) {
 			if ((!found) && (line.trim().contains("<CityModel"))) {
@@ -113,7 +114,8 @@ public class Transform {
 		bWriter.close();
 		Files.delete(outputXMLTmp.toPath());
 		
-		System.out.println("Transformation done!\n"
+		long endTime   = System.nanoTime();
+		System.out.println("Transformation done in " + (endTime - startTime) / 1e9 + " seconds!\n" 
 				+ "File output: " + outputXMLFile);
 	}
 }
