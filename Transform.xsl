@@ -80,19 +80,19 @@ SOFTWARE.
 		</CityModel>
 	</xsl:template>
     
-<!--    <xsl:template match="/*">
-        <CityModel xmlns:xlink="http://www.w3.org/1999/xlink" 
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-        xmlns:xAL="urn:oasis:names:tc:ciq:xsdschema:xAL:2.0" 
-        xmlns:con="http://www.opengis.net/citygml/construction/3.0" 
-        xmlns:bldg="http://www.opengis.net/citygml/building/3.0" 
-        xmlns:gml="http://www.opengis.net/gml/3.2" 
-        xmlns:gen="http://www.opengis.net/citygml/generics/3.0" 
-        xmlns:default="http://www.opengis.net/citygml/3.0"  
-        xsi:schemaLocation="http://www.opengis.net/citygml/3.0 ../xsds/cityGMLBase.xsd http://www.opengis.net/citygml/building/3.0 ../xsds/building.xsd http://www.opengis.net/citygml/construction/3.0 ../xsds/construction.xsd http://www.opengis.net/citygml/generics/3.0 ../xsds/generics.xsd">
-            <xsl:apply-templates select="@*|node()"/>
-        </CityModel>
-    </xsl:template>-->
+<!--    <xsl:template match="/*"> -->
+<!--         <CityModel xmlns:xlink="http://www.w3.org/1999/xlink"  -->
+<!--         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  -->
+<!--         xmlns:xAL="urn:oasis:names:tc:ciq:xsdschema:xAL:2.0"  -->
+<!--         xmlns:con="http://www.opengis.net/citygml/construction/3.0"  -->
+<!--         xmlns:bldg="http://www.opengis.net/citygml/building/3.0"  -->
+<!--         xmlns:gml="http://www.opengis.net/gml/3.2"  -->
+<!--         xmlns:gen="http://www.opengis.net/citygml/generics/3.0"  -->
+<!--         xmlns:default="http://www.opengis.net/citygml/3.0"   -->
+<!--         xsi:schemaLocation="http://www.opengis.net/citygml/3.0 ../xsds/cityGMLBase.xsd http://www.opengis.net/citygml/building/3.0 ../xsds/building.xsd http://www.opengis.net/citygml/construction/3.0 ../xsds/construction.xsd http://www.opengis.net/citygml/generics/3.0 ../xsds/generics.xsd"> -->
+<!--             <xsl:apply-templates select="@*|node()"/> -->
+<!--         </CityModel> -->
+<!--  	</xsl:template> -->
     
 <!--    Update default namespace 
     <xsl:template match="*[namespace-uri() = '']">
@@ -145,74 +145,51 @@ SOFTWARE.
 			<xsl:apply-templates select="@*|node()" />
 		</xsl:copy>
 	</xsl:template>
-    
-    <!--
-    Create new bldg:buildingSpace
-    Create new con:ConstructionSpace
-    Add a gml:id to con:ConstructionSpace
-    Move bldg:lod2Solid and bldg:boundedBy
-    Rename bldg:boundedBy to boundary
-    Remove bldg of bldg:lod2Solid
-    All other children and attributes will be copied before/after bldg:boundedBy and bldg:lod2Solid depending on whichever comes first-->
-	<xsl:template match="bldg:Building">
+	
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- ++++++++++++++++++++++++ CITY MODEL ++++++++++++++++++++++++ -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+	<xsl:template name="StandardObjectProperties">
+		<xsl:apply-templates select="gml:metaDataProperty" />
+		<xsl:apply-templates select="gml:description" />
+		<xsl:apply-templates select="gml:descriptionReference" />
+		<xsl:apply-templates select="gml:identifier" />
+		<xsl:apply-templates select="gml:name" />
+ 	</xsl:template>
+ 	
+ 	<xsl:template match="gml:metaDataProperty | gml:description | gml:descriptionReference | gml:identifier | gml:name">
 		<xsl:copy>
-			<xsl:copy-of select="@*" />
-
-			<!-- Transform gml:name -->
-			<xsl:apply-templates select="gml:name" />
-			
-			<!-- Transform creationDate -->
-			<xsl:apply-templates select="*[local-name()='creationDate']" />
-	
-		    <!-- Transform externalReference -->
-			<xsl:apply-templates select="*[local-name()='externalReference']" />
-			
-			<!-- Transform app:appearance -->
-			<xsl:apply-templates select="app:appearance" />
-			
-			<!-- Transform generics attributes -->
-			<xsl:apply-templates select="gen:stringAttribute | gen:intAttribute | gen:doubleAttribute | gen:dateAttribut | gen:uriAttribute | gen:measureAttribute" />
-	
-						<!-- Transform bldg:function -->
-			<xsl:apply-templates select="bldg:function" />
-			
-			<!-- Transform bldg:roofType -->
-			<xsl:apply-templates select="bldg:roofType" />
-			
-			<!-- Transform lod2Solid and bldg:boundedBy -->
-			<bldg:buildingSpace>
-				<con:ConstructionSpace>
-					<xsl:attribute name="gml:id">
-	                        <xsl:value-of select="concat(./@gml:id, '_csl_', generate-id())" />
-	                    </xsl:attribute>
-					<xsl:for-each select="bldg:lod2Solid">
-						<lod2Solid>
-							<xsl:apply-templates select="@*|node()" />
-						</lod2Solid>
-					</xsl:for-each>
-					<xsl:for-each select="bldg:boundedBy">
-						<boundary>
-							<xsl:apply-templates select="@*|node()" />
-						</boundary>
-					</xsl:for-each>
-				</con:ConstructionSpace>
-			</bldg:buildingSpace>
-			
-			<!-- Transform bldg:measuredHeight -->
-			<xsl:apply-templates select="*[name()='bldg:measuredHeight']" />
+			<xsl:apply-templates select="@*|node()" />
 		</xsl:copy>
 	</xsl:template>
 	
-	<!-- Transform gml:name -->
-	<xsl:template match="gml:name">
-		<gml:name>
+	<xsl:template name="AbstractGMLType">
+		<xsl:copy-of select="@gml:id" />
+		<xsl:call-template name="StandardObjectProperties" />
+ 	</xsl:template>
+	
+	<xsl:template name="AbstractFeatureType">
+		<xsl:call-template name="AbstractGMLType" />
+		<xsl:apply-templates select="gml:boundedBy" />
+		<xsl:apply-templates select="gml:location" />
+ 	</xsl:template>
+ 	
+ 	<xsl:template match="gml:boundedBy | gml:location">
+		<xsl:copy>
 			<xsl:apply-templates select="@*|node()" />
-		</gml:name>
+		</xsl:copy>
 	</xsl:template>
-    
-    <!-- Transform creationDate -->
-	<xsl:template match="*[local-name()='creationDate']">
-		<creationDate>
+
+	<xsl:template name="AbstractFeatureWithLifespanType">
+		<xsl:call-template name="AbstractFeatureType" />
+		<xsl:apply-templates select="*[local-name()='creationDate']" />
+		<xsl:apply-templates select="*[local-name()='terminationDate']" />
+		<xsl:apply-templates select="*[local-name()='validFrom']" />
+		<xsl:apply-templates select="*[local-name()='validTo']" />
+ 	</xsl:template>
+ 	
+ 	<xsl:template match="*[local-name()='creationDate']">
+		<xsl:copy>
 			<xsl:choose>
 				<xsl:when test="contains(text(), 'T')">
 					<xsl:value-of select="text()" />
@@ -221,11 +198,84 @@ SOFTWARE.
 					<xsl:value-of select="concat(text(), 'T00:00:00')" />
 				</xsl:otherwise>
 			</xsl:choose>
-		</creationDate>
+		</xsl:copy>
 	</xsl:template>
 	
-	<!-- Transform externalReference -->
-	<xsl:template match="*[local-name()='externalReference']">
+	<xsl:template match="*[local-name()='terminationDate']">
+		<xsl:copy>
+			<xsl:choose>
+				<xsl:when test="contains(text(), 'T')">
+					<xsl:value-of select="text()" />
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="concat(text(), 'T00:00:00')" />
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:copy>
+	</xsl:template>
+	
+	<xsl:template match="*[local-name()='validFrom']">
+		<xsl:copy>
+			<xsl:choose>
+				<xsl:when test="contains(text(), 'T')">
+					<xsl:value-of select="text()" />
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="concat(text(), 'T00:00:00')" />
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:copy>
+	</xsl:template>
+	
+	<xsl:template match="*[local-name()='validTo']">
+		<xsl:copy>
+			<xsl:choose>
+				<xsl:when test="contains(text(), 'T')">
+					<xsl:value-of select="text()" />
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="concat(text(), 'T00:00:00')" />
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:copy>
+	</xsl:template>
+	
+	<xsl:template match="*[local-name()='CityModel']">
+		<xsl:copy>
+			<xsl:call-template name="AbstractFeatureWithLifespanType" />
+			<xsl:apply-templates select="*[local-name()='cityObjectMember']" />
+			<xsl:apply-templates select="app:appearanceMember" />
+		</xsl:copy>
+	</xsl:template>
+
+	<xsl:template match="*[local-name()='cityObjectMember']">
+		<xsl:copy>
+			<xsl:apply-templates select="bldg:Building" />
+		</xsl:copy>
+	</xsl:template>
+
+	<!-- Transform app:appearanceMember -->
+	<xsl:template match="app:appearanceMember">
+		<appearanceMember>
+			<xsl:apply-templates select="app:Appearance" />
+		</appearanceMember>
+	</xsl:template>
+    
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- +++++++++++++++++++++++++ BUILDING +++++++++++++++++++++++++ -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <xsl:template name="AbstractCityObjectType">
+		<xsl:call-template name="AbstractFeatureWithLifespanType" />
+		<xsl:apply-templates select="*[local-name()='externalReference']" />
+		<xsl:apply-templates select="*[local-name()='generalizesTo']" />
+		<xsl:apply-templates select="*[local-name()='relativeToTerrain']" />
+		<xsl:apply-templates select="*[local-name()='relativeToWater']" />
+		<xsl:apply-templates select="app:appearance" />
+		<xsl:apply-templates select="gen:stringAttribute | gen:intAttribute | gen:doubleAttribute | gen:dateAttribut | gen:uriAttribute | gen:measureAttribute" />
+		<xsl:apply-templates select="dyn:dynamizer" />
+ 	</xsl:template>
+ 	
+ 	<xsl:template match="*[local-name()='externalReference']">
 		<externalReference>
 			<ExternalReference>
 				<targetResource>
@@ -238,92 +288,24 @@ SOFTWARE.
 		</externalReference>
 	</xsl:template>
 	
-	<!-- Transform generic string attributes -->
-	<xsl:template match="gen:stringAttribute">
-		<genericAttribute>
-			<gen:StringAttribute>
-				<gen:name>
-					<xsl:value-of select="@name" />
-				</gen:name>
-				<gen:value>
-					<xsl:value-of select="gen:value" />
-				</gen:value>
-			</gen:StringAttribute>
-		</genericAttribute>
-	</xsl:template>
-
-	<!-- Transform generic integer attributes -->
-	<xsl:template match="gen:intAttribute">
-		<genericAttribute>
-			<gen:IntAttribute>
-				<gen:name>
-					<xsl:value-of select="@name" />
-				</gen:name>
-				<gen:value>
-					<xsl:value-of select="gen:value" />
-				</gen:value>
-			</gen:IntAttribute>
-		</genericAttribute>
+	<xsl:template match="*[local-name()='generalizesTo']">
+		<xsl:copy>
+			<xsl:apply-templates select="@*|node()" />
+		</xsl:copy>
 	</xsl:template>
 	
-	<!-- Transform generic double attributes -->
-	<xsl:template match="gen:doubleAttribute">
-		<genericAttribute>
-			<gen:DoubleAttribute>
-				<gen:name>
-					<xsl:value-of select="@name" />
-				</gen:name>
-				<gen:value>
-					<xsl:value-of select="gen:value" />
-				</gen:value>
-			</gen:DoubleAttribute>
-		</genericAttribute>
+	<xsl:template match="*[local-name()='relativeToTerrain']">
+		<xsl:copy>
+			<xsl:apply-templates select="@*|node()" />
+		</xsl:copy>
 	</xsl:template>
 	
-	<!-- Transform generic date attributes -->
-	<xsl:template match="gen:dateAttribute">
-		<genericAttribute>
-			<gen:DateAttribute>
-				<gen:name>
-					<xsl:value-of select="@name" />
-				</gen:name>
-				<gen:value>
-					<xsl:value-of select="gen:value" />
-				</gen:value>
-			</gen:DateAttribute>
-		</genericAttribute>
+	<xsl:template match="*[local-name()='relativeToWater']">
+		<xsl:copy>
+			<xsl:apply-templates select="@*|node()" />
+		</xsl:copy>
 	</xsl:template>
 	
-	<!-- Transform generic uri attributes -->
-	<xsl:template match="gen:uriAttribute">
-		<genericAttribute>
-			<gen:UriAttribute>
-				<gen:name>
-					<xsl:value-of select="@name" />
-				</gen:name>
-				<gen:value>
-					<xsl:value-of select="gen:value" />
-				</gen:value>
-			</gen:UriAttribute>
-		</genericAttribute>
-	</xsl:template>
-
-	<!-- Transform generic measure attributes -->
-	<xsl:template match="gen:measureAttribute">
-		<genericAttribute>
-			<gen:MeasureAttribute>
-				<gen:name>
-					<xsl:value-of select="@name" />
-				</gen:name>
-				<gen:value>
-					<xsl:copy-of select="gen:value/@*" />
-					<xsl:value-of select="gen:value" />
-				</gen:value>
-			</gen:MeasureAttribute>
-		</genericAttribute>
-	</xsl:template>
-
-	<!-- Transform app:appearance -->
 	<xsl:template match="app:appearance">
 		<core:appearance>
 			<app:Appearance>
@@ -369,91 +351,302 @@ SOFTWARE.
 		</core:appearance>
 	</xsl:template>
 	
-		<!-- Transform bldg:function -->
-	<xsl:template match="bldg:function">
-		<bldg:function>
-			<xsl:apply-templates select="@*|node()" />
-		</bldg:function>
+	<xsl:template match="gen:stringAttribute">
+		<xsl:element name="genericAttribute">
+			<xsl:element name="gen:StringAttribute">
+				<xsl:element name="gen:name">
+					<xsl:value-of select="@name" />
+				</xsl:element>
+				<xsl:element name="gen:value">
+					<xsl:value-of select="gen:value" />
+				</xsl:element>
+			</xsl:element>
+		</xsl:element>
 	</xsl:template>
 	
-	<!-- Transform bldg:roofType -->
-	<xsl:template match="bldg:roofType">
-		<bldg:roofType>
+	<xsl:template match="gen:intAttribute">
+		<xsl:element name="genericAttribute">
+			<xsl:element name="gen:IntAttribute">
+				<xsl:element name="gen:name">
+					<xsl:value-of select="@name" />
+				</xsl:element>
+				<xsl:element name="gen:value">
+					<xsl:value-of select="gen:value" />
+				</xsl:element>
+			</xsl:element>
+		</xsl:element>
+	</xsl:template>
+	
+	<xsl:template match="gen:doubleAttribute">
+		<xsl:element name="genericAttribute">
+			<xsl:element name="gen:DoubleAttribute">
+				<xsl:element name="gen:name">
+					<xsl:value-of select="@name" />
+				</xsl:element>
+				<xsl:element name="gen:value">
+					<xsl:value-of select="gen:value" />
+				</xsl:element>
+			</xsl:element>
+		</xsl:element>
+	</xsl:template>
+	
+	<xsl:template match="gen:dateAttribute">
+		<xsl:element name="genericAttribute">
+			<xsl:element name="gen:DateAttribute">
+				<xsl:element name="gen:name">
+					<xsl:value-of select="@name" />
+				</xsl:element>
+				<xsl:element name="gen:value">
+					<xsl:value-of select="gen:value" />
+				</xsl:element>
+			</xsl:element>
+		</xsl:element>
+	</xsl:template>
+	
+	<xsl:template match="gen:uriAttribute">
+		<xsl:element name="genericAttribute">
+			<xsl:element name="gen:UriAttribute">
+				<xsl:element name="gen:name">
+					<xsl:value-of select="@name" />
+				</xsl:element>
+				<xsl:element name="gen:value">
+					<xsl:value-of select="gen:value" />
+				</xsl:element>
+			</xsl:element>
+		</xsl:element>
+	</xsl:template>
+	
+	<xsl:template match="gen:measureAttribute">
+		<xsl:element name="genericAttribute">
+			<xsl:element name="gen:MeasureAttribute">
+				<xsl:element name="gen:name">
+					<xsl:value-of select="@name" />
+				</xsl:element>
+				<xsl:element name="gen:value">
+					<xsl:copy-of select="gen:value/@*" />
+					<xsl:value-of select="gen:value" />
+				</xsl:element>
+			</xsl:element>
+		</xsl:element>
+	</xsl:template>
+	
+	<xsl:template match="dyn:dynamizer">
+		<xsl:copy>
 			<xsl:apply-templates select="@*|node()" />
-		</bldg:roofType>
+		</xsl:copy>
+	</xsl:template>
+    
+    <xsl:template name="AbstractTopLevelCityObjectType">
+		<xsl:call-template name="AbstractCityObjectType" />
+ 	</xsl:template>
+
+	<xsl:template match="bldg:Building">
+		<xsl:copy>
+			<xsl:call-template name="AbstractTopLevelCityObjectType" />
+	
+			<xsl:apply-templates select="bldg:class" />
+			<xsl:apply-templates select="bldg:function" />
+			<xsl:apply-templates select="bldg:usage" />
+			<xsl:apply-templates select="bldg:roofType" />
+			<xsl:apply-templates select="bldg:storeysAboveGround" />
+			<xsl:apply-templates select="bldg:storeysBelowGround" />
+			<xsl:apply-templates select="bldg:storeyHeightsAboveGround" />
+			<xsl:apply-templates select="bldg:storeyHeightsBelowGround" />
+			
+			<xsl:apply-templates select="bldg:buildingConstructiveElement" />
+			<xsl:apply-templates select="bldg:buildingInstallation" />
+			
+			<!-- Transform lod2Solid and bldg:boundedBy -->
+			<xsl:element name="bldg:buildingSpace">
+				<xsl:element name="con:ConstructionSpace">
+					<xsl:attribute name="gml:id">
+	                        <xsl:value-of select="concat(./@gml:id, '_csl_', generate-id())" />
+	                </xsl:attribute>
+					<xsl:for-each select="bldg:lod2Solid">
+						<xsl:element name="lod2Solid">
+							<xsl:apply-templates select="@*|node()" />
+						</xsl:element>
+					</xsl:for-each>
+					<xsl:for-each select="bldg:boundedBy">
+						<xsl:element name="boundary">
+							<xsl:apply-templates select="@*|node()" />
+						</xsl:element>
+					</xsl:for-each>
+				</xsl:element>
+			</xsl:element>
+			
+			<xsl:apply-templates select="bldg:interiorRoom" />
+			<xsl:apply-templates select="bldg:buildingFurniture" />
+			<xsl:apply-templates select="bldg:buildingSubdivision" />
+			
+			<xsl:apply-templates select="bldg:address" />
+			
+			<xsl:apply-templates select="bldg:conditionOfConstruction" />
+			
+			<xsl:apply-templates select="bldg:dateOfConstruction" />
+			<xsl:apply-templates select="bldg:dateOfRenovation" />
+			<xsl:apply-templates select="bldg:dateOfDemolition" />
+			
+			<xsl:apply-templates select="bldg:elevation" />
+			
+			<xsl:apply-templates select="bldg:measuredHeight" />
+			
+			<xsl:apply-templates select="bldg:buildingPart" />
+		</xsl:copy>
+	</xsl:template>
+	
+	<xsl:template match="bldg:class | bldg:function | bldg:usage | bldg:roofType | bldg:storeysAboveGround | bldg:storeysBelowGround | bldg:storeyHeightsAboveGround | bldg:storeyHeightsBelowGround">
+		<xsl:copy>
+			<xsl:apply-templates select="@*|node()" />
+		</xsl:copy>
+	</xsl:template>
+	
+	<xsl:template match="bldg:buildingConstructiveElement | bldg:buildingInstallation">
+		<xsl:copy>
+			<xsl:apply-templates select="@*|node()" />
+		</xsl:copy>
+	</xsl:template>
+	
+	<!-- Change namespace bldg of WallSurface to con -->
+	<xsl:template match="bldg:WallSurface">
+		<xsl:element name="con:WallSurface">
+			<xsl:apply-templates select="@*|node()" />
+		</xsl:element>
+	</xsl:template>
+    
+    <!-- Change namespace bldg of RoofSurface to con -->
+	<xsl:template match="bldg:RoofSurface">
+		<xsl:element name="con:RoofSurface">
+			<xsl:apply-templates select="@*|node()" />
+		</xsl:element>
+	</xsl:template>
+    
+    <!-- Change namespace bldg of GroundSurface to con -->
+	<xsl:template match="bldg:GroundSurface">
+		<xsl:element name="con:GroundSurface">
+			<xsl:apply-templates select="@*|node()" />
+		</xsl:element>
+	</xsl:template>
+    
+    <!-- Change gml:CompositeSurface to gml:Shell -->
+	<xsl:template match="gml:CompositeSurface">
+		<xsl:element name="gml:Shell">
+			<xsl:apply-templates select="@*|node()" />
+		</xsl:element>
+	</xsl:template>
+    
+    <!-- Remove namespace bldg of lod2MultiSurface -->
+	<xsl:template match="bldg:lod2MultiSurface">
+		<xsl:element name="lod2MultiSurface">
+			<xsl:apply-templates select="@*|node()" />
+		</xsl:element>
+	</xsl:template>
+    
+    <!-- Generate uniquely identified IDs for gml:MultiSurface -->
+	<xsl:template match="gml:MultiSurface">
+		<xsl:element name="gml:MultiSurface">
+			<xsl:attribute name="gml:id">
+                <xsl:value-of select="concat(../../@gml:id, '_msl_', generate-id())" />
+            </xsl:attribute>
+			<xsl:apply-templates select="@*|node()" />
+		</xsl:element>
+	</xsl:template>
+    
+    <!-- Generate uniquely identified IDs for gml:Solid -->
+	<xsl:template match="gml:Solid">
+		<xsl:element name="gml:Solid">
+			<xsl:attribute name="gml:id">
+                <xsl:value-of select="concat(../../@gml:id, '_sl_', generate-id())" />
+            </xsl:attribute>
+			<xsl:apply-templates select="@*|node()" />
+		</xsl:element>
+	</xsl:template>
+	
+	<xsl:template match="bldg:interiorRoom | bldg:buildingFurniture | bldg:buildingSubdivision">
+		<xsl:copy>
+			<xsl:apply-templates select="@*|node()" />
+		</xsl:copy>
+	</xsl:template>
+	
+	<xsl:template match="bldg:address">
+		<xsl:copy>
+			<xsl:apply-templates select="@*|node()" />
+		</xsl:copy>
+	</xsl:template>
+	
+	<xsl:template match="bldg:conditionOfConstruction">
+		<xsl:copy>
+			<xsl:apply-templates select="@*|node()" />
+		</xsl:copy>
+	</xsl:template>
+	
+	<xsl:template match="bldg:dateOfConstruction">
+		<xsl:copy>
+			<xsl:choose>
+				<xsl:when test="contains(text(), 'T')">
+					<xsl:value-of select="text()" />
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="concat(text(), 'T00:00:00')" />
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:copy>
+	</xsl:template>
+	
+	<xsl:template match="bldg:dateOfRenovation">
+		<xsl:copy>
+			<xsl:choose>
+				<xsl:when test="contains(text(), 'T')">
+					<xsl:value-of select="text()" />
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="concat(text(), 'T00:00:00')" />
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:copy>
+	</xsl:template>
+	
+	<xsl:template match="bldg:dateOfDemolition">
+		<xsl:copy>
+			<xsl:choose>
+				<xsl:when test="contains(text(), 'T')">
+					<xsl:value-of select="text()" />
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="concat(text(), 'T00:00:00')" />
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:copy>
+	</xsl:template>
+	
+	<xsl:template match="bldg:elevation">
+		<xsl:copy>
+			<xsl:apply-templates select="@*|node()" />
+		</xsl:copy>
 	</xsl:template>
 	
 	<!-- Transform bldg:measuredHeight -->
 	<xsl:template match="bldg:measuredHeight">
-		<bldg:heightAboveGround>
-			<con:HeightAboveGround>
-				<con:heightReference>highestRoofEdge</con:heightReference>
-				<con:lowReference>lowestGroundPoint</con:lowReference>
-				<con:status>measured</con:status>
-				<con:value>
+		<xsl:element name="bldg:heightAboveGround">
+			<xsl:element name="con:HeightAboveGround">
+				<xsl:element name="con:heightReference">highestRoofEdge</xsl:element>
+				<xsl:element name="con:lowReference">lowestGroundPoint</xsl:element>
+				<xsl:element name="con:status">measured</xsl:element>
+				<xsl:element name="con:value">
 					<xsl:if test="@uom">
 						<xsl:attribute name="uom">
 	                        <xsl:value-of select="@uom" />
 						</xsl:attribute>
 					</xsl:if>
 					<xsl:value-of select="text()" />
-				</con:value>
-			</con:HeightAboveGround>
-		</bldg:heightAboveGround>
+				</xsl:element>
+			</xsl:element>
+		</xsl:element>
 	</xsl:template>
-
-    <!-- Change namespace bldg of WallSurface to con -->
-	<xsl:template match="bldg:WallSurface">
-		<con:WallSurface>
+	
+	<xsl:template match="bldg:buildingPart">
+		<xsl:copy>
 			<xsl:apply-templates select="@*|node()" />
-		</con:WallSurface>
-	</xsl:template>
-    
-    <!-- Change namespace bldg of RoofSurface to con -->
-	<xsl:template match="bldg:RoofSurface">
-		<con:RoofSurface>
-			<xsl:apply-templates select="@*|node()" />
-		</con:RoofSurface>
-	</xsl:template>
-    
-    <!-- Change namespace bldg of GroundSurface to con -->
-	<xsl:template match="bldg:GroundSurface">
-		<con:GroundSurface>
-			<xsl:apply-templates select="@*|node()" />
-		</con:GroundSurface>
-	</xsl:template>
-    
-    <!-- Change gml:CompositeSurface to gml:Shell -->
-	<xsl:template match="gml:CompositeSurface">
-		<gml:Shell>
-			<xsl:apply-templates select="@*|node()" />
-		</gml:Shell>
-	</xsl:template>
-    
-    <!-- Remove namespace bldg of lod2MultiSurface -->
-	<xsl:template match="bldg:lod2MultiSurface">
-		<lod2MultiSurface>
-			<xsl:apply-templates select="@*|node()" />
-		</lod2MultiSurface>
-	</xsl:template>
-    
-    <!-- Generate uniquely identified IDs for gml:MultiSurface -->
-	<xsl:template match="gml:MultiSurface">
-		<gml:MultiSurface>
-			<xsl:attribute name="gml:id">
-                <xsl:value-of select="concat(../../@gml:id, '_msl_', generate-id())" />
-            </xsl:attribute>
-			<xsl:apply-templates select="@*|node()" />
-		</gml:MultiSurface>
-	</xsl:template>
-    
-    <!-- Generate uniquely identified IDs for gml:Solid -->
-	<xsl:template match="gml:Solid">
-		<gml:Solid>
-			<xsl:attribute name="gml:id">
-                <xsl:value-of select="concat(../../@gml:id, '_sl_', generate-id())" />
-            </xsl:attribute>
-			<xsl:apply-templates select="@*|node()" />
-		</gml:Solid>
+		</xsl:copy>
 	</xsl:template>
 </xsl:stylesheet>
