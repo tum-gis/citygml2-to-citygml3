@@ -19,7 +19,7 @@ where
 | Arguments        | Description           | Default  |
 | ------------- |:-------------| -----|
 | `SourceXMLFile`      | The location of the source CityGML v2.0 file | `input/CityGML_v2.gml` |
-| `XSLFile`      | The location of the XSL file used for transformation | `Transform.xsl` |
+| `XSLFile`      | The location of the XSL file used for transformation | `xsl/Transform.xsl` |
 | `OutputXMLFile`      | The location of the transformed CityGML v3.0 file | `output/CityGML_v3_Transformed.gml` |
 
 For reference, the file [CityGML_v3.gml](output/CityGML_v3.gml) can be used as an example of how the transformed file should look like.
@@ -50,6 +50,7 @@ The list of allowed namespaces in CityGML v2.0 as well as in v3.0 are selected b
 | `xmlns:gen` | Generics | `http://www.opengis.net/citygml/generics/2.0` | `http://www.opengis.net/citygml/generics/3.0` |
 | `xmlns:luse` | LandUse | `http://www.opengis.net/citygml/landuse/2.0` | `http://www.opengis.net/citygml/landuse/3.0` |
 | `xmlns:dem` | Relief | `http://www.opengis.net/citygml/relief/2.0` | `http://www.opengis.net/citygml/relief/3.0` |
+| `xmlns:pcl` | PointCloud |  | `http://www.opengis.net/citygml/pointcloud/3.0` |
 | `xmlns:tex` | Textured Surface | `http://www.opengis.net/citygml/texturedsurface/2.0` | `http://www.opengis.net/citygml/texturedsurface/2.0` |
 | `xmlns:tran` | Transportation | `http://www.opengis.net/citygml/transportation/2.0` | `http://www.opengis.net/citygml/transportation/3.0` |
 | `xmlns:tun` | Tunnel | `http://www.opengis.net/citygml/tunnel/2.0` | `http://www.opengis.net/citygml/tunnel/3.0` |
@@ -80,6 +81,7 @@ The list of supported CityGML v3.0 feature types and elements in the current imp
 + `bldg:roofType`
 + `bldg:buildingSpace` and `con:ConstructionSpace`
 + `bldg:heightAboveGround`
++ And many more...
 
 
 

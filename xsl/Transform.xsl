@@ -39,6 +39,7 @@ SOFTWARE.
 	xmlns:frn="http://www.opengis.net/citygml/cityfurniture/2.0"
 	xmlns:grp="http://www.opengis.net/citygml/cityobjectgroup/2.0"
 	xmlns:con="http://www.opengis.net/citygml/construction/3.0"
+	xmlns:pcl="http://www.opengis.net/citygml/pointcloud/3.0"
 	xmlns:core="http://www.opengis.net/citygml/2.0"
 	xmlns:dyn="http://www.opengis.net/citygml/dynamizer/3.0"
 	xmlns:gen="http://www.opengis.net/citygml/generics/2.0"
@@ -169,7 +170,7 @@ SOFTWARE.
 
 	<xsl:template name="gml:AbstractGMLType">
 		<!-- These elements have custom IDs in their templates, exclude them here to avoid overriding custom IDs -->
-		<xsl:if test="name()!=con:ConstructionSpace and name()!=gml:Solid and name()!=gml:MultiSurface">
+		<xsl:if test="name()!=gml:Solid and name()!=gml:MultiSurface">
 			<xsl:copy-of select="@gml:id" />
 		</xsl:if>
 		
@@ -278,7 +279,6 @@ SOFTWARE.
 		<xsl:apply-templates select="*[local-name()='generalizesTo']" />
 		<xsl:apply-templates select="*[local-name()='relativeToTerrain']" />
 		<xsl:apply-templates select="*[local-name()='relativeToWater']" />
-		<xsl:apply-templates select="app:appearance" />
 		<xsl:apply-templates select="gen:stringAttribute | gen:intAttribute | gen:doubleAttribute | gen:dateAttribut | gen:uriAttribute | gen:measureAttribute" />
 		<xsl:apply-templates select="dyn:dynamizer" />
 	</xsl:template>
@@ -491,11 +491,12 @@ SOFTWARE.
 		<xsl:apply-templates select="bldg:lod1TerrainIntersectionCurve" />
 		<xsl:apply-templates select="bldg:lod2TerrainIntersectionCurve" />
 		<xsl:apply-templates select="bldg:lod3TerrainIntersectionCurve" />
-		<xsl:apply-templates select="bldg:pointCloud" />
+		<xsl:apply-templates select="pointCloud" />
 	</xsl:template>
 
 	<xsl:template name="core:AbstractOccupiedSpaceType">
 		<xsl:call-template name="core:AbstractPhysicalSpaceType" />
+		<xsl:apply-templates select="bldg:opening" />
 		<xsl:apply-templates select="bldg:lod1ImplicitRepresentation" />
 		<xsl:apply-templates select="bldg:lod2ImplicitRepresentation" />
 		<xsl:apply-templates select="bldg:lod3ImplicitRepresentation" />
@@ -505,9 +506,63 @@ SOFTWARE.
 		<xsl:call-template name="core:AbstractOccupiedSpaceType" />
 	</xsl:template>
 
+	<xsl:template name="con:AbstractConstructionType">
+		<xsl:call-template name="core:AbstractOccupiedSpaceType" />
+		<xsl:apply-templates select="bldg:conditionOfConstruction" />
+		<xsl:apply-templates select="bldg:dateOfConstruction" />
+		<xsl:apply-templates select="bldg:dateOfRenovation" />
+		<xsl:apply-templates select="bldg:dateOfDemolition" />
+		<xsl:apply-templates select="bldg:elevation" />
+		<xsl:apply-templates select="bldg:measuredHeight" />
+	</xsl:template>
+
+	<xsl:template match="bldg:conditionOfConstruction">
+		<xsl:copy>
+			<xsl:apply-templates select="@*|node()" />
+		</xsl:copy>
+	</xsl:template>
+
+	<xsl:template match="bldg:dateOfConstruction | bldg:dateOfRenovation | bldg:dateOfDemolition">
+		<xsl:copy>
+			<xsl:choose>
+				<xsl:when test="contains(text(), 'T')">
+					<xsl:value-of select="text()" />
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="concat(text(), 'T00:00:00')" />
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:copy>
+	</xsl:template>
+
+	<xsl:template match="bldg:elevation">
+		<xsl:copy>
+			<xsl:apply-templates select="@*|node()" />
+		</xsl:copy>
+	</xsl:template>
+
+	<!-- Transform bldg:measuredHeight -->
+	<xsl:template match="bldg:measuredHeight">
+		<xsl:element name="con:heightAboveGround">
+			<xsl:element name="con:HeightAboveGround">
+				<xsl:element name="con:heightReference">highestRoofEdge</xsl:element>
+				<xsl:element name="con:lowReference">lowestGroundPoint</xsl:element>
+				<xsl:element name="con:status">measured</xsl:element>
+				<xsl:element name="con:value">
+					<xsl:if test="@uom">
+						<xsl:attribute name="uom">
+							<xsl:value-of select="@uom" />
+						</xsl:attribute>
+					</xsl:if>
+					<xsl:value-of select="text()" />
+				</xsl:element>
+			</xsl:element>
+		</xsl:element>
+	</xsl:template>
+
 	<xsl:template match="bldg:Building">
 		<xsl:copy>
-			<xsl:call-template name="core:AbstractTopLevelCityObjectType" />
+			<xsl:call-template name="con:AbstractConstructionType" />
 
 			<xsl:apply-templates select="bldg:class" />
 			<xsl:apply-templates select="bldg:function" />
@@ -522,35 +577,12 @@ SOFTWARE.
 			<xsl:apply-templates select="bldg:buildingConstructiveElement" />
 			<xsl:apply-templates select="bldg:buildingInstallation" />
 
-			<xsl:element name="bldg:buildingSpace">
-				<xsl:element name="con:ConstructionSpace">
-					<xsl:attribute name="gml:id">
-						<xsl:value-of select="concat(./@gml:id, '_csl_', generate-id())" />
-	                </xsl:attribute>
-
-					<xsl:call-template name="gml:AssociationAttributeGroup" />
-					<xsl:call-template name="gml:OwnershipAttributeGroup" />
-
-					<xsl:call-template name="con:ConstructionSpace" />
-				</xsl:element>
-			</xsl:element>
-			
 			<!-- TODO -->
 			<xsl:apply-templates select="bldg:interiorRoom" />
 			<xsl:apply-templates select="bldg:buildingFurniture" />
 			<xsl:apply-templates select="bldg:buildingSubdivision" />
 
 			<xsl:apply-templates select="bldg:address" />
-
-			<xsl:apply-templates select="bldg:conditionOfConstruction" />
-
-			<xsl:apply-templates select="bldg:dateOfConstruction" />
-			<xsl:apply-templates select="bldg:dateOfRenovation" />
-			<xsl:apply-templates select="bldg:dateOfDemolition" />
-
-			<xsl:apply-templates select="bldg:elevation" />
-
-			<xsl:apply-templates select="bldg:measuredHeight" />
 
 			<xsl:apply-templates select="bldg:buildingPart" />
 		</xsl:copy>
@@ -563,7 +595,7 @@ SOFTWARE.
 	</xsl:template>
 
 	<xsl:template match="bldg:buildingConstructiveElement | bldg:buildingInstallation" />
-	
+
 	<!-- Change namespace bldg of WallSurface to con -->
 	<xsl:template match="bldg:WallSurface">
 		<xsl:element name="con:WallSurface">
@@ -688,76 +720,6 @@ SOFTWARE.
 		<xsl:copy>
 			<xsl:apply-templates select="@*|node()" />
 		</xsl:copy>
-	</xsl:template>
-
-	<xsl:template match="bldg:conditionOfConstruction">
-		<xsl:copy>
-			<xsl:apply-templates select="@*|node()" />
-		</xsl:copy>
-	</xsl:template>
-
-	<xsl:template match="bldg:dateOfConstruction">
-		<xsl:copy>
-			<xsl:choose>
-				<xsl:when test="contains(text(), 'T')">
-					<xsl:value-of select="text()" />
-				</xsl:when>
-				<xsl:otherwise>
-					<xsl:value-of select="concat(text(), 'T00:00:00')" />
-				</xsl:otherwise>
-			</xsl:choose>
-		</xsl:copy>
-	</xsl:template>
-
-	<xsl:template match="bldg:dateOfRenovation">
-		<xsl:copy>
-			<xsl:choose>
-				<xsl:when test="contains(text(), 'T')">
-					<xsl:value-of select="text()" />
-				</xsl:when>
-				<xsl:otherwise>
-					<xsl:value-of select="concat(text(), 'T00:00:00')" />
-				</xsl:otherwise>
-			</xsl:choose>
-		</xsl:copy>
-	</xsl:template>
-
-	<xsl:template match="bldg:dateOfDemolition">
-		<xsl:copy>
-			<xsl:choose>
-				<xsl:when test="contains(text(), 'T')">
-					<xsl:value-of select="text()" />
-				</xsl:when>
-				<xsl:otherwise>
-					<xsl:value-of select="concat(text(), 'T00:00:00')" />
-				</xsl:otherwise>
-			</xsl:choose>
-		</xsl:copy>
-	</xsl:template>
-
-	<xsl:template match="bldg:elevation">
-		<xsl:copy>
-			<xsl:apply-templates select="@*|node()" />
-		</xsl:copy>
-	</xsl:template>
-	
-	<!-- Transform bldg:measuredHeight -->
-	<xsl:template match="bldg:measuredHeight">
-		<xsl:element name="bldg:heightAboveGround">
-			<xsl:element name="con:HeightAboveGround">
-				<xsl:element name="con:heightReference">highestRoofEdge</xsl:element>
-				<xsl:element name="con:lowReference">lowestGroundPoint</xsl:element>
-				<xsl:element name="con:status">measured</xsl:element>
-				<xsl:element name="con:value">
-					<xsl:if test="@uom">
-						<xsl:attribute name="uom">
-	                        <xsl:value-of select="@uom" />
-						</xsl:attribute>
-					</xsl:if>
-					<xsl:value-of select="text()" />
-				</xsl:element>
-			</xsl:element>
-		</xsl:element>
 	</xsl:template>
 
 	<xsl:template match="bldg:buildingPart">
