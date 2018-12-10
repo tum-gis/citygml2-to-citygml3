@@ -105,7 +105,6 @@ public class Transform {
 		ns.add(new String[] { "gen", "http://www.opengis.net/citygml/generics/3.0", xsdLocation + "generics.xsd" });
 		ns.add(new String[] { "luse", "http://www.opengis.net/citygml/landuse/3.0", xsdLocation + "landUse.xsd" });
 		ns.add(new String[] { "dem", "http://www.opengis.net/citygml/relief/3.0", xsdLocation + "relief.xsd" });
-		//ns.add(new String[] { "tex", "http://www.opengis.net/citygml/texturedsurface/2.0", "http://schemas.opengis.net/citygml/texturedsurface/2.0/texturedSurface.xsd" });
 		ns.add(new String[] { "tran", "http://www.opengis.net/citygml/transportation/3.0", xsdLocation + "transportation.xsd" });
 		ns.add(new String[] { "tun", "http://www.opengis.net/citygml/tunnel/3.0", xsdLocation + "tunnel.xsd" });
 		ns.add(new String[] { "veg", "http://www.opengis.net/citygml/vegetation/3.0", xsdLocation + "vegetation.xsd" });
