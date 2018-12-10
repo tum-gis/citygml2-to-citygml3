@@ -90,14 +90,14 @@ public class Transform {
 		String line = null;
 		boolean found = false;
 
-		String xsdLocation = "https://raw.githubusercontent.com/opengeospatial/CityGML-3.0Encodings/editor-model-updates/CityGML/Schema/";
+		String xsdLocation = "http://www.3dcitydb.org/citygml3/2018-12-06/xsds/";
 
 		ArrayList<String[]> ns = new ArrayList<>();
 		ns.add(new String[] { "app", "http://www.opengis.net/citygml/appearance/3.0", xsdLocation + "appearance.xsd" });
 		ns.add(new String[] { "brid", "http://www.opengis.net/citygml/bridge/3.0", xsdLocation + "bridge.xsd" });
 		ns.add(new String[] { "bldg", "http://www.opengis.net/citygml/building/3.0", xsdLocation + "building.xsd" });
 		ns.add(new String[] { "frn", "http://www.opengis.net/citygml/cityfurniture/3.0", xsdLocation + "cityFurniture.xsd" });
-		ns.add(new String[] { "grp", "http://www.opengis.net/citygml/cityobjectgroup/3.0", xsdLocation + "cityPbjectGroup.xsd" });
+		ns.add(new String[] { "grp", "http://www.opengis.net/citygml/cityobjectgroup/3.0", xsdLocation + "cityObjectGroup.xsd" });
 		ns.add(new String[] { "con", "http://www.opengis.net/citygml/construction/3.0", xsdLocation + "construction.xsd" });
 		ns.add(new String[] { "pcl", "http://www.opengis.net/citygml/pointcloud/3.0", xsdLocation + "pointCloud.xsd" });
 		ns.add(new String[] { "core", "http://www.opengis.net/citygml/3.0", xsdLocation + "cityGMLBase.xsd" });
@@ -105,7 +105,7 @@ public class Transform {
 		ns.add(new String[] { "gen", "http://www.opengis.net/citygml/generics/3.0", xsdLocation + "generics.xsd" });
 		ns.add(new String[] { "luse", "http://www.opengis.net/citygml/landuse/3.0", xsdLocation + "landUse.xsd" });
 		ns.add(new String[] { "dem", "http://www.opengis.net/citygml/relief/3.0", xsdLocation + "relief.xsd" });
-		ns.add(new String[] { "tex", "http://www.opengis.net/citygml/texturedsurface/2.0", "http://schemas.opengis.net/citygml/texturedsurface/2.0/texturedSurface.xsd" });
+		//ns.add(new String[] { "tex", "http://www.opengis.net/citygml/texturedsurface/2.0", "http://schemas.opengis.net/citygml/texturedsurface/2.0/texturedSurface.xsd" });
 		ns.add(new String[] { "tran", "http://www.opengis.net/citygml/transportation/3.0", xsdLocation + "transportation.xsd" });
 		ns.add(new String[] { "tun", "http://www.opengis.net/citygml/tunnel/3.0", xsdLocation + "tunnel.xsd" });
 		ns.add(new String[] { "veg", "http://www.opengis.net/citygml/vegetation/3.0", xsdLocation + "vegetation.xsd" });
