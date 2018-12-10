@@ -53,9 +53,9 @@ public class Transform {
 	}
 
 	public static void main(String[] args) throws TransformerFactoryConfigurationError, TransformerException, IOException {
-		String sourceXMLFile = "input/CityGML_v2_extended.gml";
+		String sourceXMLFile = "input/CityGML_v2.gml";
 		String sourceXSLFile = "xsl/Transform.xsl";
-		String outputXMLFile = "output/CityGML_v3_extended_Transformed.gml";
+		String outputXMLFile = "output/CityGML_v3_Transformed.gml";
 
 		if (args.length >= 3) {
 			if ((args[0] != null) && (!args[0].equals(""))) {
@@ -90,7 +90,7 @@ public class Transform {
 		String line = null;
 		boolean found = false;
 
-		String xsdLocation = "../xsds/";
+		String xsdLocation = "https://raw.githubusercontent.com/opengeospatial/CityGML-3.0Encodings/editor-model-updates/CityGML/Schema/";
 
 		ArrayList<String[]> ns = new ArrayList<>();
 		ns.add(new String[] { "app", "http://www.opengis.net/citygml/appearance/3.0", xsdLocation + "appearance.xsd" });
@@ -130,9 +130,11 @@ public class Transform {
 
 				line += "xsi:schemaLocation=\"";
 				for (int i = 0; i < ns.size(); i++) {
-					line += (ns.get(i)[2].equals("") ? "" : (ns.get(i)[1] + " " + ns.get(i)[2] + (i == ns.size() - 1 ? "" : " ")));
+					line += (ns.get(i)[2].equals("") ? "" : (ns.get(i)[1] + " " + ns.get(i)[2] + " "));
 				}
 
+				// Remove the last whitespace
+				line = line.substring(0, line.length() - 1);
 				line += "\">";
 			}
 
@@ -142,6 +144,7 @@ public class Transform {
 
 		bReader.close();
 		bWriter.close();
+		// Remove temp file
 		Files.delete(outputXMLTmp.toPath());
 
 		long endTime = System.nanoTime();
