@@ -78,72 +78,6 @@ SOFTWARE.
 		xalan:indent-amount="4"
 		standalone="yes" />
     
-    <!-- Use this to move all namespace declarations to root -->
-	<xsl:template match="/*">
-		<CityModel>
-			<xsl:apply-templates select="@*|node()" />
-		</CityModel>
-	</xsl:template>
-    
-<!--    <xsl:template match="/*"> -->
-<!--         <CityModel xmlns:xlink="http://www.w3.org/1999/xlink"  -->
-<!--         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  -->
-<!--         xmlns:xAL="urn:oasis:names:tc:ciq:xsdschema:xAL:2.0"  -->
-<!--         xmlns:con="http://www.opengis.net/citygml/construction/3.0"  -->
-<!--         xmlns:bldg="http://www.opengis.net/citygml/building/3.0"  -->
-<!--         xmlns:gml="http://www.opengis.net/gml/3.2"  -->
-<!--         xmlns:gen="http://www.opengis.net/citygml/generics/3.0"  -->
-<!--         xmlns:default="http://www.opengis.net/citygml/3.0"   -->
-<!--         xsi:schemaLocation="http://www.opengis.net/citygml/3.0 ../xsds/cityGMLBase.xsd http://www.opengis.net/citygml/building/3.0 ../xsds/building.xsd http://www.opengis.net/citygml/construction/3.0 ../xsds/construction.xsd http://www.opengis.net/citygml/generics/3.0 ../xsds/generics.xsd"> -->
-<!--             <xsl:apply-templates select="@*|node()"/> -->
-<!--         </CityModel> -->
-<!--  	</xsl:template> -->
-    
-<!--    Update default namespace 
-    <xsl:template match="*[namespace-uri() = '']">
-        <xsl:element name="{name()}" namespace="http://www.opengis.net/citygml/3.0">
-            <xsl:apply-templates select="@*|node()"/>
-        </xsl:element>
-    </xsl:template>
-    <xsl:template match="@*[namespace-uri() = '']">
-        <xsl:attribute name="{name()}" namespace="http://www.opengis.net/citygml/3.0">
-            <xsl:value-of  select="."/>
-        </xsl:attribute>
-    </xsl:template>
-    
-    Update bldg namespace 
-    <xsl:template match="bldg:*">
-        <xsl:element name="{name()}" namespace="http://www.opengis.net/citygml/building/3.0">
-            <xsl:apply-templates select="@*|node()"/>
-        </xsl:element>
-    </xsl:template>
-    
-    Update gml namespace 
-    <xsl:template match="gml:*">
-        <xsl:element name="{name()}" namespace="http://www.opengis.net/gml/3.2">
-            <xsl:apply-templates select="@*|node()"/>
-        </xsl:element>
-    </xsl:template>
-    
-    Update gen namespace 
-    <xsl:template match="gen:*">
-        <xsl:element name="{name()}" namespace="http://www.opengis.net/citygml/generics/3.0">
-            <xsl:apply-templates select="@*|node()"/>
-        </xsl:element>
-    </xsl:template>
-    
-    Update schema location
-    <xsl:template match="/*">
-        <xsl:element name="{name()}" namespace="{namespace-uri()}">
-            <xsl:copy-of select="namespace::*[name()]"/>
-            <xsl:apply-templates select="@*"/>
-            <xsl:attribute name="xsi:schemaLocation">
-                <xsl:value-of select="'http://www.opengis.net/citygml/3.0 ../xsds/cityGMLBase.xsd http://www.opengis.net/citygml/building/3.0 ../xsds/building.xsd http://www.opengis.net/citygml/construction/3.0 ../xsds/construction.xsd http://www.opengis.net/citygml/generics/3.0 ../xsds/generics.xsd'"/>
-            </xsl:attribute>
-            <xsl:apply-templates select="node()"/>
-        </xsl:element>
-    </xsl:template>-->
-    
     <!-- Identity transformation -->
 	<xsl:template match="@*|node()">
 		<xsl:copy>
@@ -154,6 +88,18 @@ SOFTWARE.
 <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 <!-- ++++++++++++++++++++++++ CITY MODEL ++++++++++++++++++++++++ -->
 <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+	<xsl:template match="*[local-name()='CityModel']">
+		<CityModel
+			xmlns:con="http://www.opengis.net/citygml/construction/3.0" 
+			xmlns:dyn="http://www.opengis.net/citygml/dynamizer/3.0" 
+			xmlns:pcl="http://www.opengis.net/citygml/pointcloud/3.0" 
+			xmlns:ver="http://www.opengis.net/citygml/versioning/3.0">
+			<xsl:call-template name="core:AbstractFeatureWithLifespanType" />
+			<xsl:apply-templates select="*[local-name()='cityObjectMember']" />
+			<xsl:apply-templates select="app:appearanceMember" />
+		</CityModel>
+	</xsl:template>
+	
 	<xsl:template name="gml:StandardObjectProperties">
 		<xsl:apply-templates select="gml:metaDataProperty" />
 		<xsl:apply-templates select="gml:description" />
@@ -246,14 +192,6 @@ SOFTWARE.
 					<xsl:value-of select="concat(text(), 'T00:00:00')" />
 				</xsl:otherwise>
 			</xsl:choose>
-		</xsl:copy>
-	</xsl:template>
-
-	<xsl:template match="*[local-name()='CityModel']">
-		<xsl:copy>
-			<xsl:call-template name="core:AbstractFeatureWithLifespanType" />
-			<xsl:apply-templates select="*[local-name()='cityObjectMember']" />
-			<xsl:apply-templates select="app:appearanceMember" />
 		</xsl:copy>
 	</xsl:template>
 
