@@ -51,7 +51,6 @@ The list of allowed namespaces in CityGML v2.0 as well as in v3.0 are selected b
 | `xmlns:luse` | LandUse | `http://www.opengis.net/citygml/landuse/2.0` | `http://www.opengis.net/citygml/landuse/3.0` |
 | `xmlns:dem` | Relief | `http://www.opengis.net/citygml/relief/2.0` | `http://www.opengis.net/citygml/relief/3.0` |
 | **`xmlns:pcl`** | **PointCloud** |  | **`http://www.opengis.net/citygml/pointcloud/3.0`** |
-| `xmlns:tex` | Textured Surface | `http://www.opengis.net/citygml/texturedsurface/2.0` | `http://www.opengis.net/citygml/texturedsurface/2.0` |
 | `xmlns:tran` | Transportation | `http://www.opengis.net/citygml/transportation/2.0` | `http://www.opengis.net/citygml/transportation/3.0` |
 | `xmlns:tun` | Tunnel | `http://www.opengis.net/citygml/tunnel/2.0` | `http://www.opengis.net/citygml/tunnel/3.0` |
 | `xmlns:veg` | Vegetation | `http://www.opengis.net/citygml/vegetation/2.0` | `http://www.opengis.net/citygml/vegetation/3.0` |
