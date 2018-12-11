@@ -61,33 +61,10 @@ SOFTWARE.
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	xmlns:xalan="http://xml.apache.org/xslt">
     
-    <!-- 
-    exclude-result-prefixes="xalan xlink xsi xAl bldg gml gen con" -->
-
-	<xsl:include href="appearance.xsl" />
-	<xsl:include href="building.xsl" />
-	<xsl:include href="construction.xsl" />
-	<xsl:include href="core.xsl" />
-	<xsl:include href="dynamizer.xsl" />
-	<xsl:include href="generics.xsl" />
-	<xsl:include href="gml.xsl" />
-	<xsl:include href="pointcloud.xsl" />
-	<xsl:include href="xlink.xsl" />
-	
-    <!-- Post processing texts -->
-	<xsl:strip-space elements="*" />
-	<xsl:output
-		method="xml"
-		indent="yes"
-		xalan:indent-amount="4"
-		standalone="yes" />
-    
-    <!-- Identity transformation -->
-	<xsl:template match="@*|node()">
+   <xsl:template match="dyn:dynamizer">
 		<xsl:copy>
 			<xsl:apply-templates select="@*|node()" />
 		</xsl:copy>
 	</xsl:template>
-	
-
+    
 </xsl:stylesheet>

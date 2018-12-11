@@ -61,33 +61,83 @@ SOFTWARE.
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	xmlns:xalan="http://xml.apache.org/xslt">
     
-    <!-- 
-    exclude-result-prefixes="xalan xlink xsi xAl bldg gml gen con" -->
-
-	<xsl:include href="appearance.xsl" />
-	<xsl:include href="building.xsl" />
-	<xsl:include href="construction.xsl" />
-	<xsl:include href="core.xsl" />
-	<xsl:include href="dynamizer.xsl" />
-	<xsl:include href="generics.xsl" />
-	<xsl:include href="gml.xsl" />
-	<xsl:include href="pointcloud.xsl" />
-	<xsl:include href="xlink.xsl" />
-	
-    <!-- Post processing texts -->
-	<xsl:strip-space elements="*" />
-	<xsl:output
-		method="xml"
-		indent="yes"
-		xalan:indent-amount="4"
-		standalone="yes" />
-    
-    <!-- Identity transformation -->
-	<xsl:template match="@*|node()">
-		<xsl:copy>
-			<xsl:apply-templates select="@*|node()" />
-		</xsl:copy>
+    <xsl:template match="gen:stringAttribute">
+		<xsl:element name="genericAttribute">
+			<xsl:element name="gen:StringAttribute">
+				<xsl:element name="gen:name">
+					<xsl:value-of select="@name" />
+				</xsl:element>
+				<xsl:element name="gen:value">
+					<xsl:value-of select="gen:value" />
+				</xsl:element>
+			</xsl:element>
+		</xsl:element>
 	</xsl:template>
-	
 
+	<xsl:template match="gen:intAttribute">
+		<xsl:element name="genericAttribute">
+			<xsl:element name="gen:IntAttribute">
+				<xsl:element name="gen:name">
+					<xsl:value-of select="@name" />
+				</xsl:element>
+				<xsl:element name="gen:value">
+					<xsl:value-of select="gen:value" />
+				</xsl:element>
+			</xsl:element>
+		</xsl:element>
+	</xsl:template>
+
+	<xsl:template match="gen:doubleAttribute">
+		<xsl:element name="genericAttribute">
+			<xsl:element name="gen:DoubleAttribute">
+				<xsl:element name="gen:name">
+					<xsl:value-of select="@name" />
+				</xsl:element>
+				<xsl:element name="gen:value">
+					<xsl:value-of select="gen:value" />
+				</xsl:element>
+			</xsl:element>
+		</xsl:element>
+	</xsl:template>
+
+	<xsl:template match="gen:dateAttribute">
+		<xsl:element name="genericAttribute">
+			<xsl:element name="gen:DateAttribute">
+				<xsl:element name="gen:name">
+					<xsl:value-of select="@name" />
+				</xsl:element>
+				<xsl:element name="gen:value">
+					<xsl:value-of select="gen:value" />
+				</xsl:element>
+			</xsl:element>
+		</xsl:element>
+	</xsl:template>
+
+	<xsl:template match="gen:uriAttribute">
+		<xsl:element name="genericAttribute">
+			<xsl:element name="gen:UriAttribute">
+				<xsl:element name="gen:name">
+					<xsl:value-of select="@name" />
+				</xsl:element>
+				<xsl:element name="gen:value">
+					<xsl:value-of select="gen:value" />
+				</xsl:element>
+			</xsl:element>
+		</xsl:element>
+	</xsl:template>
+
+	<xsl:template match="gen:measureAttribute">
+		<xsl:element name="genericAttribute">
+			<xsl:element name="gen:MeasureAttribute">
+				<xsl:element name="gen:name">
+					<xsl:value-of select="@name" />
+				</xsl:element>
+				<xsl:element name="gen:value">
+					<xsl:copy-of select="gen:value/@*" />
+					<xsl:value-of select="gen:value" />
+				</xsl:element>
+			</xsl:element>
+		</xsl:element>
+	</xsl:template>
+    
 </xsl:stylesheet>

@@ -61,33 +61,55 @@ SOFTWARE.
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	xmlns:xalan="http://xml.apache.org/xslt">
     
-    <!-- 
-    exclude-result-prefixes="xalan xlink xsi xAl bldg gml gen con" -->
-
-	<xsl:include href="appearance.xsl" />
-	<xsl:include href="building.xsl" />
-	<xsl:include href="construction.xsl" />
-	<xsl:include href="core.xsl" />
-	<xsl:include href="dynamizer.xsl" />
-	<xsl:include href="generics.xsl" />
-	<xsl:include href="gml.xsl" />
-	<xsl:include href="pointcloud.xsl" />
-	<xsl:include href="xlink.xsl" />
-	
-    <!-- Post processing texts -->
-	<xsl:strip-space elements="*" />
-	<xsl:output
-		method="xml"
-		indent="yes"
-		xalan:indent-amount="4"
-		standalone="yes" />
-    
-    <!-- Identity transformation -->
-	<xsl:template match="@*|node()">
-		<xsl:copy>
-			<xsl:apply-templates select="@*|node()" />
-		</xsl:copy>
+    <xsl:template match="app:appearanceMember">
+		<appearanceMember>
+			<xsl:apply-templates select="app:Appearance" />
+		</appearanceMember>
 	</xsl:template>
 	
-
+	<xsl:template match="app:appearance">
+		<xsl:element name="core:appearance">
+			<xsl:element name="app:Appearance">
+				<xsl:copy-of select="app:Appearance/@*" />
+				<xsl:element name="app:theme">
+					<xsl:value-of select="app:Appearance/app:theme/text()" />
+				</xsl:element>
+				<xsl:for-each select="app:Appearance/app:surfaceDataMember">
+					<xsl:element name="app:surfaceDataMember">
+						<xsl:choose>
+							<xsl:when test="app:ParameterizedTexture">
+								<xsl:element name="app:ParameterizedTexture">
+									<xsl:copy-of select="app:ParameterizedTexture/@*" />
+									<xsl:copy-of select="app:ParameterizedTexture/child::node()[name()!='app:target']" />
+									<xsl:element name="app:target">
+										<xsl:element name="app:TextureAssociation">
+											<xsl:element name="app:uri">
+												<xsl:value-of select="app:ParameterizedTexture/app:target/@uri" />
+											</xsl:element>
+											<xsl:element name="app:target">
+												<xsl:if test="app:ParameterizedTexture/app:target/app:TexCoordList">
+													<xsl:element name="app:TexCoordList">
+														<xsl:element name="app:textureCoordinates">
+															<xsl:value-of select="app:ParameterizedTexture/app:target/app:TexCoordList/app:textureCoordinates/text()" />
+														</xsl:element>
+														<xsl:element name="app:ring">
+															<xsl:value-of select="app:ParameterizedTexture/app:target/app:TexCoordList/app:textureCoordinates/@ring" />
+														</xsl:element>
+													</xsl:element>
+												</xsl:if>
+											</xsl:element>
+										</xsl:element>
+									</xsl:element>
+								</xsl:element>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:copy-of select="@*|node()" />
+							</xsl:otherwise>
+						</xsl:choose>
+					</xsl:element>
+				</xsl:for-each>
+			</xsl:element>
+		</xsl:element>
+	</xsl:template>
+    
 </xsl:stylesheet>

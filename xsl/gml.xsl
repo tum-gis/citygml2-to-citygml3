@@ -61,33 +61,72 @@ SOFTWARE.
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	xmlns:xalan="http://xml.apache.org/xslt">
     
-    <!-- 
-    exclude-result-prefixes="xalan xlink xsi xAl bldg gml gen con" -->
-
-	<xsl:include href="appearance.xsl" />
-	<xsl:include href="building.xsl" />
-	<xsl:include href="construction.xsl" />
-	<xsl:include href="core.xsl" />
-	<xsl:include href="dynamizer.xsl" />
-	<xsl:include href="generics.xsl" />
-	<xsl:include href="gml.xsl" />
-	<xsl:include href="pointcloud.xsl" />
-	<xsl:include href="xlink.xsl" />
+    <xsl:template name="gml:StandardObjectProperties">
+		<xsl:apply-templates select="gml:metaDataProperty" />
+		<xsl:apply-templates select="gml:description" />
+		<xsl:apply-templates select="gml:descriptionReference" />
+		<xsl:apply-templates select="gml:identifier" />
+		<xsl:apply-templates select="gml:name" />
+	</xsl:template>
 	
-    <!-- Post processing texts -->
-	<xsl:strip-space elements="*" />
-	<xsl:output
-		method="xml"
-		indent="yes"
-		xalan:indent-amount="4"
-		standalone="yes" />
-    
-    <!-- Identity transformation -->
-	<xsl:template match="@*|node()">
+	<xsl:template match="gml:metaDataProperty | gml:description | gml:descriptionReference | gml:identifier | gml:name">
 		<xsl:copy>
 			<xsl:apply-templates select="@*|node()" />
 		</xsl:copy>
 	</xsl:template>
 	
+	<xsl:template name="gml:AbstractGMLType">
+		<!-- These elements have custom IDs in their templates, exclude them here to avoid overriding custom IDs -->
+		<xsl:if test="name()!=gml:Solid and name()!=gml:MultiSurface">
+			<xsl:copy-of select="@gml:id" />
+		</xsl:if>
+		
+		<xsl:call-template name="gml:StandardObjectProperties" />
+	</xsl:template>
 
+	<xsl:template name="gml:AbstractFeatureType">
+		<xsl:call-template name="gml:AbstractGMLType" />
+		<xsl:apply-templates select="gml:boundedBy" />
+		<xsl:apply-templates select="gml:location" />
+	</xsl:template>
+
+	<xsl:template match="gml:boundedBy | gml:location">
+		<xsl:copy>
+			<xsl:apply-templates select="@*|node()" />
+		</xsl:copy>
+	</xsl:template>
+	
+	<xsl:template name="gml:AssociationAttributeGroup">
+		<xsl:call-template name="simpleAttrs" />
+		<xsl:copy-of select="@gml:nilReason" />
+		<xsl:copy-of select="@gml:remoteSchema" />
+	</xsl:template>
+
+	<xsl:template name="gml:OwnershipAttributeGroup">
+		<xsl:param
+			name="currentNode"
+			select="." />
+		<xsl:copy-of select="@gml:owns" />
+	</xsl:template>
+	
+	<!-- Generate uniquely identified IDs for gml:MultiSurface -->
+	<xsl:template match="gml:MultiSurface">
+		<xsl:element name="gml:MultiSurface">
+			<xsl:attribute name="gml:id">
+                <xsl:value-of select="concat(../../@gml:id, '_msl_', generate-id())" />
+            </xsl:attribute>
+			<xsl:apply-templates select="@*|node()" />
+		</xsl:element>
+	</xsl:template>
+    
+    <!-- Generate uniquely identified IDs for gml:Solid -->
+	<xsl:template match="gml:Solid">
+		<xsl:element name="gml:Solid">
+			<xsl:attribute name="gml:id">
+                <xsl:value-of select="concat(../../@gml:id, '_sl_', generate-id())" />
+            </xsl:attribute>
+			<xsl:apply-templates select="@*|node()" />
+		</xsl:element>
+	</xsl:template>
+    
 </xsl:stylesheet>
