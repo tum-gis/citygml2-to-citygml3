@@ -7,7 +7,7 @@ This project is still in early development and subject to change.
 ### How to run
 The program can be executed by running the `Run.bat` file (in Windows).
 
-The result is by default saved in [CityGML_v3.gml](CityGML_v3.gml) (only visible after the program is complete).
+The result is by default saved in [CityGML_v3.gml](output/CityGML_v3.gml) (only visible after the program is complete).
 
 ### Command line
 Alternatively, the program can also be executed using the command line:
