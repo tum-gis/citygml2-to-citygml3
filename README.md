@@ -7,7 +7,7 @@ This project is still in early development and subject to change.
 ### How to run
 The program can be executed by running the `Run.bat` file (in Windows).
 
-The result is by default saved in [CityGML_v3_Transformed.gml](CityGML_v3_Transformed.gml) (only visible after the program is complete).
+The result is by default saved in [CityGML_v3.gml](CityGML_v3.gml) (only visible after the program is complete).
 
 ### Command line
 Alternatively, the program can also be executed using the command line:
@@ -20,7 +20,7 @@ where
 | ------------- |:-------------| -----|
 | `SourceXMLFile`      | The location of the source CityGML v2.0 file | `input/CityGML_v2.gml` |
 | `XSLFile`      | The location of the XSL file used for transformation | `xsl/Transform.xsl` |
-| `OutputXMLFile`      | The location of the transformed CityGML v3.0 file | `output/CityGML_v3_Transformed.gml` |
+| `OutputXMLFile`      | The location of the transformed CityGML v3.0 file | `output/CityGML_v3.gml` |
 
 For reference, the file [CityGML_v3.gml](output/CityGML_v3.gml) can be used as an example of how the transformed file should look like.
 
@@ -72,13 +72,12 @@ Note that the XML schemata for CityGML 3.0 are still in active development and s
 The list of supported CityGML v3.0 feature types and elements in the current implementation is shown as follows (note that this list may change in the future):
 
 + `gml:name`
-+ `creationDate`
++ `creationDate` and other similar date/time elements
 + `externalReference`
 + `core:appearance` (both `app:ParameterizedTexture` and `app:X3DMaterial`)
-+ `genericAttribute` (`gen:StringAttribute`, `gen:intAttribute`, `gen:doubleAttribute`, `gen:dateAttribut`, `gen:uriAttribute` and `gen:measureAttribute`)
++ `genericAttribute` (`gen:StringAttribute`, `gen:intAttribute`, `gen:doubleAttribute`, `gen:dateAttribute`, `gen:uriAttribute` and `gen:measureAttribute`)
 + `bldg:function`
 + `bldg:roofType`
-+ `bldg:buildingSpace` and `con:ConstructionSpace`
 + `bldg:heightAboveGround`
 + And many more...
 
