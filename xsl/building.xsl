@@ -57,51 +57,84 @@ SOFTWARE.
 	xmlns:xlink="http://www.w3.org/1999/xlink"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:gml="http://www.opengis.net/gml"
+	xmlns:ade="http://www.3dcitydb.org/citygml-ade/3.0/citygml/1.0"
 	xmlns="http://www.opengis.net/citygml/2.0"
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	xmlns:xalan="http://xml.apache.org/xslt">
+	
+	<xsl:template name="bldg:AbstractBuildingType">
+		<xsl:call-template name="con:AbstractConstructionType" />
+
+		<xsl:apply-templates select="bldg:class" />
+		<xsl:apply-templates select="bldg:function" />
+		<xsl:apply-templates select="bldg:usage" />
+		<xsl:apply-templates select="bldg:roofType" />
+		<xsl:apply-templates select="bldg:storeysAboveGround" />
+		<xsl:apply-templates select="bldg:storeysBelowGround" />
+		<xsl:apply-templates select="bldg:storeyHeightsAboveGround" />
+		<xsl:apply-templates select="bldg:storeyHeightsBelowGround" />
+
+		<xsl:apply-templates select="bldg:buildingConstructiveElement" />
+		<xsl:apply-templates select="bldg:buildingInstallation" />
+
+		<xsl:apply-templates select="bldg:interiorRoom" />
+		<xsl:apply-templates select="bldg:buildingFurniture" />
+		<xsl:apply-templates select="bldg:buildingSubdivision" />
+
+		<xsl:apply-templates select="bldg:address" />
+
+		<xsl:apply-templates select="bldg:AbstractGenericApplicationPropertyOfAbstractBuilding" />
+	</xsl:template>
 	
 	<xsl:template match="bldg:Building">
 		<xsl:copy>
 			<xsl:attribute name="gml:id">
                 <xsl:value-of select="@gml:id" />
             </xsl:attribute>
-            
-			<xsl:call-template name="con:AbstractConstructionType" />
-
-			<xsl:apply-templates select="bldg:class" />
-			<xsl:apply-templates select="bldg:function" />
-			<xsl:apply-templates select="bldg:usage" />
-			<xsl:apply-templates select="bldg:roofType" />
-			<xsl:apply-templates select="bldg:storeysAboveGround" />
-			<xsl:apply-templates select="bldg:storeysBelowGround" />
-			<xsl:apply-templates select="bldg:storeyHeightsAboveGround" />
-			<xsl:apply-templates select="bldg:storeyHeightsBelowGround" />
-
-			<xsl:apply-templates select="bldg:buildingConstructiveElement" />
-			<xsl:apply-templates select="bldg:buildingInstallation" />
-
-			<xsl:apply-templates select="bldg:interiorRoom" />
-			<xsl:apply-templates select="bldg:buildingFurniture" />
-			<xsl:apply-templates select="bldg:buildingSubdivision" />
-
-			<xsl:apply-templates select="bldg:address" />
-
-			<xsl:apply-templates select="bldg:AbstractGenericApplicationPropertyOfAbstractBuilding" />
+	            
+			<xsl:call-template name="bldg:AbstractBuildingType" />
+			<xsl:apply-templates select="bldg:consistsOfBuildingPart" />
+			<xsl:apply-templates select="bldg:AbstractGenericApplicationPropertyOfBuilding" />
 		</xsl:copy>
 	</xsl:template>
 
-	<xsl:template match="bldg:dateOfConstruction | bldg:dateOfRenovation | bldg:dateOfDemolition">
-		<xsl:copy>
+	<xsl:template match="bldg:yearOfConstruction">
+		<xsl:element name="con:dateOfConstruction">
 			<xsl:choose>
 				<xsl:when test="contains(text(), 'T')">
-					<xsl:value-of select="text()" />
+					<xsl:value-of select="concat(text(), '-01-01')" /> <!-- Convert from year to date -->
 				</xsl:when>
 				<xsl:otherwise>
-					<xsl:value-of select="concat(text(), 'T00:00:00')" />
+					<xsl:value-of select="concat(text(), '-01-01T00:00:00')" />
 				</xsl:otherwise>
 			</xsl:choose>
-		</xsl:copy>
+		</xsl:element>
+	</xsl:template>
+	
+	<xsl:template match="bldg:yearOfRenovation">
+		<xsl:element name="con:dateOfRenovation">
+			<xsl:choose>
+				<xsl:when test="contains(text(), 'T')">
+					<xsl:value-of select="concat(text(), '-01-01')" /> <!-- Convert from year to date -->
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="concat(text(), '-01-01T00:00:00')" />
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:element>
+	</xsl:template>
+	
+	<xsl:template match="bldg:yearOfDemolition">
+		<xsl:element name="con:dateOfDemolition">
+			<xsl:choose>
+				<xsl:when test="contains(text(), 'T')">
+					<xsl:value-of select="concat(text(), '-01-01')" /> <!-- Convert from year to date -->
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="concat(text(), '-01-01T00:00:00')" />
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:element>
 	</xsl:template>
 
 	<!-- Transform bldg:measuredHeight -->
@@ -123,24 +156,93 @@ SOFTWARE.
 		</xsl:element>
 	</xsl:template>
 
-	<!-- Change namespace bldg of WallSurface to con -->
-	<xsl:template match="bldg:WallSurface">
-		<xsl:element name="con:WallSurface">
-			<xsl:apply-templates select="@*|node()" />
-		</xsl:element>
-	</xsl:template>
-    
-    <!-- Change namespace bldg of RoofSurface to con -->
-	<xsl:template match="bldg:RoofSurface">
-		<xsl:element name="con:RoofSurface">
-			<xsl:apply-templates select="@*|node()" />
-		</xsl:element>
-	</xsl:template>
-    
-    <!-- Change namespace bldg of GroundSurface to con -->
+	<!-- Change namespace bldg to con -->
 	<xsl:template match="bldg:GroundSurface">
 		<xsl:element name="con:GroundSurface">
-			<xsl:apply-templates select="@*|node()" />
+			<xsl:copy-of select="@*" />
+			<xsl:call-template name="con:AbstractConstructionSurfaceType" />
+			<xsl:apply-templates select="con:AbstractGenericApplicationPropertyOfGroundSurface" />
+		</xsl:element>
+	</xsl:template>
+	
+	<xsl:template match="bldg:RoofSurface">
+		<xsl:element name="con:RoofSurface">
+			<xsl:copy-of select="@*" />
+			<xsl:call-template name="con:AbstractConstructionSurfaceType" />
+			<xsl:apply-templates select="con:AbstractGenericApplicationPropertyOfRoofSurface" />
+		</xsl:element>
+	</xsl:template>
+	
+	<xsl:template match="bldg:CeilingSurface">
+		<xsl:element name="con:CeilingSurface">
+			<xsl:copy-of select="@*" />
+			<xsl:call-template name="con:AbstractConstructionSurfaceType" />
+			<xsl:apply-templates select="con:AbstractGenericApplicationPropertyOfCeilingSurface" />
+		</xsl:element>
+	</xsl:template>
+	
+	<xsl:template match="bldg:OuterCeilingSurface">
+		<xsl:element name="con:OuterCeilingSurface">
+			<xsl:copy-of select="@*" />
+			<xsl:call-template name="con:AbstractConstructionSurfaceType" />
+			<xsl:apply-templates select="con:AbstractGenericApplicationPropertyOfOuterCeilingSurface" />
+		</xsl:element>
+	</xsl:template>
+	
+	<xsl:template match="bldg:Door">
+		<xsl:element name="con:DoorSurface">
+			<xsl:copy-of select="@*" />
+			<xsl:call-template name="con:AbstractConstructionSurfaceType" />
+			<xsl:apply-templates select="bldg:address" />
+			<xsl:apply-templates select="con:AbstractGenericApplicationPropertyOfDoorSurface" />
+		</xsl:element>
+	</xsl:template>
+	
+	<xsl:template match="bldg:FloorSurface">
+		<xsl:element name="con:FloorSurface">
+			<xsl:copy-of select="@*" />
+			<xsl:call-template name="con:AbstractConstructionSurfaceType" />
+			<xsl:apply-templates select="con:AbstractGenericApplicationPropertyOfFloorSurface" />
+		</xsl:element>
+	</xsl:template>
+	
+	<xsl:template match="bldg:OuterFloorSurface">
+		<xsl:element name="con:OuterFloorSurface">
+			<xsl:copy-of select="@*" />
+			<xsl:call-template name="con:AbstractConstructionSurfaceType" />
+			<xsl:apply-templates select="con:AbstractGenericApplicationPropertyOfOuterFloorSurface" />
+		</xsl:element>
+	</xsl:template>
+	
+	<xsl:template match="bldg:WallSurface">
+		<xsl:element name="con:WallSurface">
+			<xsl:copy-of select="@*" />
+			<xsl:call-template name="con:AbstractConstructionSurfaceType" />
+			<xsl:apply-templates select="con:AbstractGenericApplicationPropertyOfWallSurface" />
+		</xsl:element>
+	</xsl:template>
+    
+	<xsl:template match="bldg:ClosureSurface">
+		<xsl:element name="ClosureSurface">
+			<xsl:copy-of select="@*" />
+			<xsl:call-template name="core:AbstractSpaceBoundaryType" />
+			<xsl:apply-templates select="core:AbstractGenericApplicationPropertyOfClosureSurface" />
+		</xsl:element>
+	</xsl:template>
+	
+	<xsl:template match="bldg:InteriorWallSurface">
+		<xsl:element name="con:InteriorWallface">
+			<xsl:copy-of select="@*" />
+			<xsl:call-template name="con:AbstractConstructionSurfaceType" />
+			<xsl:apply-templates select="con:AbstractGenericApplicationPropertyOfInteriorWallSurface" />
+		</xsl:element>
+	</xsl:template>
+	
+	<xsl:template match="bldg:Window">
+		<xsl:element name="con:WindowSurface">
+			<xsl:copy-of select="@*" />
+			<xsl:call-template name="con:AbstractConstructionSurfaceType" />
+			<xsl:apply-templates select="con:AbstractGenericApplicationPropertyOfWindowSurface" />
 		</xsl:element>
 	</xsl:template>
     
@@ -219,10 +321,16 @@ SOFTWARE.
 			<xsl:apply-templates select="@*|node()" />
 		</xsl:element>
 	</xsl:template>
-	
-	<xsl:template match="bldg:Window">
-		<xsl:element name="Void">
-			<xsl:apply-templates select="@*|node()" />
+
+	<xsl:template match="bldg:consistsOfBuildingPart">
+		<xsl:apply-templates select="bldg:BuildingPart" />
+	</xsl:template>
+
+	<xsl:template match="bldg:BuildingPart">
+		<xsl:element name="bldg:buildingPart">
+			<xsl:element name="bldg:BuildingPart">
+				<xsl:apply-templates select="@*|node()" />
+			</xsl:element>
 		</xsl:element>
 	</xsl:template>
 	
@@ -240,8 +348,7 @@ SOFTWARE.
 						bldg:storeysBelowGround | 
 						bldg:storeyHeightsAboveGround | 
 						bldg:storeyHeightsBelowGround | 
-						bldg:address | 
-						bldg:AbstractGenericApplicationPropertyOfAbstractBuilding">
+						bldg:address">
 		<xsl:copy>
 			<xsl:apply-templates select="@*|node()" />
 		</xsl:copy>

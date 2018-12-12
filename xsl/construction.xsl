@@ -57,6 +57,7 @@ SOFTWARE.
 	xmlns:xlink="http://www.w3.org/1999/xlink"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:gml="http://www.opengis.net/gml"
+	xmlns:ade="http://www.3dcitydb.org/citygml-ade/3.0/citygml/1.0"
 	xmlns="http://www.opengis.net/citygml/2.0"
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	xmlns:xalan="http://xml.apache.org/xslt">
@@ -80,6 +81,16 @@ SOFTWARE.
 		<xsl:copy>
 			<xsl:apply-templates select="@*|node()" />
 		</xsl:copy>
+	</xsl:template>
+	
+	<xsl:template name="con:AbstractConstructiveElementType">
+		<xsl:call-template name="core:AbstractOccupiedSpaceType" />
+		<xsl:apply-templates select="con:AbstractGenericApplicationPropertyOfAbstractConstructiveElement" />
+	</xsl:template>
+	
+	<xsl:template name="con:AbstractConstructionSurfaceType">
+		<xsl:call-template name="core:AbstractThematicSurfaceType" />
+		<xsl:apply-templates select="con:AbstractGenericApplicationPropertyOfAbstractConstructionSurface" />
 	</xsl:template>
 
 </xsl:stylesheet>

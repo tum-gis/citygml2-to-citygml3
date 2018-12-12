@@ -57,9 +57,14 @@ SOFTWARE.
 	xmlns:xlink="http://www.w3.org/1999/xlink"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:gml="http://www.opengis.net/gml"
+	xmlns:ade="http://www.3dcitydb.org/citygml-ade/3.0/citygml/1.0"
 	xmlns="http://www.opengis.net/citygml/2.0"
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	xmlns:xalan="http://xml.apache.org/xslt">
     
-    
+    <!-- ++++++++++++++++++++++++++++++++++++++++ -->
+	<!-- ++++++++++++++ NEW IN 3.0 ++++++++++++++ -->
+	<!-- ++++++++++++++++++++++++++++++++++++++++ -->
+	<xsl:template match="pcl:pointCloud" />
+	
 </xsl:stylesheet>

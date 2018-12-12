@@ -57,6 +57,7 @@ SOFTWARE.
 	xmlns:xlink="http://www.w3.org/1999/xlink"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:gml="http://www.opengis.net/gml"
+	xmlns:ade="http://www.3dcitydb.org/citygml-ade/3.0/citygml/1.0"
 	xmlns="http://www.opengis.net/citygml/2.0"
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	xmlns:xalan="http://xml.apache.org/xslt">
@@ -135,7 +136,7 @@ SOFTWARE.
 	</xsl:template>
 
 	<xsl:template match="*[local-name()='cityObjectMember']">
-		<xsl:copy>
+		<xsl:copy copy-namespaces="no">
 			<xsl:apply-templates select="bldg:Building" />
 		</xsl:copy>
 	</xsl:template>
@@ -208,7 +209,7 @@ SOFTWARE.
 		<xsl:apply-templates select="bldg:lod4MultiSurface" />
 		<xsl:apply-templates select="bldg:lod4MultiCurve" />
 		<xsl:apply-templates select="bldg:lod4MultiCurve" />
-		<xsl:apply-templates select="bldg:consistsOfBuildingPart" />
+		<xsl:apply-templates select="core:AbstractGenericApplicationPropertyOfAbstractSpace" />
 	</xsl:template>
 
 	<xsl:template name="core:AbstractPhysicalSpaceType">
@@ -241,6 +242,23 @@ SOFTWARE.
 		<xsl:copy>
 			<xsl:apply-templates select="@*|node()" />
 		</xsl:copy>
+	</xsl:template>
+	
+	<xsl:template name="core:AbstractSpaceBoundaryType">
+		<xsl:call-template name="core:AbstractCityObjectType" />
+		<xsl:apply-templates select="lod0MultiCurve" /> <!-- NEW -->
+		<xsl:apply-templates select="bldg:lod1MultiSurface" />
+		<xsl:apply-templates select="bldg:lod2MultiSurface" />
+		<xsl:apply-templates select="bldg:lod3MultiSurface" />
+		<xsl:apply-templates select="bldg:boundedBy" /> <!-- bounds -->
+		<xsl:apply-templates select="core:AbstractGenericApplicationPropertyOfAbstractSpaceBoundary" />
+	</xsl:template>
+	
+	<xsl:template name="core:AbstractThematicSurfaceType">
+		<xsl:call-template name="core:AbstractSpaceBoundaryType" />
+		<xsl:apply-templates select="bldg:opening" />
+		<xsl:apply-templates select="pcl:pointCloud" /> <!-- NEW -->
+		<xsl:apply-templates select="core:AbstractGenericApplicationPropertyOfAbstractOccupiedSpace" />
 	</xsl:template>
 
 						

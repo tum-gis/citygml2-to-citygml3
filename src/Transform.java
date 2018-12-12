@@ -55,7 +55,7 @@ public class Transform {
 	public static void main(String[] args) throws TransformerFactoryConfigurationError, TransformerException, IOException {
 		String sourceXMLFile = "input/CityGML_v2.gml";
 		String sourceXSLFile = "xsl/Transform.xsl";
-		String outputXMLFile = "output/CityGML_v3_Transformed.gml";
+		String outputXMLFile = "output/CityGML_v3.gml";
 
 		if (args.length >= 3) {
 			if ((args[0] != null) && (!args[0].equals(""))) {
@@ -116,6 +116,7 @@ public class Transform {
 		ns.add(new String[] { "xlink", "http://www.w3.org/1999/xlink", "" });
 		ns.add(new String[] { "xsi", "http://www.w3.org/2001/XMLSchema-instance", "" });
 		ns.add(new String[] { "gml", "http://www.opengis.net/gml/3.2", "" });
+		ns.add(new String[] { "ade", "http://www.3dcitydb.org/citygml-ade/3.0/citygml/1.0", "" });
 		ns.add(new String[] { "", "http://www.opengis.net/citygml/3.0", "" });
 
 		while ((line = bReader.readLine()) != null) {

@@ -57,6 +57,7 @@ SOFTWARE.
 	xmlns:xlink="http://www.w3.org/1999/xlink"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:gml="http://www.opengis.net/gml"
+	xmlns:ade="http://www.3dcitydb.org/citygml-ade/3.0/citygml/1.0"
 	xmlns="http://www.opengis.net/citygml/2.0"
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	xmlns:xalan="http://xml.apache.org/xslt">
@@ -78,7 +79,7 @@ SOFTWARE.
 	<xsl:template name="gml:AbstractGMLType">
 		<!-- These elements have custom IDs in their templates, exclude them here to avoid overriding custom IDs -->
 		<xsl:if test="name()!=gml:Solid and name()!=gml:MultiSurface">
-			<xsl:copy-of select="@gml:id" />
+			<xsl:copy-of select="./@gml:id" />
 		</xsl:if>
 		
 		<xsl:call-template name="gml:StandardObjectProperties" />
