@@ -74,23 +74,73 @@ SOFTWARE.
 		<xsl:apply-templates select="bldg:dateOfDemolition" />
 		<xsl:apply-templates select="bldg:elevation" />
 		<xsl:apply-templates select="bldg:measuredHeight" />
-		<xsl:apply-templates select="con:AbstractGenericApplicationPropertyOfAbstractConstruction" />
+		<xsl:call-template name="con:AbstractGenericApplicationPropertyOfAbstractConstruction" />
 	</xsl:template>
 
 	<xsl:template name="con:AbstractGenericApplicationPropertyOfAbstractConstruction">
-		<xsl:copy>
-			<xsl:apply-templates select="@*|node()" />
-		</xsl:copy>
 	</xsl:template>
 	
 	<xsl:template name="con:AbstractConstructiveElementType">
 		<xsl:call-template name="core:AbstractOccupiedSpaceType" />
-		<xsl:apply-templates select="con:AbstractGenericApplicationPropertyOfAbstractConstructiveElement" />
+		<xsl:call-template name="con:AbstractGenericApplicationPropertyOfAbstractConstructiveElement" />
 	</xsl:template>
 	
 	<xsl:template name="con:AbstractConstructionSurfaceType">
 		<xsl:call-template name="core:AbstractThematicSurfaceType" />
-		<xsl:apply-templates select="con:AbstractGenericApplicationPropertyOfAbstractConstructionSurface" />
+		<xsl:call-template name="con:AbstractGenericApplicationPropertyOfAbstractConstructionSurface" />
+	</xsl:template>
+	
+	<xsl:template name="con:AbstractGenericApplicationPropertyOfGroundSurface">
+	</xsl:template>
+	
+	<xsl:template name="con:AbstractGenericApplicationPropertyOfRoofSurface">
+	</xsl:template>
+	
+	<xsl:template name="con:AbstractGenericApplicationPropertyOfCeilingSurface">
+	</xsl:template>
+	
+	<xsl:template name="con:AbstractGenericApplicationPropertyOfOuterCeilingSurface">
+	</xsl:template>
+	
+	<xsl:template name="con:AbstractGenericApplicationPropertyOfDoorSurface">
+	</xsl:template>
+	
+	<xsl:template name="con:AbstractGenericApplicationPropertyOfFloorSurface">
+	</xsl:template>
+	
+	<xsl:template name="con:AbstractGenericApplicationPropertyOfOuterFloorSurface">
+	</xsl:template>
+	
+	<xsl:template name="con:AbstractGenericApplicationPropertyOfWallSurface">
+	</xsl:template>
+	
+	<xsl:template name="core:AbstractGenericApplicationPropertyOfClosureSurface">
+	</xsl:template>
+	
+	<xsl:template name="con:AbstractGenericApplicationPropertyOfInteriorWallSurface">
+	</xsl:template>
+	
+	<xsl:template name="con:AbstractGenericApplicationPropertyOfWindowSurface">
+	</xsl:template>
+	
+	<xsl:template name="con:AbstractGenericApplicationPropertyOfAbstractConstructiveElement">
+	</xsl:template>
+	
+	<xsl:template name="con:AbstractGenericApplicationPropertyOfAbstractConstructionSurface">
+	</xsl:template>
+	
+	<xsl:template name="con:AbstractGenericApplicationPropertyOfDoor">
+	</xsl:template>
+	
+	<xsl:template name="con:AbstractGenericApplicationPropertyOfWindow">
+	</xsl:template>
+	
+	<xsl:template name="con:AbstractFurnitureType">
+		<xsl:call-template name="core:AbstractOccupiedSpaceType" />
+		<xsl:call-template name="con:AbstractGenericApplicationPropertyOfAbstractFurniture" />
+	</xsl:template>
+	
+	<xsl:template name="con:AbstractGenericApplicationPropertyOfAbstractFurniture">
 	</xsl:template>
 
 </xsl:stylesheet>

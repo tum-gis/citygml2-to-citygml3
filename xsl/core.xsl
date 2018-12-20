@@ -80,7 +80,10 @@ SOFTWARE.
 		<xsl:apply-templates select="*[local-name()='terminationDate']" />
 		<xsl:apply-templates select="*[local-name()='validFrom']" />
 		<xsl:apply-templates select="*[local-name()='validTo']" />
-		<xsl:apply-templates select="core:AbstractGenericApplicationPropertyOfAbstractFeatureWithLifespan" />
+		<xsl:call-template name="core:AbstractGenericApplicationPropertyOfAbstractFeatureWithLifespan" />
+	</xsl:template>
+	
+	<xsl:template name="core:AbstractGenericApplicationPropertyOfAbstractFeatureWithLifespan">
 	</xsl:template>
 
 	<xsl:template match="*[local-name()='creationDate']">
@@ -151,7 +154,10 @@ SOFTWARE.
 		<xsl:apply-templates select="app:appearance" />
 		<xsl:apply-templates select="gen:stringAttribute | gen:intAttribute | gen:doubleAttribute | gen:dateAttribut | gen:uriAttribute | gen:measureAttribute" />
 		<xsl:apply-templates select="dyn:dynamizer" /> <!-- NEW -->
-		<xsl:apply-templates select="core:AbstractGenericApplicationPropertyOfAbstractCityObject" />
+		<xsl:call-template name="core:AbstractGenericApplicationPropertyOfAbstractCityObject" />
+	</xsl:template>
+	
+	<xsl:template name="core:AbstractGenericApplicationPropertyOfAbstractCityObject">
 	</xsl:template>
 
 	<xsl:template match="*[local-name()='externalReference']">
@@ -201,15 +207,15 @@ SOFTWARE.
 		<xsl:apply-templates select="bldg:lod2MultiSurface" />
 		<xsl:apply-templates select="bldg:lod2MultiCurve" />
 		<xsl:apply-templates select="bldg:boundedBy" />
-		<xsl:apply-templates select="bldg:lod3Solid" />
-		<xsl:apply-templates select="bldg:lod3MultiSurface" />
-		<xsl:apply-templates select="bldg:lod3MultiCurve" />
+		<xsl:apply-templates select="bldg:lod3Solid | bldg:lod4Solid" />
+		<xsl:apply-templates select="bldg:lod3MultiSurface | bldg:lod4MultiSurface" />
+		<xsl:apply-templates select="bldg:lod3MultiCurve | bldg:lod4MultiCurve" />
 		<!-- TODO LOD4 does not exists anymore, change them in LOD3? -->
-		<xsl:apply-templates select="bldg:lod4Solid" />
-		<xsl:apply-templates select="bldg:lod4MultiSurface" />
-		<xsl:apply-templates select="bldg:lod4MultiCurve" />
-		<xsl:apply-templates select="bldg:lod4MultiCurve" />
-		<xsl:apply-templates select="core:AbstractGenericApplicationPropertyOfAbstractSpace" />
+		<xsl:apply-templates select="bldg:lod4Geometry" />
+		<xsl:call-template name="core:AbstractGenericApplicationPropertyOfAbstractSpace" />
+	</xsl:template>
+	
+	<xsl:template name="core:AbstractGenericApplicationPropertyOfAbstractSpace">
 	</xsl:template>
 
 	<xsl:template name="core:AbstractPhysicalSpaceType">
@@ -219,19 +225,25 @@ SOFTWARE.
 		<xsl:apply-templates select="bldg:lod2TerrainIntersection" /> <!-- lod2TerrainIntersectionCurve -->
 		<xsl:apply-templates select="bldg:lod3TerrainIntersection" /> <!-- lod3TerrainIntersectionCurve -->
 		<xsl:apply-templates select="pointCloud" />
-		<xsl:apply-templates select="core:AbstractGenericApplicationPropertyOfAbstractPhysicalSpace" />
+		<xsl:call-template name="core:AbstractGenericApplicationPropertyOfAbstractPhysicalSpace" />
+	</xsl:template>
+	
+	<xsl:template name="core:AbstractGenericApplicationPropertyOfAbstractPhysicalSpace">
 	</xsl:template>
 
 	<xsl:template name="core:AbstractOccupiedSpaceType">
 		<xsl:call-template name="core:AbstractPhysicalSpaceType" />
-		<xsl:apply-templates select="bldg:opening" />
+		<xsl:apply-templates select="bldg:opening" /> <!-- TODO -->
 		<!-- NEW -->
 		<xsl:apply-templates select="lod1ImplicitRepresentation" />
 		<xsl:apply-templates select="lod2ImplicitRepresentation" />
 		<xsl:apply-templates select="lod3ImplicitRepresentation" />
-		<xsl:apply-templates select="core:AbstractGenericApplicationPropertyOfAbstractOccupiedSpace" />
+		<xsl:call-template name="core:AbstractGenericApplicationPropertyOfAbstractOccupiedSpace" />
 	</xsl:template>
 
+	<xsl:template name="core:AbstractGenericApplicationPropertyOfAbstractOccupiedSpace">
+	</xsl:template>
+	
 	<xsl:template match="lod1TerrainIntersectionCurve | lod2TerrainIntersectionCurve | lod3TerrainIntersectionCurve | pointCloud">
 		<xsl:copy>
 			<xsl:apply-templates select="@*|node()" />
@@ -250,17 +262,46 @@ SOFTWARE.
 		<xsl:apply-templates select="bldg:lod1MultiSurface" />
 		<xsl:apply-templates select="bldg:lod2MultiSurface" />
 		<xsl:apply-templates select="bldg:lod3MultiSurface" />
+		<xsl:apply-templates select="bldg:lod4MultiSurface" /> <!-- from AbstractOpeningType in v2.0-->
+		<xsl:apply-templates select="bldg:lod3ImplicitRepresentation" /> <!-- from AbstractOpeningType in v2.0-->
+		<xsl:apply-templates select="bldg:lod3ImplicitRepresentation" /> <!-- from AbstractOpeningType in v2.0-->
 		<xsl:apply-templates select="bldg:boundedBy" /> <!-- bounds -->
-		<xsl:apply-templates select="core:AbstractGenericApplicationPropertyOfAbstractSpaceBoundary" />
+		<xsl:call-template name="core:AbstractGenericApplicationPropertyOfAbstractSpaceBoundary" />
+	</xsl:template>
+	
+	<xsl:template name="core:AbstractGenericApplicationPropertyOfAbstractSpaceBoundary">
 	</xsl:template>
 	
 	<xsl:template name="core:AbstractThematicSurfaceType">
 		<xsl:call-template name="core:AbstractSpaceBoundaryType" />
 		<xsl:apply-templates select="bldg:opening" />
 		<xsl:apply-templates select="pcl:pointCloud" /> <!-- NEW -->
-		<xsl:apply-templates select="core:AbstractGenericApplicationPropertyOfAbstractOccupiedSpace" />
+		<xsl:call-template name="core:AbstractGenericApplicationPropertyOfAbstractOccupiedSpace" />
 	</xsl:template>
-
+	
+	<xsl:template name="core:AbstractGenericApplicationPropertyOfVoid">
+	</xsl:template>
+	
+	<xsl:template name="core:AbstractUnoccupiedSpaceType">
+		<xsl:call-template name="core:AbstractPhysicalSpaceType" />
+		<xsl:call-template name="core:AbstractGenericApplicationPropertyOfAbstractUnoccupiedSpace" />
+	</xsl:template>
+	
+	<xsl:template name="core:AbstractGenericApplicationPropertyOfAbstractUnoccupiedSpace">
+	</xsl:template>
+	
+	<xsl:template name="core:VoidSurfaceType">
+		<xsl:element name="VoidSurface">
+			<xsl:element name="bounds">
+				<xsl:call-template name="core:AbstractSpaceBoundaryType" />
+				<xsl:call-template name="core:AbstractGenericApplicationPropertyOfVoidSurface" />
+				<xsl:apply-templates select="@*|node()" />
+			</xsl:element>
+		</xsl:element>
+	</xsl:template>
+	
+	<xsl:template name="core:AbstractGenericApplicationPropertyOfVoidSurface">
+	</xsl:template>
 						
 	<!-- ++++++++++++++++++++++++++++++++++++++++ -->
 	<!-- ++++++++++++++ NEW IN 3.0 ++++++++++++++ -->
