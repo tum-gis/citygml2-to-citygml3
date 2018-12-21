@@ -24,7 +24,7 @@ The program settings can be adjusted in the configuration file [SETTINGS.txt](SE
 | `XSL_FILE`      | The location of the XSL file used for transformation | `xsl/Transform.xsl` |
 | `OUTPUT_FILE`      | The location of the transformed CityGML v3.0 file | `output/FZKHaus_v3.gml` |
 | `LOD4_TO_LOD3`      | Set to `true` if all found LOD 4 elements are to be replaced by the corresponding LOD 3 elements. The value `false` will remove all found LOD 4 elements. | `true` |
-| `LOD4_GEOMETRY`      | Specifies how to handle found `lod4Geometry` objects. If the `LOD4_TO_LOD3` is set to `true`, `lod4Geometry` can either be converted to `lod3MultiSurface`, `lod3MultiCurve` or`lod3Solid`. |
+| `LOD4_GEOMETRY`      | Specifies how to handle found `lod4Geometry` objects. If the `LOD4_TO_LOD3` is set to `true`, `lod4Geometry` can either be converted to `lod3MultiSurface`, `lod3MultiCurve` or`lod3Solid`. | `lod3MultiSurface` |
 
 For reference, the file [FZKHaus_v3.gml](output/FZKHaus_v3.gml), which contains all LOD 0-4 information, can be used as an example of how the transformed file should look like.
 
