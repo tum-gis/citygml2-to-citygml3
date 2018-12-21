@@ -7,22 +7,26 @@ This project is still in early development and subject to change.
 ### How to run
 The program can be executed by running the `Run.bat` file (in Windows).
 
-The result is by default saved in [CityGML_v3.gml](output/CityGML_v3.gml) (only visible after the program is complete).
+The result is by default saved in [FZKHaus_v3.gml](output/FZKHaus_v3.gml) (only visible after the program is complete).
 
 ### Command line
 Alternatively, the program can also be executed using the command line:
 ```batch
-java -jar Transform.jar SourceXMLFile XSLFile OutputXMLFile
+java -jar Transform.jar
 ```
-where 
 
-| Arguments        | Description           | Default  |
+### Configurations
+The program settings can be adjusted in the configuration file [SETTINGS.txt](SETTINGS.txt). Depending on the use-case, users may change these configurations to fit their needs:
+
+| Parameter        | Description           | Default  |
 | ------------- |:-------------| -----|
-| `SourceXMLFile`      | The location of the source CityGML v2.0 file | `input/CityGML_v2.gml` |
-| `XSLFile`      | The location of the XSL file used for transformation | `xsl/Transform.xsl` |
-| `OutputXMLFile`      | The location of the transformed CityGML v3.0 file | `output/CityGML_v3.gml` |
+| `INPUT_FILE`      | The location of the source CityGML v2.0 file | `input/FZKHaus.gml` |
+| `XSL_FILE`      | The location of the XSL file used for transformation | `xsl/Transform.xsl` |
+| `OUTPUT_FILE`      | The location of the transformed CityGML v3.0 file | `output/FZKHaus_v3.gml` |
+| `LOD4_TO_LOD3`      | Set to `true` if all found LOD 4 elements are to be replaced by the corresponding LOD 3 elements. The value `false` will remove all found LOD 4 elements. | `true` |
+| `LOD4_GEOMETRY`      | Specifies how to handle found `lod4Geometry` objects. If the `LOD4_TO_LOD3` is set to `true`, `lod4Geometry` can either be converted to `lod3MultiSurface`, `lod3MultiCurve` or`lod3Solid`. |
 
-For reference, the file [CityGML_v3.gml](output/CityGML_v3.gml) can be used as an example of how the transformed file should look like.
+For reference, the file [FZKHaus_v3.gml](output/FZKHaus_v3.gml), which contains all LOD 0-4 information, can be used as an example of how the transformed file should look like.
 
 ### Namespaces
 To produce the best results, the input CityGML document must satisfy the following conditions:
@@ -79,9 +83,18 @@ The list of supported CityGML v3.0 feature types and elements in the current imp
 + `bldg:function`
 + `bldg:roofType`
 + `bldg:heightAboveGround`
++ `BoundarySurfaces` and `BuildingParts`
++ `AbstractConstructiveElement` such as `Window` and `Door` (as `VoidSurface`)
++ `AbstractConstructionSurface` such as `GroundSurface`, `RoofSurface`, `CeilingSurface`, `OuterCeilingSurface`
++ `BuildingFurnitures`
++ `BuildingInstallations`
 + And many more...
 
+Below are the visualization screenshots taken in FME of the transformed sample dataset [FZKHaus_v3.gml](output/FZKHaus_v3.gml) in 3D and 2D respectively:
 
+ ![FZKHaus in 3D](output/FZKHaus_3d.png "FZKHaus in 3D")
+ 
+ ![FZKHaus in 2D](output/FZKHaus_2d.png "FZKHaus in 2D")
 
 ### Other Notes
 Currently, only the Building module is supported.
