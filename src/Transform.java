@@ -35,10 +35,12 @@
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
@@ -49,27 +51,50 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
 public class Transform {
-	public Transform() {
+	public static final String sourceXMLFile = "INPUT_FILE";
+	public static final String sourceXSLFile = "XSL_FILE";
+	public static final String outputXMLFile = "OUTPUT_FILE";
+	public static final String lod4ToLod3 = "LOD4_TO_LOD3";
+	public static final String changeLod4Geometry = "LOD4_GEOMETRY";
+
+	public static HashMap<String, String> SETTINGS = new HashMap<>();
+
+	public static void readConfigs(String filename) {
+		BufferedReader br = null;
+		try {
+			br = new BufferedReader(new FileReader(filename));
+			String line = "";
+			while ((line = br.readLine()) != null) {
+				if (line.trim().length() == 0 || line.trim().startsWith("#")) {
+					continue;
+				}
+
+				String[] ss = line.split("=");
+				SETTINGS.put(ss[0], ss[1].replaceAll("\\\\", "/"));
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if (br != null) {
+					br.close();
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public static void main(String[] args) throws TransformerFactoryConfigurationError, TransformerException, IOException {
-		String sourceXMLFile = "input/CityGML_v2.gml";
-		String sourceXSLFile = "xsl/Transform.xsl";
-		String outputXMLFile = "output/CityGML_v3.gml";
+		readConfigs("SETTINGS.txt");
 
-		if (args.length >= 3) {
-			if ((args[0] != null) && (!args[0].equals(""))) {
-				sourceXMLFile = args[0];
-			}
-
-			if ((args[1] != null) && (!args[1].equals(""))) {
-				sourceXSLFile = args[1];
-			}
-
-			if ((args[2] != null) && (!args[2].equals(""))) {
-				outputXMLFile = args[2];
-			}
-		}
+		String sourceXMLFile = SETTINGS.get(Transform.sourceXMLFile);
+		String sourceXSLFile = SETTINGS.get(Transform.sourceXSLFile);
+		String outputXMLFile = SETTINGS.get(Transform.outputXMLFile);
+		String lod4ToLod3 = SETTINGS.get(Transform.lod4ToLod3);
+		String changeLod4Geometry = SETTINGS.get(Transform.changeLod4Geometry);
 
 		String outputXMLFile_tmp = "output/Tmp.gml";
 
@@ -82,6 +107,8 @@ public class Transform {
 		javax.xml.transform.Result xmlOutput = new StreamResult(outputXMLTmp);
 
 		Transformer transformer = TransformerFactory.newInstance().newTransformer(xsl);
+		transformer.setParameter("lod4ToLod3", lod4ToLod3);
+		transformer.setParameter("changeLod4Geometry", changeLod4Geometry);
 		transformer.transform(xmlInput, xmlOutput);
 
 		BufferedReader bReader = new BufferedReader(new java.io.FileReader(outputXMLTmp));
@@ -148,6 +175,6 @@ public class Transform {
 		Files.delete(outputXMLTmp.toPath());
 
 		long endTime = System.nanoTime();
-		System.out.println("Transformation done in " + (endTime - startTime) / 1e9 + " seconds!\n" + "File output: " + outputXMLFile);
+		System.out.println("Transformation done in " + ((long) ((endTime - startTime) / 1e6)) / 1000. + " seconds!\n" + "File output: " + outputXMLFile);
 	}
 }

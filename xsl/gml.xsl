@@ -104,9 +104,7 @@ SOFTWARE.
 	</xsl:template>
 
 	<xsl:template name="gml:OwnershipAttributeGroup">
-		<xsl:param
-			name="currentNode"
-			select="." />
+		<xsl:param name="currentNode" select="." />
 		<xsl:copy-of select="@gml:owns" />
 	</xsl:template>
 	
@@ -128,6 +126,10 @@ SOFTWARE.
             </xsl:attribute>
 			<xsl:apply-templates select="@*|node()" />
 		</xsl:element>
+	</xsl:template>
+	
+	<xsl:template name="gml:AbstractFeatureMemberType">
+		<xsl:apply-templates select="gml:OwnershipAttributeGroup" />
 	</xsl:template>
     
 </xsl:stylesheet>

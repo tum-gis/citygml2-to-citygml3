@@ -1,0 +1,16 @@
+# Input file
+INPUT_FILE=input/FZKHaus.gml
+
+# XSL file
+XSL_FILE=xsl/Transform.xsl
+
+# Output file
+OUTPUT_FILE=output/FZKHaus_v3.gml
+
+# Change all LOD4 to LOD3?
+# [true | false]
+LOD4_TO_LOD3=true
+
+# How to handle lod4Geometry? 
+# [lod3MultiSurface | lod3MultiCurve | lod3Solid]
+LOD4_GEOMETRY=lod3MultiSurface

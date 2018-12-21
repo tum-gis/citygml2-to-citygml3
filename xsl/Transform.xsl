@@ -90,5 +90,10 @@ SOFTWARE.
 		</xsl:copy>
 	</xsl:template>
 	
+	<!-- Replace LOD4 with LOD3, this is given from Transform.java -->
+	<xsl:param name="lod4ToLod3" />
+	
+	<!-- How to handle lod4Geometry, this is given from Transform.java -->
+	<xsl:param name="changeLod4Geometry" />
 
 </xsl:stylesheet>

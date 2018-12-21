@@ -75,15 +75,22 @@ SOFTWARE.
 		<xsl:apply-templates select="bldg:storeyHeightsBelowGround" />
 
 		<xsl:apply-templates select="bldg:buildingConstructiveElement" />
-		<xsl:apply-templates select="bldg:buildingInstallation" />
+		
+		<!-- move and rename bldg:Room/bldg:roomInstallation/bldg:IntBuildingInstallation to Building/bldg:buildingFurniture/bldg:BuildingInstallation -->
+		<xsl:apply-templates select="bldg:interiorRoom/bldg:Room/bldg:roomInstallation/bldg:IntBuildingInstallation" /> <!-- NEW -->
 
 		<xsl:apply-templates select="bldg:interiorRoom" />
-		<xsl:apply-templates select="bldg:buildingFurniture" />
+		<!-- move bldg:Room/bldg:interiorFurniture/bldg:BuildingFurniture to Building/bldg:buildingFurniture/bldg:BuildingFurniture -->
+		<xsl:apply-templates select="bldg:interiorRoom/bldg:Room/bldg:interiorFurniture/bldg:BuildingFurniture" /> <!-- NEW -->
+		
 		<xsl:apply-templates select="bldg:buildingSubdivision" />
 
 		<xsl:apply-templates select="bldg:address" />
 
-		<xsl:apply-templates select="bldg:AbstractGenericApplicationPropertyOfAbstractBuilding" />
+		<xsl:call-template name="bldg:AbstractGenericApplicationPropertyOfAbstractBuilding" />
+	</xsl:template>
+	
+	<xsl:template name="bldg:AbstractGenericApplicationPropertyOfAbstractBuilding">
 	</xsl:template>
 	
 	<xsl:template match="bldg:Building">
@@ -94,8 +101,11 @@ SOFTWARE.
 	            
 			<xsl:call-template name="bldg:AbstractBuildingType" />
 			<xsl:apply-templates select="bldg:consistsOfBuildingPart" />
-			<xsl:apply-templates select="bldg:AbstractGenericApplicationPropertyOfBuilding" />
+			<xsl:call-template name="bldg:AbstractGenericApplicationPropertyOfBuilding" />
 		</xsl:copy>
+	</xsl:template>
+	
+	<xsl:template name="bldg:AbstractGenericApplicationPropertyOfBuilding">
 	</xsl:template>
 
 	<xsl:template match="bldg:yearOfConstruction">
@@ -159,90 +169,96 @@ SOFTWARE.
 	<!-- Change namespace bldg to con -->
 	<xsl:template match="bldg:GroundSurface">
 		<xsl:element name="con:GroundSurface">
-			<xsl:copy-of select="@*" />
 			<xsl:call-template name="con:AbstractConstructionSurfaceType" />
-			<xsl:apply-templates select="con:AbstractGenericApplicationPropertyOfGroundSurface" />
+			<xsl:call-template name="con:AbstractGenericApplicationPropertyOfGroundSurface" />
 		</xsl:element>
 	</xsl:template>
 	
 	<xsl:template match="bldg:RoofSurface">
 		<xsl:element name="con:RoofSurface">
-			<xsl:copy-of select="@*" />
 			<xsl:call-template name="con:AbstractConstructionSurfaceType" />
-			<xsl:apply-templates select="con:AbstractGenericApplicationPropertyOfRoofSurface" />
+			<xsl:call-template name="con:AbstractGenericApplicationPropertyOfRoofSurface" />
 		</xsl:element>
 	</xsl:template>
 	
 	<xsl:template match="bldg:CeilingSurface">
 		<xsl:element name="con:CeilingSurface">
-			<xsl:copy-of select="@*" />
 			<xsl:call-template name="con:AbstractConstructionSurfaceType" />
-			<xsl:apply-templates select="con:AbstractGenericApplicationPropertyOfCeilingSurface" />
+			<xsl:call-template name="con:AbstractGenericApplicationPropertyOfCeilingSurface" />
 		</xsl:element>
 	</xsl:template>
 	
 	<xsl:template match="bldg:OuterCeilingSurface">
 		<xsl:element name="con:OuterCeilingSurface">
-			<xsl:copy-of select="@*" />
 			<xsl:call-template name="con:AbstractConstructionSurfaceType" />
-			<xsl:apply-templates select="con:AbstractGenericApplicationPropertyOfOuterCeilingSurface" />
-		</xsl:element>
-	</xsl:template>
-	
-	<xsl:template match="bldg:Door">
-		<xsl:element name="con:DoorSurface">
-			<xsl:copy-of select="@*" />
-			<xsl:call-template name="con:AbstractConstructionSurfaceType" />
-			<xsl:apply-templates select="bldg:address" />
-			<xsl:apply-templates select="con:AbstractGenericApplicationPropertyOfDoorSurface" />
+			<xsl:call-template name="con:AbstractGenericApplicationPropertyOfOuterCeilingSurface" />
 		</xsl:element>
 	</xsl:template>
 	
 	<xsl:template match="bldg:FloorSurface">
 		<xsl:element name="con:FloorSurface">
-			<xsl:copy-of select="@*" />
 			<xsl:call-template name="con:AbstractConstructionSurfaceType" />
-			<xsl:apply-templates select="con:AbstractGenericApplicationPropertyOfFloorSurface" />
+			<xsl:call-template name="con:AbstractGenericApplicationPropertyOfFloorSurface" />
 		</xsl:element>
 	</xsl:template>
 	
 	<xsl:template match="bldg:OuterFloorSurface">
 		<xsl:element name="con:OuterFloorSurface">
-			<xsl:copy-of select="@*" />
 			<xsl:call-template name="con:AbstractConstructionSurfaceType" />
-			<xsl:apply-templates select="con:AbstractGenericApplicationPropertyOfOuterFloorSurface" />
+			<xsl:call-template name="con:AbstractGenericApplicationPropertyOfOuterFloorSurface" />
 		</xsl:element>
 	</xsl:template>
 	
 	<xsl:template match="bldg:WallSurface">
 		<xsl:element name="con:WallSurface">
-			<xsl:copy-of select="@*" />
 			<xsl:call-template name="con:AbstractConstructionSurfaceType" />
-			<xsl:apply-templates select="con:AbstractGenericApplicationPropertyOfWallSurface" />
+			<xsl:call-template name="con:AbstractGenericApplicationPropertyOfWallSurface" />
 		</xsl:element>
 	</xsl:template>
     
 	<xsl:template match="bldg:ClosureSurface">
 		<xsl:element name="ClosureSurface">
-			<xsl:copy-of select="@*" />
 			<xsl:call-template name="core:AbstractSpaceBoundaryType" />
-			<xsl:apply-templates select="core:AbstractGenericApplicationPropertyOfClosureSurface" />
+			<xsl:call-template name="core:AbstractGenericApplicationPropertyOfClosureSurface" />
 		</xsl:element>
 	</xsl:template>
 	
 	<xsl:template match="bldg:InteriorWallSurface">
-		<xsl:element name="con:InteriorWallface">
-			<xsl:copy-of select="@*" />
+		<xsl:element name="con:InteriorWallSurface">
 			<xsl:call-template name="con:AbstractConstructionSurfaceType" />
-			<xsl:apply-templates select="con:AbstractGenericApplicationPropertyOfInteriorWallSurface" />
+			<xsl:call-template name="con:AbstractGenericApplicationPropertyOfInteriorWallSurface" />
+		</xsl:element>
+	</xsl:template>
+	
+<!-- 	<xsl:template match="bldg:Door"> -->
+<!-- 		<xsl:element name="con:DoorSurface"> -->
+<!-- 			<xsl:apply-templates select="@*|node()" /> -->
+<!-- 			<xsl:call-template name="con:AbstractConstructionSurfaceType" /> -->
+<!-- 			<xsl:apply-templates select="bldg:address" /> -->
+<!-- 			<xsl:call-template name="con:AbstractGenericApplicationPropertyOfDoorSurface" /> -->
+<!-- 		</xsl:element> -->
+<!-- 	</xsl:template> -->
+	
+<!-- 	<xsl:template match="bldg:Window"> -->
+<!-- 		<xsl:element name="con:WindowSurface"> -->
+<!-- 			<xsl:apply-templates select="@*|node()" /> -->
+<!-- 			<xsl:call-template name="con:AbstractConstructionSurfaceType" /> -->
+<!-- 			<xsl:call-template name="con:AbstractGenericApplicationPropertyOfWindowSurface" /> -->
+<!-- 		</xsl:element> -->
+<!-- 	</xsl:template> -->
+	
+	<xsl:template match="bldg:Door">
+		<xsl:element name="con:Door">
+			<xsl:call-template name="con:AbstractConstructiveElementType" />
+			<xsl:apply-templates select="bldg:address" />
+			<xsl:call-template name="con:AbstractGenericApplicationPropertyOfDoor" />
 		</xsl:element>
 	</xsl:template>
 	
 	<xsl:template match="bldg:Window">
-		<xsl:element name="con:WindowSurface">
-			<xsl:copy-of select="@*" />
-			<xsl:call-template name="con:AbstractConstructionSurfaceType" />
-			<xsl:apply-templates select="con:AbstractGenericApplicationPropertyOfWindowSurface" />
+		<xsl:element name="con:Window">
+			<xsl:call-template name="con:AbstractConstructiveElementType" />
+			<xsl:call-template name="con:AbstractGenericApplicationPropertyOfWindow" />
 		</xsl:element>
 	</xsl:template>
     
@@ -272,11 +288,13 @@ SOFTWARE.
 		</xsl:element>
 	</xsl:template>
 	
-	<!-- Change all LOD4 to LOD3 -->
+	<!-- Change or remove all LOD4 to LOD3 depending on the parameter lod4ToLod3 -->
 	<xsl:template match="bldg:lod4MultiSurface">
-		<xsl:element name="lod3MultiSurface">
-			<xsl:apply-templates select="@*|node()" />
-		</xsl:element>
+		<xsl:if test="$lod4ToLod3='true'">
+			<xsl:element name="lod3MultiSurface">
+				<xsl:apply-templates select="@*|node()" />
+			</xsl:element>
+		</xsl:if>
 	</xsl:template>
 
 	<xsl:template match="bldg:lod0Footprint">
@@ -305,7 +323,16 @@ SOFTWARE.
 	
 	<!-- Change all LOD4 to LOD3 -->
 	<xsl:template match="bldg:lod4Solid">
-		<xsl:element name="lod3Solid">
+		<xsl:if test="$lod4ToLod3='true'">
+			<xsl:element name="lod3Solid">
+				<xsl:apply-templates select="@*|node()" />
+			</xsl:element>
+		</xsl:if>
+	</xsl:template>
+	
+	<!-- Change all lod4Geometry to either lod3MultiSurface, lod3MultiCurve or lod3Solid -->
+	<xsl:template match="bldg:lod4Geometry">
+		<xsl:element name="{$changeLod4Geometry}">
 			<xsl:apply-templates select="@*|node()" />
 		</xsl:element>
 	</xsl:template>
@@ -318,7 +345,9 @@ SOFTWARE.
 	
 	<xsl:template match="bldg:opening">
 		<xsl:element name="opening">
-			<xsl:apply-templates select="@*|node()" />
+			<xsl:call-template name="gml:AbstractFeatureMemberType" />
+			<xsl:call-template name="core:VoidSurfaceType" />
+			<xsl:call-template name="gml:AssociationAttributeGroup" />
 		</xsl:element>
 	</xsl:template>
 
@@ -334,6 +363,85 @@ SOFTWARE.
 		</xsl:element>
 	</xsl:template>
 	
+	<xsl:template match="bldg:interiorRoom">
+		<xsl:element name="bldg:interiorRoom">
+			<xsl:call-template name="gml:AbstractFeatureMemberType" />
+			<xsl:apply-templates select="bldg:Room" />
+		</xsl:element>
+	</xsl:template>
+	
+	<xsl:template match="bldg:Room">
+		<xsl:element name="bldg:Room">
+			<xsl:call-template name="core:AbstractUnoccupiedSpaceType" />
+			<xsl:apply-templates select="bldg:class" />
+			<xsl:apply-templates select="bldg:function" />
+			<xsl:apply-templates select="bldg:usage" />
+			<xsl:apply-templates select="bldg:RoomHeight" /> <!-- NEW TODO -->
+			<xsl:apply-templates select="bldg:interiorFurniture" />
+			<xsl:apply-templates select="bldg:roomInstallation" />
+			<xsl:call-template name="bldg:AbstractGenericApplicationPropertyOfRoom" />
+		</xsl:element>
+	</xsl:template>
+	
+	<xsl:template name="bldg:AbstractGenericApplicationPropertyOfRoom">
+	</xsl:template>
+	
+	<!-- Add xlink -->
+	<xsl:template match="bldg:interiorFurniture">
+		<xsl:copy>
+			<xsl:attribute name="xlink:href">
+                <xsl:value-of select="./bldg:BuildingFurniture/@gml:id" />
+            </xsl:attribute>
+			<xsl:call-template name="gml:AbstractFeatureMemberType" />
+			<xsl:call-template name="gml:AssociationAttributeGroup" />
+		</xsl:copy>
+	</xsl:template>
+	
+	<!-- Move bldg:BuildingFurniture to Building/bldg:buildingFurniture -->
+	<xsl:template match="bldg:interiorRoom/bldg:Room/bldg:interiorFurniture/bldg:BuildingFurniture">
+		<xsl:element name="bldg:buildingFurniture">
+			<xsl:copy>
+				<!-- Order of elements changed -->
+				<xsl:call-template name="con:AbstractFurnitureType" />
+				<xsl:apply-templates select="bldg:class" />
+				<xsl:apply-templates select="bldg:function" />
+				<xsl:apply-templates select="bldg:usage" />
+				<xsl:call-template name="bldg:AbstractGenericApplicationPropertyOfBuildingFurniture" />
+			</xsl:copy>
+		</xsl:element>
+	</xsl:template>
+	
+	<!-- Add xlink -->
+	<xsl:template match="bldg:roomInstallation">
+		<xsl:copy>
+			<xsl:attribute name="xlink:href">
+                <xsl:value-of select="./bldg:IntBuildingInstallation/@gml:id" />
+            </xsl:attribute>
+			<xsl:call-template name="gml:AbstractFeatureMemberType" />
+			<xsl:call-template name="gml:AssociationAttributeGroup" />
+		</xsl:copy>
+	</xsl:template>
+	
+	<!-- Move and rename bldg:IntBuildingInstallation to Building/bldg:buildingInstallation/bldg:BuildingInstallation -->
+	<xsl:template match="bldg:interiorRoom/bldg:Room/bldg:roomInstallation/bldg:IntBuildingInstallation">
+		<xsl:element name="bldg:buildingInstallation">
+			<xsl:element name="bldg:BuildingInstallation">
+				<!-- Order of elements changed -->
+				<xsl:call-template name="con:AbstractInstallationType" />
+				<xsl:apply-templates select="bldg:class" />
+				<xsl:apply-templates select="bldg:function" />
+				<xsl:apply-templates select="bldg:usage" />
+				<xsl:call-template name="bldg:AbstractGenericApplicationPropertyOfBuildingInstallation" />
+			</xsl:element>
+		</xsl:element>
+	</xsl:template>
+	
+	<xsl:template name="bldg:AbstractGenericApplicationPropertyOfBuildingFurniture">
+	</xsl:template>
+	
+	<xsl:template name="bldg:AbstractGenericApplicationPropertyOfBuildingInstallation">
+	</xsl:template>
+	
 	<!-- ++++++++++++++++++++++++++++++++++++++++ -->
 	<!-- +++++++++++++++++ COPY +++++++++++++++++ -->
 	<!-- ++++++++++++++++++++++++++++++++++++++++ -->
@@ -343,7 +451,6 @@ SOFTWARE.
 						bldg:roofType | 
 						bldg:conditionOfConstruction | 
 						bldg:elevation | 
-						bldg:interiorRoom | 
 						bldg:storeysAboveGround | 
 						bldg:storeysBelowGround | 
 						bldg:storeyHeightsAboveGround | 
@@ -358,19 +465,7 @@ SOFTWARE.
 	<!-- ++++++++++++++++ REMOVE ++++++++++++++++ -->
 	<!-- ++++++++++++++++++++++++++++++++++++++++ -->
 	<xsl:template match="bldg:lod0FootPrint | 
-						bldg:lod0RoofEdge |
-						bldg:buildingInstallation |
+						bldg:lod0RoofEdge | 
 						bldg:lod4MultiCurve" />
-						
-	<!-- ++++++++++++++++++++++++++++++++++++++++ -->
-	<!-- ++++++++++++++ NEW IN 3.0 ++++++++++++++ -->
-	<!-- ++++++++++++++++++++++++++++++++++++++++ -->
-	
-	<!-- ++++++++++++++++++++++++++++++++++++++++ -->
-	<!-- +++++++++++++++++ TODO +++++++++++++++++ -->
-	<!-- ++++++++++++++++++++++++++++++++++++++++ -->
-	<xsl:template match="bldg:buildingConstructiveElement | 
-						bldg:buildingFurniture | 
-						bldg:buildingSubdivision" />
 
 </xsl:stylesheet>
