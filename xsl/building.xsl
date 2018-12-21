@@ -75,10 +75,11 @@ SOFTWARE.
 		<xsl:apply-templates select="bldg:storeyHeightsBelowGround" />
 
 		<xsl:apply-templates select="bldg:buildingConstructiveElement" />
-		<xsl:apply-templates select="bldg:buildingInstallation" />
+		
+		<!-- move and rename bldg:Room/bldg:roomInstallation/bldg:IntBuildingInstallation to Building/bldg:buildingFurniture/bldg:BuildingInstallation -->
+		<xsl:apply-templates select="bldg:interiorRoom/bldg:Room/bldg:roomInstallation/bldg:IntBuildingInstallation" /> <!-- NEW -->
 
 		<xsl:apply-templates select="bldg:interiorRoom" />
-		
 		<!-- move bldg:Room/bldg:interiorFurniture/bldg:BuildingFurniture to Building/bldg:buildingFurniture/bldg:BuildingFurniture -->
 		<xsl:apply-templates select="bldg:interiorRoom/bldg:Room/bldg:interiorFurniture/bldg:BuildingFurniture" /> <!-- NEW -->
 		
@@ -385,6 +386,7 @@ SOFTWARE.
 	<xsl:template name="bldg:AbstractGenericApplicationPropertyOfRoom">
 	</xsl:template>
 	
+	<!-- Add xlink -->
 	<xsl:template match="bldg:interiorFurniture">
 		<xsl:copy>
 			<xsl:attribute name="xlink:href">
@@ -395,15 +397,49 @@ SOFTWARE.
 		</xsl:copy>
 	</xsl:template>
 	
+	<!-- Move bldg:BuildingFurniture to Building/bldg:buildingFurniture -->
 	<xsl:template match="bldg:interiorRoom/bldg:Room/bldg:interiorFurniture/bldg:BuildingFurniture">
 		<xsl:element name="bldg:buildingFurniture">
 			<xsl:copy>
-				<xsl:apply-templates select="@*|node()" />
+				<!-- Order of elements changed -->
+				<xsl:call-template name="con:AbstractFurnitureType" />
+				<xsl:apply-templates select="bldg:class" />
+				<xsl:apply-templates select="bldg:function" />
+				<xsl:apply-templates select="bldg:usage" />
+				<xsl:call-template name="bldg:AbstractGenericApplicationPropertyOfBuildingFurniture" />
 			</xsl:copy>
 		</xsl:element>
 	</xsl:template>
 	
+	<!-- Add xlink -->
+	<xsl:template match="bldg:roomInstallation">
+		<xsl:copy>
+			<xsl:attribute name="xlink:href">
+                <xsl:value-of select="./bldg:IntBuildingInstallation/@gml:id" />
+            </xsl:attribute>
+			<xsl:call-template name="gml:AbstractFeatureMemberType" />
+			<xsl:call-template name="gml:AssociationAttributeGroup" />
+		</xsl:copy>
+	</xsl:template>
+	
+	<!-- Move and rename bldg:IntBuildingInstallation to Building/bldg:buildingInstallation/bldg:BuildingInstallation -->
+	<xsl:template match="bldg:interiorRoom/bldg:Room/bldg:roomInstallation/bldg:IntBuildingInstallation">
+		<xsl:element name="bldg:buildingInstallation">
+			<xsl:element name="bldg:BuildingInstallation">
+				<!-- Order of elements changed -->
+				<xsl:call-template name="con:AbstractInstallationType" />
+				<xsl:apply-templates select="bldg:class" />
+				<xsl:apply-templates select="bldg:function" />
+				<xsl:apply-templates select="bldg:usage" />
+				<xsl:call-template name="bldg:AbstractGenericApplicationPropertyOfBuildingInstallation" />
+			</xsl:element>
+		</xsl:element>
+	</xsl:template>
+	
 	<xsl:template name="bldg:AbstractGenericApplicationPropertyOfBuildingFurniture">
+	</xsl:template>
+	
+	<xsl:template name="bldg:AbstractGenericApplicationPropertyOfBuildingInstallation">
 	</xsl:template>
 	
 	<!-- ++++++++++++++++++++++++++++++++++++++++ -->
@@ -429,8 +465,7 @@ SOFTWARE.
 	<!-- ++++++++++++++++ REMOVE ++++++++++++++++ -->
 	<!-- ++++++++++++++++++++++++++++++++++++++++ -->
 	<xsl:template match="bldg:lod0FootPrint | 
-						bldg:lod0RoofEdge |
-						bldg:buildingInstallation |
+						bldg:lod0RoofEdge | 
 						bldg:lod4MultiCurve" />
 
 </xsl:stylesheet>

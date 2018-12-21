@@ -142,5 +142,14 @@ SOFTWARE.
 	
 	<xsl:template name="con:AbstractGenericApplicationPropertyOfAbstractFurniture">
 	</xsl:template>
+	
+	<xsl:template name="con:AbstractInstallationType">
+		<xsl:call-template name="core:AbstractOccupiedSpaceType" />
+		<xsl:apply-templates select="relationToConstruction" /> <!-- NEW -->
+		<xsl:call-template name="con:AbstractGenericApplicationPropertyOfAbstractInstallation" />
+	</xsl:template>
+	
+	<xsl:template name="con:AbstractGenericApplicationPropertyOfAbstractInstallation">
+	</xsl:template>
 
 </xsl:stylesheet>
