@@ -92,9 +92,9 @@ The list of supported CityGML v3.0 feature types and elements in the current imp
 
 Below are the visualization screenshots taken in FME of the transformed sample dataset [FZKHaus_v3.gml](output/FZKHaus_v3.gml) in 3D and 2D respectively:
 
- ![FZKHaus in 3D](output/FZKHaus_3d.png "FZKHaus in 3D")
+ ![FZKHaus in 3D](output/FZKHaus_3D.png "FZKHaus in 3D")
  
- ![FZKHaus in 2D](output/FZKHaus_2d.png "FZKHaus in 2D")
+ ![FZKHaus in 2D](output/FZKHaus_2D.png "FZKHaus in 2D")
 
 ### Other Notes
 Currently, only the Building module is supported.
