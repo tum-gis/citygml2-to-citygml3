@@ -175,6 +175,6 @@ public class Transform {
 		Files.delete(outputXMLTmp.toPath());
 
 		long endTime = System.nanoTime();
-		System.out.println("Transformation done in " + (endTime - startTime) / 1e9 + " seconds!\n" + "File output: " + outputXMLFile);
+		System.out.println("Transformation done in " + ((long) ((endTime - startTime) / 1e6)) / 1000. + " seconds!\n" + "File output: " + outputXMLFile);
 	}
 }
