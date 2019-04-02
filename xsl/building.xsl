@@ -147,6 +147,22 @@ SOFTWARE.
 		</xsl:element>
 	</xsl:template>
 
+	<xsl:template match="bldg:yearOfRenovation">
+		<xsl:element name="con:constructionEvent">
+			<xsl:element name="con:event">endOfRenovation</xsl:element>
+			<xsl:element name="con:dateOfEvent">
+				<xsl:choose>
+					<xsl:when test="contains(text(), 'T')">
+						<xsl:value-of select="concat(text(), '-01-01')"/> <!-- Convert from year to date -->
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:value-of select="concat(text(), '-01-01T00:00:00')"/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:element>
+		</xsl:element>
+	</xsl:template>
+
 	<!-- Transform bldg:measuredHeight -->
 	<xsl:template match="bldg:measuredHeight">
 		<xsl:element name="con:heightAboveGround">
