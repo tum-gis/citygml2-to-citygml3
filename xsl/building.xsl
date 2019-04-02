@@ -410,6 +410,26 @@ SOFTWARE.
 			</xsl:copy>
 		</xsl:element>
 	</xsl:template>
+
+	<xsl:template match="bldg:buildingSubdivision">
+		<xsl:call-template name="bldg:AbstractBuildingSubdivisionType" />
+	</xsl:template>
+
+	<xsl:template name="bldg:AbstractBuildingSubdivisionType">
+		<xsl:call-template name="core:AbstractLogicalSpaceType" />
+		<xsl:apply-templates select="bldg:class" />
+		<xsl:apply-templates select="bldg:function" />
+		<xsl:apply-templates select="bldg:elevation" />
+		<xsl:apply-templates select="bldg:sortKey" />
+		<xsl:apply-templates select="bldg:buildingConstructiveElement" />
+		<xsl:apply-templates select="bldg:buildingFurniture" />
+		<xsl:apply-templates select="bldg:buildingInstallation" />
+		<xsl:apply-templates select="bldg:buildingRoom" />
+		<xsl:call-template name="bldg:AbstractGenericApplicationPropertyOfAbstractBuildingSubdivision" />
+	</xsl:template>
+
+	<xsl:template name="bldg:AbstractGenericApplicationPropertyOfAbstractBuildingSubdivision">
+	</xsl:template>
 	
 	<!-- Add xlink -->
 	<xsl:template match="bldg:roomInstallation">
