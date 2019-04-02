@@ -248,7 +248,7 @@ SOFTWARE.
 <!-- 	</xsl:template> -->
 	
 	<xsl:template match="bldg:Door">
-		<xsl:element name="con:Door">
+		<xsl:element name="con:DoorSurface">
 			<xsl:call-template name="con:AbstractConstructiveElementType" />
 			<xsl:apply-templates select="bldg:address" />
 			<xsl:call-template name="con:AbstractGenericApplicationPropertyOfDoor" />
@@ -256,7 +256,7 @@ SOFTWARE.
 	</xsl:template>
 	
 	<xsl:template match="bldg:Window">
-		<xsl:element name="con:Window">
+		<xsl:element name="con:WindowSurface">
 			<xsl:call-template name="con:AbstractConstructiveElementType" />
 			<xsl:call-template name="con:AbstractGenericApplicationPropertyOfWindow" />
 		</xsl:element>
