@@ -413,13 +413,13 @@ SOFTWARE.
 	
 	<!-- Add xlink -->
 	<xsl:template match="bldg:roomInstallation">
-		<xsl:copy>
+		<xsl:element name="bldg:buildingInstallation">
 			<xsl:attribute name="xlink:href">
-                <xsl:value-of select="./bldg:IntBuildingInstallation/@gml:id" />
-            </xsl:attribute>
+				<xsl:value-of select="./bldg:IntBuildingInstallation/@gml:id" />
+			</xsl:attribute>
 			<xsl:call-template name="gml:AbstractFeatureMemberType" />
 			<xsl:call-template name="gml:AssociationAttributeGroup" />
-		</xsl:copy>
+		</xsl:element>
 	</xsl:template>
 	
 	<!-- Move and rename bldg:IntBuildingInstallation to Building/bldg:buildingInstallation/bldg:BuildingInstallation -->
