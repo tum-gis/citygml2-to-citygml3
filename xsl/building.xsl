@@ -250,6 +250,15 @@ SOFTWARE.
 			<xsl:call-template name="con:AbstractGenericApplicationPropertyOfWindow" />
 		</xsl:element>
 	</xsl:template>
+
+	<xsl:template match="bldg:opening">
+		<xsl:element name="con:fillingSurface">
+			<xsl:apply-templates select="bldg:Door" />
+			<xsl:apply-templates select="bldg:Window" />
+			<xsl:call-template name="gml:AbstractFeatureMemberType" />
+			<xsl:call-template name="gml:AssociationAttributeGroup" />
+		</xsl:element>
+	</xsl:template>
     
     <!-- Change gml:CompositeSurface to gml:Shell -->
 	<xsl:template match="gml:CompositeSurface">
@@ -329,14 +338,6 @@ SOFTWARE.
 	<xsl:template match="bldg:boundedBy">
 		<xsl:element name="boundary">
 			<xsl:apply-templates select="@*|node()" />
-		</xsl:element>
-	</xsl:template>
-	
-	<xsl:template match="bldg:opening">
-		<xsl:element name="opening">
-			<xsl:call-template name="gml:AbstractFeatureMemberType" />
-			<xsl:call-template name="core:VoidSurfaceType" />
-			<xsl:call-template name="gml:AssociationAttributeGroup" />
 		</xsl:element>
 	</xsl:template>
 
