@@ -69,9 +69,9 @@ SOFTWARE.
 	<xsl:template name="con:AbstractConstructionType">
 		<xsl:call-template name="core:AbstractOccupiedSpaceType" />
 		<xsl:apply-templates select="bldg:conditionOfConstruction" />
-		<xsl:apply-templates select="bldg:dateOfConstruction" />
-		<xsl:apply-templates select="bldg:dateOfRenovation" />
-		<xsl:apply-templates select="bldg:dateOfDemolition" />
+		<xsl:apply-templates select="bldg:yearOfConstruction" />
+		<!--<xsl:apply-templates select="bldg:dateOfRenovation" />-->
+		<xsl:apply-templates select="bldg:yearOfDemolition" />
 		<xsl:apply-templates select="bldg:elevation" />
 		<xsl:apply-templates select="bldg:measuredHeight" />
 		<xsl:call-template name="con:AbstractGenericApplicationPropertyOfAbstractConstruction" />
