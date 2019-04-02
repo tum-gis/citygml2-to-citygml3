@@ -70,7 +70,7 @@ SOFTWARE.
 					<xsl:value-of select="app:Appearance/app:theme/text()" />
 				</xsl:element>
 				<xsl:for-each select="app:Appearance/app:surfaceDataMember">
-					<xsl:element name="app:surfaceDataMember">
+					<xsl:element name="app:surfaceData">
 						<xsl:choose>
 							<xsl:when test="app:ParameterizedTexture">
 								<xsl:element name="app:ParameterizedTexture">
