@@ -288,17 +288,15 @@ SOFTWARE.
 	<xsl:template name="core:AbstractGenericApplicationPropertyOfAbstractUnoccupiedSpace">
 	</xsl:template>
 	
-	<xsl:template name="core:VoidSurfaceType">
-		<xsl:element name="VoidSurface">
-			<xsl:element name="bounds">
-				<xsl:call-template name="core:AbstractSpaceBoundaryType" />
-				<xsl:call-template name="core:AbstractGenericApplicationPropertyOfVoidSurface" />
-				<xsl:apply-templates select="@*|node()" />
-			</xsl:element>
-		</xsl:element>
-	</xsl:template>
-	
 	<xsl:template name="core:AbstractGenericApplicationPropertyOfVoidSurface">
+	</xsl:template>
+
+	<xsl:template name="core:AbstractLogicalSpaceType">
+		<xsl:call-template name="core:AbstractSpaceType" />
+		<xsl:call-template name="core:AbstractGenericApplicationPropertyOfAbstractLogicalSpace" />
+	</xsl:template>
+
+	<xsl:template name="core:AbstractGenericApplicationPropertyOfAbstractLogicalSpace">
 	</xsl:template>
 						
 	<!-- ++++++++++++++++++++++++++++++++++++++++ -->
