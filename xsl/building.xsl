@@ -364,7 +364,7 @@ SOFTWARE.
 	</xsl:template>
 	
 	<xsl:template match="bldg:interiorRoom">
-		<xsl:element name="bldg:interiorRoom">
+		<xsl:element name="bldg:buildingRoom">
 			<xsl:call-template name="gml:AbstractFeatureMemberType" />
 			<xsl:apply-templates select="bldg:Room" />
 		</xsl:element>
