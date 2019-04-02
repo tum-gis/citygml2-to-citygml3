@@ -110,40 +110,13 @@ SOFTWARE.
 
 	<xsl:template match="bldg:yearOfConstruction">
 		<xsl:element name="con:dateOfConstruction">
-			<xsl:choose>
-				<xsl:when test="contains(text(), 'T')">
-					<xsl:value-of select="concat(text(), '-01-01')" /> <!-- Convert from year to date -->
-				</xsl:when>
-				<xsl:otherwise>
-					<xsl:value-of select="concat(text(), '-01-01T00:00:00')" />
-				</xsl:otherwise>
-			</xsl:choose>
-		</xsl:element>
-	</xsl:template>
-	
-	<xsl:template match="bldg:yearOfRenovation">
-		<xsl:element name="con:dateOfRenovation">
-			<xsl:choose>
-				<xsl:when test="contains(text(), 'T')">
-					<xsl:value-of select="concat(text(), '-01-01')" /> <!-- Convert from year to date -->
-				</xsl:when>
-				<xsl:otherwise>
-					<xsl:value-of select="concat(text(), '-01-01T00:00:00')" />
-				</xsl:otherwise>
-			</xsl:choose>
+			<xsl:value-of select="concat(text(), '-01-01')" /> <!-- Convert from year to date -->
 		</xsl:element>
 	</xsl:template>
 	
 	<xsl:template match="bldg:yearOfDemolition">
 		<xsl:element name="con:dateOfDemolition">
-			<xsl:choose>
-				<xsl:when test="contains(text(), 'T')">
-					<xsl:value-of select="concat(text(), '-01-01')" /> <!-- Convert from year to date -->
-				</xsl:when>
-				<xsl:otherwise>
-					<xsl:value-of select="concat(text(), '-01-01T00:00:00')" />
-				</xsl:otherwise>
-			</xsl:choose>
+			<xsl:value-of select="concat(text(), '-01-01')" /> <!-- Convert from year to date -->
 		</xsl:element>
 	</xsl:template>
 
@@ -231,7 +204,7 @@ SOFTWARE.
 			<xsl:call-template name="con:AbstractGenericApplicationPropertyOfWallSurface" />
 		</xsl:element>
 	</xsl:template>
-    
+
 	<xsl:template match="bldg:ClosureSurface">
 		<xsl:element name="ClosureSurface">
 			<xsl:call-template name="core:AbstractSpaceBoundaryType" />
