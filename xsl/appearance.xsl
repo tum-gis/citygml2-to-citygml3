@@ -76,7 +76,7 @@ SOFTWARE.
 								<xsl:element name="app:ParameterizedTexture">
 									<xsl:copy-of select="app:ParameterizedTexture/@*" />
 									<xsl:copy-of select="app:ParameterizedTexture/child::node()[name()!='app:target']" />
-									<xsl:element name="app:target">
+									<xsl:element name="app:textureParameterization">
 										<xsl:element name="app:TextureAssociation">
 											<xsl:element name="app:uri">
 												<xsl:value-of select="app:ParameterizedTexture/app:target/@uri" />
