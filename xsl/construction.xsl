@@ -87,6 +87,8 @@ SOFTWARE.
 	
 	<xsl:template name="con:AbstractConstructionSurfaceType">
 		<xsl:call-template name="core:AbstractThematicSurfaceType" />
+		<xsl:apply-templates select="bldg:opening" />
+		<xsl:apply-templates select="bldg:ClosureSurface" />
 		<xsl:call-template name="con:AbstractGenericApplicationPropertyOfAbstractConstructionSurface" />
 	</xsl:template>
 	
