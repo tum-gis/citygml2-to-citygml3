@@ -256,7 +256,7 @@ SOFTWARE.
 		</xsl:copy>
 	</xsl:template>
 	
-	<xsl:template name="core:AbstractSpaceBoundaryType">
+	<xsl:template name="core:AbstractThematicSurfaceType">
 		<xsl:call-template name="core:AbstractCityObjectType" />
 		<xsl:apply-templates select="lod0MultiCurve" /> <!-- NEW -->
 		<xsl:apply-templates select="bldg:lod1MultiSurface" />
@@ -266,17 +266,15 @@ SOFTWARE.
 		<xsl:apply-templates select="bldg:lod3ImplicitRepresentation" /> <!-- from AbstractOpeningType in v2.0-->
 		<xsl:apply-templates select="bldg:lod3ImplicitRepresentation" /> <!-- from AbstractOpeningType in v2.0-->
 		<xsl:apply-templates select="bldg:boundedBy" /> <!-- bounds -->
-		<xsl:call-template name="core:AbstractGenericApplicationPropertyOfAbstractSpaceBoundary" />
+		<xsl:call-template name="core:AbstractGenericApplicationPropertyOfAbstractThematicSurface" />
 	</xsl:template>
-	
-	<xsl:template name="core:AbstractGenericApplicationPropertyOfAbstractSpaceBoundary">
+
+	<xsl:template name="core:AbstractGenericApplicationPropertyOfAbstractThematicSurface">
 	</xsl:template>
-	
-	<xsl:template name="core:AbstractThematicSurfaceType">
-		<xsl:call-template name="core:AbstractSpaceBoundaryType" />
-		<xsl:apply-templates select="bldg:opening" />
-		<xsl:apply-templates select="pcl:pointCloud" /> <!-- NEW -->
-		<xsl:call-template name="core:AbstractGenericApplicationPropertyOfAbstractOccupiedSpace" />
+
+	<xsl:template name="core:ClosureSurfaceType">
+		<xsl:call-template name="core:AbstractThematicSurfaceType" />
+		<xsl:call-template name="core:AbstractGenericApplicationPropertyOfClosureSurface" />
 	</xsl:template>
 	
 	<xsl:template name="core:AbstractGenericApplicationPropertyOfVoid">
