@@ -61,15 +61,9 @@ SOFTWARE.
 	xmlns="http://www.opengis.net/citygml/2.0"
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	xmlns:xalan="http://xml.apache.org/xslt">
-    
+
     <xsl:template match="app:appearanceMember">
 		<appearanceMember>
-			<xsl:apply-templates select="app:Appearance" />
-		</appearanceMember>
-	</xsl:template>
-	
-	<xsl:template match="app:appearance">
-		<xsl:element name="core:appearance">
 			<xsl:element name="app:Appearance">
 				<xsl:copy-of select="app:Appearance/@*" />
 				<xsl:element name="app:theme">
@@ -110,7 +104,7 @@ SOFTWARE.
 					</xsl:element>
 				</xsl:for-each>
 			</xsl:element>
-		</xsl:element>
+		</appearanceMember>
 	</xsl:template>
     
 </xsl:stylesheet>
