@@ -165,18 +165,18 @@ SOFTWARE.
 
 	<!-- Transform bldg:measuredHeight -->
 	<xsl:template match="bldg:measuredHeight">
-		<xsl:element name="con:heightAboveGround">
-			<xsl:element name="con:HeightAboveGround">
-				<xsl:element name="con:heightReference">highestRoofEdge</xsl:element>
+		<xsl:element name="con:height">
+			<xsl:element name="con:Height">
+				<xsl:element name="con:highReference">highestRoofEdge</xsl:element>
 				<xsl:element name="con:lowReference">lowestGroundPoint</xsl:element>
 				<xsl:element name="con:status">measured</xsl:element>
 				<xsl:element name="con:value">
 					<xsl:if test="@uom">
 						<xsl:attribute name="uom">
-							<xsl:value-of select="@uom" />
+							<xsl:value-of select="@uom"/>
 						</xsl:attribute>
 					</xsl:if>
-					<xsl:value-of select="text()" />
+					<xsl:value-of select="text()"/>
 				</xsl:element>
 			</xsl:element>
 		</xsl:element>
