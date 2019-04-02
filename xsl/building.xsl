@@ -207,8 +207,8 @@ SOFTWARE.
 
 	<xsl:template match="bldg:ClosureSurface">
 		<xsl:element name="ClosureSurface">
-			<xsl:call-template name="core:AbstractSpaceBoundaryType" />
-			<xsl:call-template name="core:AbstractGenericApplicationPropertyOfClosureSurface" />
+			<xsl:call-template name="core:AbstractThematicSurfaceType"/>
+			<xsl:call-template name="core:AbstractGenericApplicationPropertyOfClosureSurface"/>
 		</xsl:element>
 	</xsl:template>
 	
