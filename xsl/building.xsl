@@ -388,13 +388,13 @@ SOFTWARE.
 	
 	<!-- Add xlink -->
 	<xsl:template match="bldg:interiorFurniture">
-		<xsl:copy>
+		<xsl:element name="bldg:buildingFurniture">
 			<xsl:attribute name="xlink:href">
-                <xsl:value-of select="./bldg:BuildingFurniture/@gml:id" />
-            </xsl:attribute>
+				<xsl:value-of select="./bldg:BuildingFurniture/@gml:id" />
+			</xsl:attribute>
 			<xsl:call-template name="gml:AbstractFeatureMemberType" />
 			<xsl:call-template name="gml:AssociationAttributeGroup" />
-		</xsl:copy>
+		</xsl:element>
 	</xsl:template>
 	
 	<!-- Move bldg:BuildingFurniture to Building/bldg:buildingFurniture -->
