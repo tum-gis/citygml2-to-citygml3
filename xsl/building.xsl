@@ -371,7 +371,7 @@ SOFTWARE.
 	</xsl:template>
 	
 	<xsl:template match="bldg:Room">
-		<xsl:element name="bldg:Room">
+		<xsl:element name="bldg:BuildingRoom">
 			<xsl:call-template name="core:AbstractUnoccupiedSpaceType" />
 			<xsl:apply-templates select="bldg:class" />
 			<xsl:apply-templates select="bldg:function" />
