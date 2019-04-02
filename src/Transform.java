@@ -117,7 +117,7 @@ public class Transform {
 		String line = null;
 		boolean found = false;
 
-		String xsdLocation = "http://www.3dcitydb.org/citygml3/2018-12-06/xsds/";
+		String xsdLocation = "http://www.3dcitydb.org/citygml3/2019-03-08/xsds/";
 
 		ArrayList<String[]> ns = new ArrayList<>();
 		ns.add(new String[] { "app", "http://www.opengis.net/citygml/appearance/3.0", xsdLocation + "appearance.xsd" });

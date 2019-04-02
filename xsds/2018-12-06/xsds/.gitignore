@@ -1,0 +1,16 @@
+/appearance.xsd
+/bridge.xsd
+/building.xsd
+/cityFurniture.xsd
+/cityGMLBase.xsd
+/cityObjectGroup.xsd
+/construction.xsd
+/dynamizer.xsd
+/generics.xsd
+/landUse.xsd
+/relief.xsd
+/transportation.xsd
+/tunnel.xsd
+/vegetation.xsd
+/versioning.xsd
+/waterBody.xsd
