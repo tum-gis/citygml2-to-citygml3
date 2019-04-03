@@ -1,6 +1,6 @@
 # Change Log
 
-### 0.3.0 - Active - See [sample file in CityGML 3.0](output/FZKHaus_v3.gml)
+### 0.4.0 - See [sample file in CityGML 3.0](output/FZKHaus_v3.gml)
 
 FZKHaus in 3D              |  FZKHaus in 2D
 :-------------------------:|:-------------------------:
