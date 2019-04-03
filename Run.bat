@@ -1,3 +1,3 @@
 @echo off
-java -jar Transform.jar
+java -jar citygml2-to-citygml3.jar
 pause
