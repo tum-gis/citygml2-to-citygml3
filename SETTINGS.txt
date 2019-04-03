@@ -1,11 +1,11 @@
 # Input file
-INPUT_FILE=input/FZKHaus_201903.xml
+INPUT_FILE=input/FZKHaus.gml
 
 # XSL file
 XSL_FILE=xsl/Transform.xsl
 
 # Output file
-OUTPUT_FILE=output/FZKHaus_201903_v3.xml
+OUTPUT_FILE=output/FZKHaus_v3.gml
 
 # Change all LOD4 to LOD3?
 # [true | false]
