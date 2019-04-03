@@ -1,6 +1,6 @@
 # Change Log
 
-### 0.3.0 - Active - See [sample file in CityGML 3.0](output/FZKHaus_201903_v3.gml)
+### 0.3.0 - Active - See [sample file in CityGML 3.0](output/FZKHaus_v3.gml)
 
 FZKHaus in 3D              |  FZKHaus in 2D
 :-------------------------:|:-------------------------:
@@ -39,6 +39,7 @@ FZKHaus in 3D              |  FZKHaus in 2D
     
 * Others
     * XSDs have been updated to version March 2019 (for all recorded versions, see [xsds](xsds)) (see [d2e59b9](https://github.com/tum-gis/citygml2-to-citygml3/commit/d2e59b9a03daa41cc09b5f145350594b58680ef7))
+    * The runnable `jar` file has been renamed from `Transform.jar` to `citygml2-to-citygml3.jar` (see [c11c539](https://github.com/tum-gis/citygml2-to-citygml3/commit/c11c539c1c05d608fc04c3f45a1cad9e60d75af2) and [72cbfd2](https://github.com/tum-gis/citygml2-to-citygml3/commit/72cbfd2fb1772ab2a07aa4a3af4615f77cfa2096))
     
 ##### FIXES
 
