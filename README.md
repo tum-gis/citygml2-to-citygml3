@@ -1,19 +1,24 @@
 # citygml2-to-citygml3
 
-A small Java program used to transform CityGML v2.0 to CityGML v3.0 files.
+A Java tool used to transform CityGML v2.0 to CityGML v3.0 files.
 
 This project is still in early development and subject to change. (However, it is already usable/useful and many datasets from different cities and countries could be successfully transformed.) 
 
 ### How to run
-The program can be executed by running the `Run.bat` file (in Windows).
 
-The result is by default saved in [FZKHaus_v3.gml](output/FZKHaus_v3.gml) (only visible after the program is complete).
+1. The source code can be cloned using 
+   ```batch
+   git clone https://github.com/tum-gis/citygml2-to-citygml3
+   ```
+   or downloading the latest release [here](https://github.com/tum-gis/citygml2-to-citygml3/releases).
 
-### Command line
-Alternatively, the program can also be executed using the command line:
-```batch
-java -jar Transform.jar
-```
+2. The program can then be executed by running the `Run.bat` file (in Windows) or using the following command line:
+   ```batch
+   java -jar citygml2-to-citygml3.jar
+   ```
+
+3. The result is by default saved in folder [output](output), such as [output/FZKHaus_v3.gml](output/FZKHaus_v3.gml) (only visible after the program is complete). 
+   Simply open this folder/file to see the output.
 
 ### Configurations
 The program settings can be adjusted in the configuration file [SETTINGS.txt](SETTINGS.txt). Depending on the use-case, users may change these configurations to fit their needs:
@@ -89,6 +94,8 @@ The list of supported CityGML v3.0 feature types and elements in the current imp
 + `BuildingFurnitures`
 + `BuildingInstallations`
 + And many more...
+
+For the list of changes please refer to the [change logs](CHANGES.md).
 
 Below are the visualization screenshots taken in FME of the transformed sample dataset [FZKHaus_v3.gml](output/FZKHaus_v3.gml) in 3D and 2D respectively:
 
