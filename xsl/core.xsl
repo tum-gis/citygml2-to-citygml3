@@ -70,7 +70,7 @@ SOFTWARE.
 			xmlns:ver="http://www.opengis.net/citygml/versioning/3.0">
 			<xsl:call-template name="core:AbstractFeatureWithLifespanType" />
 			<xsl:apply-templates select="*[local-name()='cityObjectMember']" />
-			<xsl:apply-templates select="app:appearanceMember" />
+			<xsl:apply-templates select="app:appearanceMember|app:appearance" />
 		</CityModel>
 	</xsl:template>
 

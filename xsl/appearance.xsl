@@ -81,7 +81,7 @@ SOFTWARE.
 											<xsl:element name="app:uri">
 												<xsl:value-of select="app:ParameterizedTexture/app:target/@uri" />
 											</xsl:element>
-											<xsl:element name="app:target">
+											<xsl:element name="app:textureParameterization">
 												<xsl:if test="app:ParameterizedTexture/app:target/app:TexCoordList">
 													<xsl:element name="app:TexCoordList">
 														<xsl:element name="app:textureCoordinates">
@@ -105,6 +105,51 @@ SOFTWARE.
 				</xsl:for-each>
 			</xsl:element>
 		</appearanceMember>
+	</xsl:template>
+
+	<xsl:template match="app:appearance">
+		<appearance>
+			<xsl:element name="app:Appearance">
+				<xsl:copy-of select="app:Appearance/@*" />
+				<xsl:element name="app:theme">
+					<xsl:value-of select="app:Appearance/app:theme/text()" />
+				</xsl:element>
+				<xsl:for-each select="app:Appearance/app:surfaceDataMember">
+					<xsl:element name="app:surfaceData">
+						<xsl:choose>
+							<xsl:when test="app:ParameterizedTexture">
+								<xsl:element name="app:ParameterizedTexture">
+									<xsl:copy-of select="app:ParameterizedTexture/@*" />
+									<xsl:copy-of select="app:ParameterizedTexture/child::node()[name()!='app:target']" />
+									<xsl:element name="app:textureParameterization">
+										<xsl:element name="app:TextureAssociation">
+											<xsl:element name="app:uri">
+												<xsl:value-of select="app:ParameterizedTexture/app:target/@uri" />
+											</xsl:element>
+											<xsl:element name="app:textureParameterization">
+												<xsl:if test="app:ParameterizedTexture/app:target/app:TexCoordList">
+													<xsl:element name="app:TexCoordList">
+														<xsl:element name="app:textureCoordinates">
+															<xsl:value-of select="app:ParameterizedTexture/app:target/app:TexCoordList/app:textureCoordinates/text()" />
+														</xsl:element>
+														<xsl:element name="app:ring">
+															<xsl:value-of select="app:ParameterizedTexture/app:target/app:TexCoordList/app:textureCoordinates/@ring" />
+														</xsl:element>
+													</xsl:element>
+												</xsl:if>
+											</xsl:element>
+										</xsl:element>
+									</xsl:element>
+								</xsl:element>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:copy-of select="@*|node()" />
+							</xsl:otherwise>
+						</xsl:choose>
+					</xsl:element>
+				</xsl:for-each>
+			</xsl:element>
+		</appearance>
 	</xsl:template>
     
 </xsl:stylesheet>
