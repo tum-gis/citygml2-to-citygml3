@@ -19,6 +19,7 @@ FZKHaus in 3D              |  FZKHaus in 2D
 * Module `APPEARANCE`:
     * Element `app:surfaceDataMember` changed to `app:surfaceData` (see [653bc43](https://github.com/tum-gis/citygml2-to-citygml3/commit/653bc43b9922fcae75cbbaf5f59048d6ee15cf34))
     * Element `app:target` changed to `app:textureParameterization` (see [ef3c626](https://github.com/tum-gis/citygml2-to-citygml3/commit/ef3c626d1c54a168687357c9625a6b0794cac7de))
+    * Element `app:appearance` changed to `appearance` and `app:target` of `app:TextureAssociation` changed to `app:textureParameterization` (see [85b6705](https://github.com/tum-gis/citygml2-to-citygml3/commit/85b6705e4e2cd8106ec23f831147e22facc16088))
     
 * Module `BUILDING`:
     * Element `bldg:interiorRoom` changed to `bldg:buildingRoom` (see [177a51a](https://github.com/tum-gis/citygml2-to-citygml3/commit/177a51a09fc26a043fe1dad479eb43001503986c))
