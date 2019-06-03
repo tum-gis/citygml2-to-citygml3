@@ -348,10 +348,17 @@ SOFTWARE.
 	<xsl:template match="bldg:BuildingPart">
 		<xsl:element name="bldg:buildingPart">
 			<xsl:element name="bldg:BuildingPart">
-				<xsl:apply-templates select="@*|node()" />
+                <xsl:attribute name="gml:id">
+                    <xsl:value-of select="@gml:id" />
+                </xsl:attribute>
+                <xsl:call-template name="bldg:AbstractBuildingType" />
+                <xsl:call-template name="bldg:AbstractGenericApplicationPropertyOfBuildingPart" />
 			</xsl:element>
 		</xsl:element>
 	</xsl:template>
+
+    <xsl:template name="bldg:AbstractGenericApplicationPropertyOfBuildingPart">
+    </xsl:template>
 	
 	<xsl:template match="bldg:interiorRoom">
 		<xsl:element name="bldg:buildingRoom">
