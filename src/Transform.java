@@ -73,7 +73,6 @@ public class Transform {
 				SETTINGS.put(ss[0], ss[1].replaceAll("\\\\", "/"));
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			try {
@@ -81,7 +80,6 @@ public class Transform {
 					br.close();
 				}
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -117,7 +115,7 @@ public class Transform {
 		String line = null;
 		boolean found = false;
 
-		String xsdLocation = "http://www.3dcitydb.org/citygml3/2019-03-08/xsds/";
+		String xsdLocation = "http://www.3dcitydb.org/citygml3/2019-06-05/xsds/";
 
 		ArrayList<String[]> ns = new ArrayList<>();
 		ns.add(new String[] { "app", "http://www.opengis.net/citygml/appearance/3.0", xsdLocation + "appearance.xsd" });
