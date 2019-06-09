@@ -141,6 +141,7 @@ SOFTWARE.
 	<xsl:template match="*[local-name()='cityObjectMember']">
 		<xsl:copy copy-namespaces="no">
 			<xsl:apply-templates select="bldg:Building" />
+			<xsl:apply-templates select="frn:CityFurniture" />
 		</xsl:copy>
 	</xsl:template>
 
@@ -221,9 +222,10 @@ SOFTWARE.
 	<xsl:template name="core:AbstractPhysicalSpaceType">
 		<xsl:call-template name="core:AbstractSpaceType" />
 		<!-- NEW -->
-		<xsl:apply-templates select="bldg:lod1TerrainIntersection" /> <!-- lod1TerrainIntersectionCurve -->
-		<xsl:apply-templates select="bldg:lod2TerrainIntersection" /> <!-- lod2TerrainIntersectionCurve -->
-		<xsl:apply-templates select="bldg:lod3TerrainIntersection" /> <!-- lod3TerrainIntersectionCurve -->
+		<xsl:apply-templates select="lod1TerrainIntersection | bldg:lod1TerrainIntersection | frn:lod1TerrainIntersection" /> <!-- lod1TerrainIntersectionCurve -->
+		<xsl:apply-templates select="lod2TerrainIntersection | bldg:lod2TerrainIntersection | frn:lod2TerrainIntersection" /> <!-- lod2TerrainIntersectionCurve -->
+		<xsl:apply-templates select="lod3TerrainIntersection | bldg:lod3TerrainIntersection | frn:lod3TerrainIntersection" /> <!-- lod3TerrainIntersectionCurve -->
+		<xsl:apply-templates select="lod4TerrainIntersection | bldg:lod4TerrainIntersection | frn:lod4TerrainIntersection" /> <!-- lod4TerrainIntersectionCurve -->
 		<xsl:apply-templates select="pointCloud" />
 		<xsl:call-template name="core:AbstractGenericApplicationPropertyOfAbstractPhysicalSpace" />
 	</xsl:template>
@@ -235,9 +237,11 @@ SOFTWARE.
 		<xsl:call-template name="core:AbstractPhysicalSpaceType" />
 		<xsl:apply-templates select="bldg:opening" /> <!-- TODO -->
 		<!-- NEW -->
-		<xsl:apply-templates select="lod1ImplicitRepresentation" />
-		<xsl:apply-templates select="lod2ImplicitRepresentation" />
-		<xsl:apply-templates select="lod3ImplicitRepresentation" />
+		<xsl:apply-templates select="lod1ImplicitRepresentation | frn:lod1ImplicitRepresentation" />
+		<xsl:apply-templates select="lod2ImplicitRepresentation | frn:lod2ImplicitRepresentation" />
+		<xsl:apply-templates select="lod3ImplicitRepresentation | frn:lod3ImplicitRepresentation" />
+		<!-- REMOVE OR REPLACE WITH LOD3 -->
+		<xsl:apply-templates select="lod4ImplicitRepresentation | frn:lod4ImplicitRepresentation" />
 		<xsl:call-template name="core:AbstractGenericApplicationPropertyOfAbstractOccupiedSpace" />
 	</xsl:template>
 
@@ -250,10 +254,28 @@ SOFTWARE.
 		</xsl:copy>
 	</xsl:template>
 
+	<!-- Change or remove all LOD4 to LOD3 depending on the parameter lod4ToLod3 -->
+	<xsl:template match="lod4TerrainIntersectionCurve">
+		<xsl:if test="$lod4ToLod3='true'">
+			<xsl:element name="lod3TerrainIntersectionCurve">
+				<xsl:apply-templates select="@*|node()" />
+			</xsl:element>
+		</xsl:if>
+	</xsl:template>
+
 	<xsl:template match="lod1ImplicitRepresentation | lod2ImplicitRepresentation | lod3ImplicitRepresentation">
 		<xsl:copy>
 			<xsl:apply-templates select="@*|node()" />
 		</xsl:copy>
+	</xsl:template>
+
+	<!-- Change or remove all LOD4 to LOD3 depending on the parameter lod4ToLod3 -->
+	<xsl:template match="lod4ImplicitRepresentation">
+		<xsl:if test="$lod4ToLod3='true'">
+			<xsl:element name="lod3ImplicitRepresentation">
+				<xsl:apply-templates select="@*|node()" />
+			</xsl:element>
+		</xsl:if>
 	</xsl:template>
 	
 	<xsl:template name="core:AbstractThematicSurfaceType">

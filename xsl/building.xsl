@@ -458,6 +458,21 @@ SOFTWARE.
 	
 	<xsl:template name="bldg:AbstractGenericApplicationPropertyOfBuildingInstallation">
 	</xsl:template>
+
+	<xsl:template match="bldg:lod1TerrainIntersectionCurve | bldg:lod2TerrainIntersectionCurve | bldg:lod3TerrainIntersectionCurve">
+		<xsl:copy>
+			<xsl:apply-templates select="@*|node()" />
+		</xsl:copy>
+	</xsl:template>
+
+	<!-- Change or remove all LOD4 to LOD3 depending on the parameter lod4ToLod3 -->
+	<xsl:template match="bldg:lod4TerrainIntersectionCurve">
+		<xsl:if test="$lod4ToLod3='true'">
+			<xsl:element name="bldg:lod3TerrainIntersectionCurve">
+				<xsl:apply-templates select="@*|node()" />
+			</xsl:element>
+		</xsl:if>
+	</xsl:template>
 	
 	<!-- ++++++++++++++++++++++++++++++++++++++++ -->
 	<!-- +++++++++++++++++ COPY +++++++++++++++++ -->

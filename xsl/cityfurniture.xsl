@@ -61,40 +61,69 @@ SOFTWARE.
 	xmlns="http://www.opengis.net/citygml/2.0"
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	xmlns:xalan="http://xml.apache.org/xslt">
-    
-    <!-- 
-    exclude-result-prefixes="xalan xlink xsi xAl bldg gml gen con" -->
 
-	<xsl:include href="appearance.xsl" />
-	<xsl:include href="building.xsl" />
-	<xsl:include href="cityfurniture.xsl" />
-	<xsl:include href="construction.xsl" />
-	<xsl:include href="core.xsl" />
-	<xsl:include href="dynamizer.xsl" />
-	<xsl:include href="generics.xsl" />
-	<xsl:include href="gml.xsl" />
-	<xsl:include href="pointcloud.xsl" />
-	<xsl:include href="xlink.xsl" />
+	<xsl:template match="frn:CityFurniture">
+		<xsl:copy>
+			<xsl:attribute name="gml:id">
+                <xsl:value-of select="@gml:id" />
+            </xsl:attribute>
+
+			<xsl:apply-templates select="bldg:class" />
+			<xsl:apply-templates select="bldg:function" />
+			<xsl:apply-templates select="bldg:usage" />
+	            
+			<xsl:call-template name="core:AbstractOccupiedSpaceType" />
+			<xsl:call-template name="frn:AbstractGenericApplicationPropertyOfCityFurniture" />
+		</xsl:copy>
+	</xsl:template>
 	
-    <!-- Post processing texts -->
-	<xsl:strip-space elements="*" />
-	<xsl:output
-		method="xml"
-		indent="yes"
-		xalan:indent-amount="4"
-		standalone="yes" />
-    
-    <!-- Identity transformation -->
-	<xsl:template match="@*|node()">
+	<xsl:template name="frn:AbstractGenericApplicationPropertyOfCityFurniture">
+	</xsl:template>
+
+	<xsl:template match="frn:lod1TerrainIntersectionCurve | frn:lod2TerrainIntersectionCurve | frn:lod3TerrainIntersectionCurve">
+		<xsl:copy>
+			<xsl:apply-templates select="@*|node()" />
+		</xsl:copy>
+	</xsl:template>
+
+	<!-- Change or remove all LOD4 to LOD3 depending on the parameter lod4ToLod3 -->
+	<xsl:template match="frn:lod4TerrainIntersectionCurve">
+		<xsl:if test="$lod4ToLod3='true'">
+			<xsl:element name="frn:lod3TerrainIntersectionCurve">
+				<xsl:apply-templates select="@*|node()" />
+			</xsl:element>
+		</xsl:if>
+	</xsl:template>
+
+	<xsl:template match="frn:lod1ImplicitRepresentation | frn:lod2ImplicitRepresentation | frn:lod3ImplicitRepresentation">
+		<xsl:copy>
+			<xsl:apply-templates select="@*|node()" />
+		</xsl:copy>
+	</xsl:template>
+
+	<!-- Change or remove all LOD4 to LOD3 depending on the parameter lod4ToLod3 -->
+	<xsl:template match="frn:lod4ImplicitRepresentation">
+		<xsl:if test="$lod4ToLod3='true'">
+			<xsl:element name="frn:lod3ImplicitRepresentation">
+				<xsl:apply-templates select="@*|node()" />
+			</xsl:element>
+		</xsl:if>
+	</xsl:template>
+	
+	<!-- ++++++++++++++++++++++++++++++++++++++++ -->
+	<!-- +++++++++++++++++ COPY +++++++++++++++++ -->
+	<!-- ++++++++++++++++++++++++++++++++++++++++ -->
+	<xsl:template match="bldg:class | 
+						bldg:function | 
+						bldg:usage">
 		<xsl:copy>
 			<xsl:apply-templates select="@*|node()" />
 		</xsl:copy>
 	</xsl:template>
 	
-	<!-- Replace LOD4 with LOD3, this is given from Transform.java -->
-	<xsl:param name="lod4ToLod3" />
-	
-	<!-- How to handle lod4Geometry, this is given from Transform.java -->
-	<xsl:param name="changeLod4Geometry" />
+	<!-- ++++++++++++++++++++++++++++++++++++++++ -->
+	<!-- ++++++++++++++++ REMOVE ++++++++++++++++ -->
+	<!-- ++++++++++++++++++++++++++++++++++++++++ -->
+	<!-- <xsl:template match="" /> -->
 
 </xsl:stylesheet>
