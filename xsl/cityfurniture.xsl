@@ -80,31 +80,92 @@ SOFTWARE.
 	<xsl:template name="frn:AbstractGenericApplicationPropertyOfCityFurniture">
 	</xsl:template>
 
-	<xsl:template match="frn:lod1TerrainIntersectionCurve | frn:lod2TerrainIntersectionCurve | frn:lod3TerrainIntersectionCurve">
-		<xsl:copy>
+	<xsl:template match="frn:lod1TerrainIntersection">
+		<xsl:element name="lod1TerrainIntersectionCurve">
 			<xsl:apply-templates select="@*|node()" />
-		</xsl:copy>
+		</xsl:element>
+	</xsl:template>
+
+	<xsl:template match="frn:lod2TerrainIntersection">
+		<xsl:element name="lod2TerrainIntersectionCurve">
+			<xsl:apply-templates select="@*|node()" />
+		</xsl:element>
+	</xsl:template>
+
+	<xsl:template match="frn:lod3TerrainIntersection">
+		<xsl:element name="lod3TerrainIntersectionCurve">
+			<xsl:apply-templates select="@*|node()" />
+		</xsl:element>
 	</xsl:template>
 
 	<!-- Change or remove all LOD4 to LOD3 depending on the parameter lod4ToLod3 -->
-	<xsl:template match="frn:lod4TerrainIntersectionCurve">
+	<xsl:template match="frn:lod4TerrainIntersection">
 		<xsl:if test="$lod4ToLod3='true'">
-			<xsl:element name="frn:lod3TerrainIntersectionCurve">
+			<xsl:element name="lod3TerrainIntersectionCurve">
 				<xsl:apply-templates select="@*|node()" />
 			</xsl:element>
 		</xsl:if>
 	</xsl:template>
 
-	<xsl:template match="frn:lod1ImplicitRepresentation | frn:lod2ImplicitRepresentation | frn:lod3ImplicitRepresentation">
-		<xsl:copy>
-			<xsl:apply-templates select="@*|node()" />
-		</xsl:copy>
+	<xsl:template match="frn:lod1ImplicitRepresentation">
+		<xsl:for-each select="./*">
+			<xsl:element name="lod1ImplicitRepresentation">
+				<xsl:call-template name="core:ImplicitGeometryType" />
+			</xsl:element>
+		</xsl:for-each>
+	</xsl:template>
+
+	<xsl:template match="frn:lod2ImplicitRepresentation">
+		<xsl:element name="lod3ImplicitRepresentation">
+			<xsl:for-each select="./*">
+				<xsl:element name="ImplicitGeometry">
+					<xsl:call-template name="core:ImplicitGeometryType"/>
+				</xsl:element>
+			</xsl:for-each>
+		</xsl:element>
+	</xsl:template>
+
+	<xsl:template match="frn:lod3ImplicitRepresentation">
+		<xsl:for-each select="./*">
+			<xsl:element name="lod3ImplicitRepresentation">
+				<xsl:call-template name="core:ImplicitGeometryType" />
+			</xsl:element>
+		</xsl:for-each>
 	</xsl:template>
 
 	<!-- Change or remove all LOD4 to LOD3 depending on the parameter lod4ToLod3 -->
 	<xsl:template match="frn:lod4ImplicitRepresentation">
 		<xsl:if test="$lod4ToLod3='true'">
-			<xsl:element name="frn:lod3ImplicitRepresentation">
+			<xsl:for-each select="./*">
+				<xsl:element name="lod3ImplicitRepresentation">
+					<xsl:call-template name="core:ImplicitGeometryType" />
+				</xsl:element>
+			</xsl:for-each>
+		</xsl:if>
+	</xsl:template>
+
+	<xsl:template match="frn:lod1Geometry">
+		<xsl:element name="lod1MultiSurface">
+			<xsl:apply-templates select="@*|node()" />
+		</xsl:element>
+	</xsl:template>
+
+	<xsl:template match="frn:lod2Geometry">
+		<xsl:element name="lod2MultiSurface">
+			<xsl:apply-templates select="@*|node()" />
+		</xsl:element>
+	</xsl:template>
+
+	<xsl:template match="frn:lod3Geometry">
+		<xsl:element name="lod3MultiSurface">
+			<xsl:apply-templates select="@*|node()" />
+		</xsl:element>
+	</xsl:template>
+
+	<!-- Change or remove all LOD4 to LOD3 depending on the parameter lod4ToLod3 -->
+	<xsl:template match="frn:lod4Geometry">
+		<xsl:if test="$lod4ToLod3='true'">
+			<xsl:element name="lod3Geometry">
 				<xsl:apply-templates select="@*|node()" />
 			</xsl:element>
 		</xsl:if>

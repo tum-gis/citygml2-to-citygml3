@@ -205,11 +205,11 @@ SOFTWARE.
 		<xsl:apply-templates select="bldg:lod0MultiSurface" />
 		<xsl:apply-templates select="bldg:lod1Solid" />
 		<xsl:apply-templates select="bldg:lod2Solid" />
-		<xsl:apply-templates select="bldg:lod2MultiSurface" />
+		<xsl:apply-templates select="bldg:lod2MultiSurface | frn:lod1Geometry" />
 		<xsl:apply-templates select="bldg:lod2MultiCurve" />
 		<xsl:apply-templates select="bldg:boundedBy" />
 		<xsl:apply-templates select="bldg:lod3Solid | bldg:lod4Solid" />
-		<xsl:apply-templates select="bldg:lod3MultiSurface | bldg:lod4MultiSurface" />
+		<xsl:apply-templates select="bldg:lod3MultiSurface | bldg:lod4MultiSurface | frn:lod3Geometry | frn:lod4Geometry" />
 		<xsl:apply-templates select="bldg:lod3MultiCurve | bldg:lod4MultiCurve" />
 		<!-- TODO LOD4 does not exists anymore, change them in LOD3? -->
 		<xsl:apply-templates select="bldg:lod4Geometry" />
@@ -319,6 +319,26 @@ SOFTWARE.
 	</xsl:template>
 
 	<xsl:template name="core:AbstractGenericApplicationPropertyOfAbstractLogicalSpace">
+	</xsl:template>
+
+	<xsl:template name="core:ImplicitGeometryType">
+		<xsl:call-template name="gml:AbstractGMLType" />
+		<xsl:apply-templates select="*[local-name()='transformationMatrix']" />
+		<xsl:apply-templates select="*[local-name()='mimeType']" />
+		<xsl:apply-templates select="*[local-name()='libraryObject']" />
+		<xsl:apply-templates select="*[local-name()='referencePoint']" />
+		<xsl:apply-templates select="*[local-name()='relativeGMLGeometry']" />
+		<!--<xsl:apply-templates select="appearance" />-->
+		<xsl:call-template name="core:AbstractGenericApplicationPropertyOfImplicitGeometry" />
+	</xsl:template>
+
+	<xsl:template match="*[local-name()='transformationMatrix'] | *[local-name()='mimeType'] | *[local-name()='libraryObject'] | *[local-name()='referencePoint'] | *[local-name()='relativeGMLGeometry']">
+		<xsl:copy>
+			<xsl:apply-templates select="@*|node()" />
+		</xsl:copy>
+	</xsl:template>
+
+	<xsl:template name="core:AbstractGenericApplicationPropertyOfImplicitGeometry">
 	</xsl:template>
 						
 	<!-- ++++++++++++++++++++++++++++++++++++++++ -->
