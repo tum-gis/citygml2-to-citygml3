@@ -204,12 +204,13 @@ SOFTWARE.
 		<xsl:apply-templates select="lod0Point" /> <!-- NEW -->
 		<xsl:apply-templates select="bldg:lod0MultiSurface" />
 		<xsl:apply-templates select="bldg:lod1Solid" />
+		<xsl:apply-templates select="bldg:lod1Geometry | frn:lod1Geometry" />
 		<xsl:apply-templates select="bldg:lod2Solid" />
-		<xsl:apply-templates select="bldg:lod2MultiSurface | frn:lod1Geometry" />
+		<xsl:apply-templates select="bldg:lod2MultiSurface | bldg:lod2Geometry | frn:lod2Geometry" />
 		<xsl:apply-templates select="bldg:lod2MultiCurve" />
 		<xsl:apply-templates select="bldg:boundedBy" />
 		<xsl:apply-templates select="bldg:lod3Solid | bldg:lod4Solid" />
-		<xsl:apply-templates select="bldg:lod3MultiSurface | bldg:lod4MultiSurface | frn:lod3Geometry | frn:lod4Geometry" />
+		<xsl:apply-templates select="bldg:lod3MultiSurface | bldg:lod4MultiSurface | bldg:lod3Geometry | bldg:lod4Geometry | frn:lod3Geometry | frn:lod4Geometry" />
 		<xsl:apply-templates select="bldg:lod3MultiCurve | bldg:lod4MultiCurve" />
 		<!-- TODO LOD4 does not exists anymore, change them in LOD3? -->
 		<xsl:apply-templates select="bldg:lod4Geometry" />
