@@ -116,7 +116,7 @@ SOFTWARE.
 	</xsl:template>
 
 	<xsl:template match="frn:lod2ImplicitRepresentation">
-		<xsl:element name="lod3ImplicitRepresentation">
+		<xsl:element name="lod2ImplicitRepresentation">
 			<xsl:for-each select="./*">
 				<xsl:element name="ImplicitGeometry">
 					<xsl:call-template name="core:ImplicitGeometryType"/>
