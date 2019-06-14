@@ -166,7 +166,7 @@ SOFTWARE.
 	<!-- Change or remove all LOD4 to LOD3 depending on the parameter lod4ToLod3 -->
 	<xsl:template match="frn:lod4Geometry">
 		<xsl:if test="$lod4ToLod3='true'">
-			<xsl:element name="lod3Geometry">
+			<xsl:element name="lod3MultiSurface">
 				<xsl:apply-templates select="@*|node()" />
 			</xsl:element>
 		</xsl:if>
