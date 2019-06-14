@@ -1,6 +1,6 @@
 # Change Log
 
-### 0.5.0 - See [sample file in CityGML 3.0](output/FZKHaus_v3.gml)
+### 0.6.0 - See [sample file in CityGML 3.0](output/FZKHaus_v3.gml)
 
 FZKHaus in 3D              |  FZKHaus in 2D
 :-------------------------:|:-------------------------:
@@ -8,16 +8,29 @@ FZKHaus in 3D              |  FZKHaus in 2D
 
 ---------
 
+##### NEW
+
+* Added support for **Module `CITYFURNITURE`**
+
 ##### FIXES
 
-* **Module `BUILDING`**:
-    * Fixed transformation for `BuildingPart` (see [`3fb2b87`](https://github.com/tum-gis/citygml2-to-citygml3/commit/3fb2b87f804c5914317ffabaa454d8c96009de3e) and [`875bc6b`](https://github.com/tum-gis/citygml2-to-citygml3/commit/875bc6bd4e7d7abf81a4a97c93225d15c83883f7))
+* **Module `APPEARANCE`**:
+    * Fixed transformation of `app:target` elements (see [`c9f02dd`](https://github.com/tum-gis/citygml2-to-citygml3/commit/c9f02ddc376e1c63b22f0d5fe0497852a3d26a8f))
+    
+  
+### 0.5.0
 
 ##### UPDATES
 
 * **Others**:
     * Updated the schemata, transformation and sample CityGML 3.0 datasets accordingly to the new release of [CityGML-3.0CM / 3.0.0-draft.2019.06.05.1](https://github.com/opengeospatial/CityGML-3.0CM/releases/tag/3.0.0-draft.2019.06.05.1) and [CityGML-3.0Encodings / 3.0.0-draft.2019.06.05.1](https://github.com/opengeospatial/CityGML-3.0Encodings/releases/tag/3.0.0-draft.2019.06.05.1) (see [`f821e8b`](https://github.com/tum-gis/citygml2-to-citygml3/commit/f821e8b6575dfd62dcff21604dc5356c27cc5b63)) 
+
+##### FIXES
+
+* **Module `BUILDING`**:
+    * Fixed transformation for `BuildingPart` (see [`3fb2b87`](https://github.com/tum-gis/citygml2-to-citygml3/commit/3fb2b87f804c5914317ffabaa454d8c96009de3e) and [`875bc6b`](https://github.com/tum-gis/citygml2-to-citygml3/commit/875bc6bd4e7d7abf81a4a97c93225d15c83883f7))
     
+        
 ### 0.4.0
 
 ##### NEW
