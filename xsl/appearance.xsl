@@ -76,25 +76,27 @@ SOFTWARE.
 								<xsl:element name="app:ParameterizedTexture">
 									<xsl:copy-of select="app:ParameterizedTexture/@*" />
 									<xsl:copy-of select="app:ParameterizedTexture/child::node()[name()!='app:target']" />
-									<xsl:element name="app:textureParameterization">
-										<xsl:element name="app:TextureAssociation">
-											<xsl:element name="app:uri">
-												<xsl:value-of select="app:ParameterizedTexture/app:target/@uri" />
-											</xsl:element>
-											<xsl:element name="app:textureParameterization">
-												<xsl:if test="app:ParameterizedTexture/app:target/app:TexCoordList">
-													<xsl:element name="app:TexCoordList">
-														<xsl:element name="app:textureCoordinates">
-															<xsl:value-of select="app:ParameterizedTexture/app:target/app:TexCoordList/app:textureCoordinates/text()" />
+									<xsl:for-each select="app:ParameterizedTexture/app:target">
+										<xsl:element name="app:textureParameterization">
+											<xsl:element name="app:TextureAssociation">
+												<xsl:element name="app:uri">
+													<xsl:value-of select="./@uri" />
+												</xsl:element>
+												<xsl:element name="app:textureParameterization">
+													<xsl:if test="./app:TexCoordList">
+														<xsl:element name="app:TexCoordList">
+															<xsl:element name="app:textureCoordinates">
+																<xsl:value-of select="./app:TexCoordList/app:textureCoordinates/text()" />
+															</xsl:element>
+															<xsl:element name="app:ring">
+																<xsl:value-of select="./app:TexCoordList/app:textureCoordinates/@ring" />
+															</xsl:element>
 														</xsl:element>
-														<xsl:element name="app:ring">
-															<xsl:value-of select="app:ParameterizedTexture/app:target/app:TexCoordList/app:textureCoordinates/@ring" />
-														</xsl:element>
-													</xsl:element>
-												</xsl:if>
+													</xsl:if>
+												</xsl:element>
 											</xsl:element>
 										</xsl:element>
-									</xsl:element>
+									</xsl:for-each>
 								</xsl:element>
 							</xsl:when>
 							<xsl:otherwise>
@@ -121,25 +123,27 @@ SOFTWARE.
 								<xsl:element name="app:ParameterizedTexture">
 									<xsl:copy-of select="app:ParameterizedTexture/@*" />
 									<xsl:copy-of select="app:ParameterizedTexture/child::node()[name()!='app:target']" />
-									<xsl:element name="app:textureParameterization">
-										<xsl:element name="app:TextureAssociation">
-											<xsl:element name="app:uri">
-												<xsl:value-of select="app:ParameterizedTexture/app:target/@uri" />
-											</xsl:element>
-											<xsl:element name="app:textureParameterization">
-												<xsl:if test="app:ParameterizedTexture/app:target/app:TexCoordList">
-													<xsl:element name="app:TexCoordList">
-														<xsl:element name="app:textureCoordinates">
-															<xsl:value-of select="app:ParameterizedTexture/app:target/app:TexCoordList/app:textureCoordinates/text()" />
+									<xsl:for-each select="app:ParameterizedTexture/app:target">
+										<xsl:element name="app:textureParameterization">
+											<xsl:element name="app:TextureAssociation">
+												<xsl:element name="app:uri">
+													<xsl:value-of select="./@uri" />
+												</xsl:element>
+												<xsl:element name="app:textureParameterization">
+													<xsl:if test="./app:TexCoordList">
+														<xsl:element name="app:TexCoordList">
+															<xsl:element name="app:textureCoordinates">
+																<xsl:value-of select="./app:TexCoordList/app:textureCoordinates/text()" />
+															</xsl:element>
+															<xsl:element name="app:ring">
+																<xsl:value-of select="./app:TexCoordList/app:textureCoordinates/@ring" />
+															</xsl:element>
 														</xsl:element>
-														<xsl:element name="app:ring">
-															<xsl:value-of select="app:ParameterizedTexture/app:target/app:TexCoordList/app:textureCoordinates/@ring" />
-														</xsl:element>
-													</xsl:element>
-												</xsl:if>
+													</xsl:if>
+												</xsl:element>
 											</xsl:element>
 										</xsl:element>
-									</xsl:element>
+									</xsl:for-each>
 								</xsl:element>
 							</xsl:when>
 							<xsl:otherwise>

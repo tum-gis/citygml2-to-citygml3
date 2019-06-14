@@ -67,6 +67,7 @@ SOFTWARE.
 
 	<xsl:include href="appearance.xsl" />
 	<xsl:include href="building.xsl" />
+	<xsl:include href="cityfurniture.xsl" />
 	<xsl:include href="construction.xsl" />
 	<xsl:include href="core.xsl" />
 	<xsl:include href="dynamizer.xsl" />
