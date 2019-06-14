@@ -68,11 +68,12 @@ SOFTWARE.
                 <xsl:value-of select="@gml:id" />
             </xsl:attribute>
 
+			<xsl:call-template name="core:AbstractOccupiedSpaceType" />
+
 			<xsl:apply-templates select="frn:class" />
 			<xsl:apply-templates select="frn:function" />
 			<xsl:apply-templates select="frn:usage" />
-	            
-			<xsl:call-template name="core:AbstractOccupiedSpaceType" />
+
 			<xsl:call-template name="frn:AbstractGenericApplicationPropertyOfCityFurniture" />
 		</xsl:copy>
 	</xsl:template>
