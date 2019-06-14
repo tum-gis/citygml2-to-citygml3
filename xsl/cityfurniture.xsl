@@ -68,9 +68,9 @@ SOFTWARE.
                 <xsl:value-of select="@gml:id" />
             </xsl:attribute>
 
-			<xsl:apply-templates select="bldg:class" />
-			<xsl:apply-templates select="bldg:function" />
-			<xsl:apply-templates select="bldg:usage" />
+			<xsl:apply-templates select="frn:class" />
+			<xsl:apply-templates select="frn:function" />
+			<xsl:apply-templates select="frn:usage" />
 	            
 			<xsl:call-template name="core:AbstractOccupiedSpaceType" />
 			<xsl:call-template name="frn:AbstractGenericApplicationPropertyOfCityFurniture" />
@@ -174,9 +174,9 @@ SOFTWARE.
 	<!-- ++++++++++++++++++++++++++++++++++++++++ -->
 	<!-- +++++++++++++++++ COPY +++++++++++++++++ -->
 	<!-- ++++++++++++++++++++++++++++++++++++++++ -->
-	<xsl:template match="bldg:class | 
-						bldg:function | 
-						bldg:usage">
+	<xsl:template match="frn:class |
+						frn:function |
+						frn:usage">
 		<xsl:copy>
 			<xsl:apply-templates select="@*|node()" />
 		</xsl:copy>
