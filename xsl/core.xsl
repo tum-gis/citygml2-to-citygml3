@@ -212,8 +212,6 @@ SOFTWARE.
 		<xsl:apply-templates select="bldg:lod3Solid | bldg:lod4Solid" />
 		<xsl:apply-templates select="bldg:lod3MultiSurface | bldg:lod4MultiSurface | bldg:lod3Geometry | bldg:lod4Geometry | frn:lod3Geometry | frn:lod4Geometry" />
 		<xsl:apply-templates select="bldg:lod3MultiCurve | bldg:lod4MultiCurve" />
-		<!-- TODO LOD4 does not exists anymore, change them in LOD3? -->
-		<xsl:apply-templates select="bldg:lod4Geometry" />
 		<xsl:call-template name="core:AbstractGenericApplicationPropertyOfAbstractSpace" />
 	</xsl:template>
 	

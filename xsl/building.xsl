@@ -75,6 +75,9 @@ SOFTWARE.
 		<xsl:apply-templates select="bldg:storeyHeightsBelowGround" />
 
 		<xsl:apply-templates select="bldg:buildingConstructiveElement" />
+
+		<!-- rename all OuterBuildingInstallation and InteriorBuildingInstallaion to BuildingInstallation -->
+		<xsl:apply-templates select="bldg:outerBuildingInstallation | bldg:interiorBuildingInstallation" />
 		
 		<!-- move and rename bldg:Room/bldg:roomInstallation/bldg:IntBuildingInstallation to Building/bldg:buildingFurniture/bldg:BuildingInstallation -->
 		<xsl:apply-templates select="bldg:interiorRoom/bldg:Room/bldg:roomInstallation/bldg:IntBuildingInstallation" /> <!-- NEW -->
@@ -261,12 +264,12 @@ SOFTWARE.
 	</xsl:template>
     
     <!-- Change gml:CompositeSurface to gml:Shell -->
-	<xsl:template match="gml:CompositeSurface">
+	<xsl:template match="gml:exterior/gml:CompositeSurface">
 		<xsl:element name="gml:Shell">
 			<xsl:apply-templates select="@*|node()" />
 		</xsl:element>
 	</xsl:template>
-    
+
     <!-- Remove namespace bldg of lodXMultiSurface -->
 	<xsl:template match="bldg:lod1MultiSurface">
 		<xsl:element name="lod1MultiSurface">
@@ -427,6 +430,18 @@ SOFTWARE.
 
 	<xsl:template name="bldg:AbstractGenericApplicationPropertyOfAbstractBuildingSubdivision">
 	</xsl:template>
+
+	<xsl:template match="bldg:outerBuildingInstallation">
+		<xsl:for-each select="./bldg:BuildingInstallation">
+			<xsl:call-template name="transformBuildingInstallation" />
+		</xsl:for-each>
+	</xsl:template>
+
+	<xsl:template match="bldg:interiorBuildingInstallation">
+		<xsl:for-each select="./bldg:BuildingInstallation">
+			<xsl:call-template name="transformBuildingInstallation" />
+		</xsl:for-each>
+	</xsl:template>
 	
 	<!-- Add xlink -->
 	<xsl:template match="bldg:roomInstallation">
@@ -441,6 +456,10 @@ SOFTWARE.
 	
 	<!-- Move and rename bldg:IntBuildingInstallation to Building/bldg:buildingInstallation/bldg:BuildingInstallation -->
 	<xsl:template match="bldg:interiorRoom/bldg:Room/bldg:roomInstallation/bldg:IntBuildingInstallation">
+		<xsl:call-template name="transformBuildingInstallation" />
+	</xsl:template>
+
+	<xsl:template name="transformBuildingInstallation">
 		<xsl:element name="bldg:buildingInstallation">
 			<xsl:element name="bldg:BuildingInstallation">
 				<!-- Order of elements changed -->
@@ -451,6 +470,221 @@ SOFTWARE.
 				<xsl:call-template name="bldg:AbstractGenericApplicationPropertyOfBuildingInstallation" />
 			</xsl:element>
 		</xsl:element>
+	</xsl:template>
+
+	<xsl:template match="bldg:lod1Geometry">
+		<xsl:choose>
+			<!-- A Space in CityGML 3.0 does not allow a single surface,
+			so that single surfaces such as CompositeSurface, Surface, Polygon, OrientableSurface
+			and subclasses of Surface, namely TriangulatedSurface and TIN must be transformed to
+			<gml:MultiSurface>
+				<gml:surfaceMember>
+					<the object here />
+				</gml:surfaceMember>
+			</gml:MultiSurface> -->
+			<xsl:when test="gml:CompositeSurface | gml:Surface | gml:Polygon | gml:OrientableSurface | gml:TriangulatedSurface | gml:TIN">
+				<xsl:element name="lod1MultiSurface">
+					<xsl:element name="gml:MultiSurface">
+						<xsl:attribute name="gml:id">
+							<xsl:value-of select="concat('_msl_', generate-id())" />
+						</xsl:attribute>
+						<xsl:element name="gml:surfaceMember">
+							<xsl:apply-templates select="@*|node()" />
+						</xsl:element>
+					</xsl:element>
+				</xsl:element>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:choose>
+					<!-- If this is a gml:Solid or gml:CompositeSolid, then rename to lodXSolid -->
+					<xsl:when test="gml:Solid | gml:CompositeSolid">
+						<xsl:element name="lod1Solid">
+							<xsl:apply-templates select="@*|node()" />
+						</xsl:element>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:choose>
+							<!-- If this is a gml:MultiCurve, then rename to lodXMultiCurve -->
+							<xsl:when test="gml:MultiCurve">
+								<xsl:element name="lod1MultiCurve">
+									<xsl:apply-templates select="@*|node()" />
+								</xsl:element>
+							</xsl:when>
+							<xsl:otherwise>
+								<!-- If this is a gml:MultiSurface, then rename to lodXMultiSurface -->
+								<xsl:if test="gml:MultiSurface">
+									<xsl:element name="lod1MultiSurface">
+										<xsl:apply-templates select="@*|node()" />
+									</xsl:element>
+								</xsl:if>
+							</xsl:otherwise>
+						</xsl:choose>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+
+	<xsl:template match="bldg:lod2Geometry">
+		<xsl:choose>
+			<!-- A Space in CityGML 3.0 does not allow a single surface,
+			so that single surfaces such as CompositeSurface, Surface, Polygon, OrientableSurface
+			and subclasses of Surface, namely TriangulatedSurface and TIN must be transformed to
+			<gml:MultiSurface>
+				<gml:surfaceMember>
+					<the object here />
+				</gml:surfaceMember>
+			</gml:MultiSurface> -->
+			<xsl:when test="gml:CompositeSurface | gml:Surface | gml:Polygon | gml:OrientableSurface | gml:TriangulatedSurface | gml:TIN">
+				<xsl:element name="lod2MultiSurface">
+					<xsl:element name="gml:MultiSurface">
+						<xsl:attribute name="gml:id">
+							<xsl:value-of select="concat('_msl_', generate-id())" />
+						</xsl:attribute>
+						<xsl:element name="gml:surfaceMember">
+							<xsl:apply-templates select="@*|node()" />
+						</xsl:element>
+					</xsl:element>
+				</xsl:element>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:choose>
+					<!-- If this is a gml:Solid or gml:CompositeSolid, then rename to lodXSolid -->
+					<xsl:when test="gml:Solid | gml:CompositeSolid">
+						<xsl:element name="lod2Solid">
+							<xsl:apply-templates select="@*|node()" />
+						</xsl:element>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:choose>
+							<!-- If this is a gml:MultiCurve, then rename to lodXMultiCurve -->
+							<xsl:when test="gml:MultiCurve">
+								<xsl:element name="lod2MultiCurve">
+									<xsl:apply-templates select="@*|node()" />
+								</xsl:element>
+							</xsl:when>
+							<xsl:otherwise>
+								<!-- If this is a gml:MultiSurface, then rename to lodXMultiSurface -->
+								<xsl:if test="gml:MultiSurface">
+									<xsl:element name="lod2MultiSurface">
+										<xsl:apply-templates select="@*|node()" />
+									</xsl:element>
+								</xsl:if>
+							</xsl:otherwise>
+						</xsl:choose>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+
+	<xsl:template match="bldg:lod3Geometry">
+		<xsl:choose>
+			<!-- A Space in CityGML 3.0 does not allow a single surface,
+			so that single surfaces such as CompositeSurface, Surface, Polygon, OrientableSurface
+			and subclasses of Surface, namely TriangulatedSurface and TIN must be transformed to
+			<gml:MultiSurface>
+				<gml:surfaceMember>
+					<the object here />
+				</gml:surfaceMember>
+			</gml:MultiSurface> -->
+			<xsl:when test="gml:CompositeSurface | gml:Surface | gml:Polygon | gml:OrientableSurface | gml:TriangulatedSurface | gml:TIN">
+				<xsl:element name="lod3MultiSurface">
+					<xsl:element name="gml:MultiSurface">
+						<xsl:attribute name="gml:id">
+							<xsl:value-of select="concat('_msl_', generate-id())" />
+						</xsl:attribute>
+						<xsl:element name="gml:surfaceMember">
+							<xsl:apply-templates select="@*|node()" />
+						</xsl:element>
+					</xsl:element>
+				</xsl:element>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:choose>
+					<!-- If this is a gml:Solid or gml:CompositeSolid, then rename to lodXSolid -->
+					<xsl:when test="gml:Solid | gml:CompositeSolid">
+						<xsl:element name="lod3Solid">
+							<xsl:apply-templates select="@*|node()" />
+						</xsl:element>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:choose>
+							<!-- If this is a gml:MultiCurve, then rename to lodXMultiCurve -->
+							<xsl:when test="gml:MultiCurve">
+								<xsl:element name="lod3MultiCurve">
+									<xsl:apply-templates select="@*|node()" />
+								</xsl:element>
+							</xsl:when>
+							<xsl:otherwise>
+								<!-- If this is a gml:MultiSurface, then rename to lodXMultiSurface -->
+								<xsl:if test="gml:MultiSurface">
+									<xsl:element name="lod3MultiSurface">
+										<xsl:apply-templates select="@*|node()" />
+									</xsl:element>
+								</xsl:if>
+							</xsl:otherwise>
+						</xsl:choose>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+
+	<!-- Change or remove all LOD4 to LOD3 depending on the parameter lod4ToLod3 -->
+	<xsl:template match="bldg:lod4Geometry">
+		<xsl:if test="$lod4ToLod3='true'">
+			<xsl:choose>
+				<!-- A Space in CityGML 3.0 does not allow a single surface,
+                so that single surfaces such as CompositeSurface, Surface, Polygon, OrientableSurface
+                and subclasses of Surface, namely TriangulatedSurface and TIN must be transformed to
+                <gml:MultiSurface>
+                    <gml:surfaceMember>
+                        <the object here />
+                    </gml:surfaceMember>
+                </gml:MultiSurface> -->
+				<xsl:when test="gml:CompositeSurface | gml:Surface | gml:Polygon | gml:OrientableSurface | gml:TriangulatedSurface | gml:TIN">
+					<xsl:element name="lod3MultiSurface">
+						<xsl:element name="gml:MultiSurface">
+							<xsl:attribute name="gml:id">
+								<xsl:value-of select="concat('_msl_', generate-id())" />
+							</xsl:attribute>
+							<xsl:element name="gml:surfaceMember">
+								<xsl:apply-templates select="@*|node()" />
+							</xsl:element>
+						</xsl:element>
+					</xsl:element>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:choose>
+						<!-- If this is a gml:Solid or gml:CompositeSolid, then rename to lodXSolid -->
+						<xsl:when test="gml:Solid | gml:CompositeSolid">
+							<xsl:element name="lod3Solid">
+								<xsl:apply-templates select="@*|node()" />
+							</xsl:element>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:choose>
+								<!-- If this is a gml:MultiCurve, then rename to lodXMultiCurve -->
+								<xsl:when test="gml:MultiCurve">
+									<xsl:element name="lod3MultiCurve">
+										<xsl:apply-templates select="@*|node()" />
+									</xsl:element>
+								</xsl:when>
+								<xsl:otherwise>
+									<!-- If this is a gml:MultiSurface, then rename to lodXMultiSurface -->
+									<xsl:if test="gml:MultiSurface">
+										<xsl:element name="lod3MultiSurface">
+											<xsl:apply-templates select="@*|node()" />
+										</xsl:element>
+									</xsl:if>
+								</xsl:otherwise>
+							</xsl:choose>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:if>
 	</xsl:template>
 	
 	<xsl:template name="bldg:AbstractGenericApplicationPropertyOfBuildingFurniture">
