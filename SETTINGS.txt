@@ -1,28 +1,16 @@
 # Input file
-#INPUT_FILE=input/CityGML_v2_extended.gml
-INPUT_FILE=input/Singapore/Buildings/SingLOD3_v2.gml
-#INPUT_FILE=input/Singapore/CityFurniture/area1_cityfurniture_v2.gml
-#INPUT_FILE=input/CityFurniture_v2.gml
-#INPUT_FILE=input/Singapore/Buildings/buildings_area4_v2.gml
-#INPUT_FILE=input/Manchester/Piccadilly_v2.gml
-#INPUT_FILE=input/FZKHaus.gml
+INPUT_FILE=input/FZKHaus.gml
 
 # XSL file
 XSL_FILE=xsl/Transform.xsl
 
 # Output file
-#OUTPUT_FILE=output/CityGML_v3_extended.gml
-OUTPUT_FILE=output/Singapore/Buildings/SingLOD3_v3.gml
-#OUTPUT_FILE=output/Singapore/CityFurniture/area1_cityfurniture_v3.gml
-#OUTPUT_FILE=output/CityFurniture_v3.gml
-#OUTPUT_FILE=output/Singapore/buildings_area4_v3.gml
-#OUTPUT_FILE=output/Manchester/Piccadilly_v3.gml
-#OUTPUT_FILE=output/FZKHaus_v3.gml
+OUTPUT_FILE=output/FZKHaus_v3.gml
 
 # Change all LOD4 to LOD3?
 # [true | false]
 LOD4_TO_LOD3=true
 
-# How to handle lod4Geometry? 
+# How to handle lod4Geometry?
 # [lod3MultiSurface | lod3MultiCurve | lod3Solid]
 LOD4_GEOMETRY=lod3MultiSurface
