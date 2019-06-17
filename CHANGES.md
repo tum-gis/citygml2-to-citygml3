@@ -10,8 +10,21 @@ FZKHaus in 3D              |  FZKHaus in 2D
 
 ##### NEW
 
-* Added support for **Module `CITYFURNITURE`**
+* **Module `CITYFURNITURE`**:
+    * Added transformation for this module
 
+* **Module `BUILDING`**:
+    * Added support for ``OuterBuildingInstallation`` and `InteriorBuildingInstallation` in CityGML 2.0 (see [`48b5a7c`](https://github.com/tum-gis/citygml2-to-citygml3/commit/48b5a7c73d0dcc4a4c0dc5a31250d5e6d1b87ad6))
+
+* **Module `BUILDING` and `CITYFURNITURE`**:
+    * Added support for ``lodXGeometry`` in CityGML 2.0 with `X` in `{1, 2, 3}` (see [`48b5a7c`](https://github.com/tum-gis/citygml2-to-citygml3/commit/48b5a7c73d0dcc4a4c0dc5a31250d5e6d1b87ad6)):
+        * if ``lodXGeometry`` contains a `CompositeSurface`, `Surface`, `Polygon`, `OrientableSurface, TriangularSurface` or `TIN`: 
+        it shall be replaced with a corresponding `lodXMultiSurface` with a single `surfaceMember` representing its geometry
+        * if ``lodXGeometry`` contains a `Solid` or `CompositeSolid`: it shall be renamed to `lodXSolid`
+        * if ``lodXGeometry`` contains a `MultiCurve`: it shall be renamed to `lodXMultiCurve`
+        * if ``lodXGeometry`` contains a `MultiSurface`: it shall be renamed to `lodXMultiSurface`
+    * All ``lod4Geometry`` elements shall be transformed in the same manner as with other LODs. However, depending on the variable `LOD4_TO_LOD3` in the configuration file [SETTINGS.txt](SETTINGS.txt), `lod4Geometry` elements will be either removed from the dataset or changed to a corresponding LOD3 element
+    
 ##### FIXES
 
 * **Module `APPEARANCE`**:
