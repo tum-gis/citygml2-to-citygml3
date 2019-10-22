@@ -270,7 +270,15 @@
                     <gen:value>1</gen:value>
                 </gen:IntAttribute>
             </genericAttribute>
-            <boundary>
+            <con:height>
+                <con:Height>
+                    <con:highReference>highestRoofEdge</con:highReference>
+                    <con:lowReference>lowestGroundPoint</con:lowReference>
+                    <con:status>measured</con:status>
+                    <con:value uom="urn:ogc:def:uom:UCUM::m">4.08551</con:value>
+                </con:Height>
+            </con:height>
+            <con:constructionSurface>
                 <con:GroundSurface>
                     <gml:boundedBy>
                         <gml:Envelope srsName="urn:ogc:def:crs,crs:EPSG:6.12:25833,crs:EPSG:6.12:5783" srsDimension="3">
@@ -293,8 +301,8 @@
                         </gml:MultiSurface>
                     </lod2MultiSurface>
                 </con:GroundSurface>
-            </boundary>
-            <boundary>
+            </con:constructionSurface>
+            <con:constructionSurface>
                 <con:WallSurface>
                     <gml:boundedBy>
                         <gml:Envelope srsName="urn:ogc:def:crs,crs:EPSG:6.12:25833,crs:EPSG:6.12:5783" srsDimension="3">
@@ -344,8 +352,8 @@
                         </gml:MultiSurface>
                     </lod2MultiSurface>
                 </con:WallSurface>
-            </boundary>
-            <boundary>
+            </con:constructionSurface>
+            <con:constructionSurface>
                 <con:RoofSurface>
                     <gml:boundedBy>
                         <gml:Envelope srsName="urn:ogc:def:crs,crs:EPSG:6.12:25833,crs:EPSG:6.12:5783" srsDimension="3">
@@ -368,15 +376,7 @@
                         </gml:MultiSurface>
                     </lod2MultiSurface>
                 </con:RoofSurface>
-            </boundary>
-            <con:height>
-                <con:Height>
-                    <con:highReference>highestRoofEdge</con:highReference>
-                    <con:lowReference>lowestGroundPoint</con:lowReference>
-                    <con:status>measured</con:status>
-                    <con:value uom="urn:ogc:def:uom:UCUM::m">4.08551</con:value>
-                </con:Height>
-            </con:height>
+            </con:constructionSurface>
             <bldg:function>1179</bldg:function>
             <bldg:address>
                 <Address gml:id="ID_148325">

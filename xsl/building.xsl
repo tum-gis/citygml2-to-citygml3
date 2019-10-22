@@ -339,7 +339,7 @@ SOFTWARE.
 	</xsl:template>
 
 	<xsl:template match="bldg:boundedBy">
-		<xsl:element name="boundary">
+		<xsl:element name="con:constructionSurface">
 			<xsl:apply-templates select="@*|node()" />
 		</xsl:element>
 	</xsl:template>

@@ -25,6 +25,11 @@ FZKHaus in 3D              |  FZKHaus in 2D
         * if ``lodXGeometry`` contains a `MultiSurface`: it shall be renamed to `lodXMultiSurface`
     * All ``lod4Geometry`` elements shall be transformed in the same manner as with other LODs. However, depending on the variable `LOD4_TO_LOD3` in the configuration file [SETTINGS.txt](SETTINGS.txt), `lod4Geometry` elements will be either removed from the dataset or changed to a corresponding LOD3 element
     
+##### CHANGES
+
+* **Module `CONSTRUCTION`**:
+    * Renamed `boundary` elements to `con:constructionSpace` that are used to link `con:AbstractConstructionSurfaces` (such as `con:WallSurface` and `con:RoofSurface`) with `con:AbstractContruction` elements (such as `bldg:Building`) (see #4 and [`c9f02dd`](https://github.com/tum-gis/citygml2-to-citygml3/commit/c9f02ddc376e1c63b22f0d5fe0497852a3d26a8f))
+
 ##### FIXES
 
 * **Module `APPEARANCE`**:

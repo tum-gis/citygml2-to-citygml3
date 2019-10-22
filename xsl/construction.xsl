@@ -74,6 +74,7 @@ SOFTWARE.
 		<xsl:apply-templates select="bldg:yearOfDemolition" />
 		<xsl:apply-templates select="bldg:elevation" />
 		<xsl:apply-templates select="bldg:measuredHeight" />
+		<xsl:apply-templates select="bldg:boundedBy" />
 		<xsl:call-template name="con:AbstractGenericApplicationPropertyOfAbstractConstruction" />
 	</xsl:template>
 

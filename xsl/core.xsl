@@ -208,7 +208,7 @@ SOFTWARE.
 		<xsl:apply-templates select="bldg:lod2Solid" />
 		<xsl:apply-templates select="bldg:lod2MultiSurface | bldg:lod2Geometry | frn:lod2Geometry" />
 		<xsl:apply-templates select="bldg:lod2MultiCurve" />
-		<xsl:apply-templates select="bldg:boundedBy" />
+<!--		<xsl:apply-templates select="bldg:boundedBy" />--> <!-- bldg:boundedBy can be converted to boundary (like here) or to con:constructionSpace (in con:AbstractConstructionType) -->
 		<xsl:apply-templates select="bldg:lod3Solid | bldg:lod4Solid" />
 		<xsl:apply-templates select="bldg:lod3MultiSurface | bldg:lod4MultiSurface | bldg:lod3Geometry | bldg:lod4Geometry | frn:lod3Geometry | frn:lod4Geometry" />
 		<xsl:apply-templates select="bldg:lod3MultiCurve | bldg:lod4MultiCurve" />

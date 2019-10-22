@@ -30,7 +30,7 @@
                     </gml:exterior>
                 </gml:Solid>
             </lod2Solid>
-            <boundary>
+            <con:constructionSurface>
                 <con:RoofSurface>
                     <lod2MultiSurface>
                         <gml:MultiSurface gml:id="DEBY_LOD2_5744682_5e13d1c8-7fb5-479f-9794-7b9e1f89ca1e_msl_N65598">
@@ -46,8 +46,8 @@
                         </gml:MultiSurface>
                     </lod2MultiSurface>
                 </con:RoofSurface>
-            </boundary>
-            <boundary>
+            </con:constructionSurface>
+            <con:constructionSurface>
                 <con:WallSurface>
                     <lod2MultiSurface>
                         <gml:MultiSurface gml:id="DEBY_LOD2_5744682_314d7d2e-1551-4946-80a4-12e463d59de5_msl_N65610">
@@ -63,8 +63,8 @@
                         </gml:MultiSurface>
                     </lod2MultiSurface>
                 </con:WallSurface>
-            </boundary>
-            <boundary>
+            </con:constructionSurface>
+            <con:constructionSurface>
                 <con:WallSurface>
                     <lod2MultiSurface>
                         <gml:MultiSurface gml:id="DEBY_LOD2_5744682_6a1b5359-d4e4-4d80-aeb8-ad63625a56dc_msl_N65622">
@@ -80,8 +80,8 @@
                         </gml:MultiSurface>
                     </lod2MultiSurface>
                 </con:WallSurface>
-            </boundary>
-            <boundary>
+            </con:constructionSurface>
+            <con:constructionSurface>
                 <con:WallSurface>
                     <lod2MultiSurface>
                         <gml:MultiSurface gml:id="DEBY_LOD2_5744682_44e7c68d-da01-4f80-b1a4-9bbde8305c77_msl_N65634">
@@ -97,8 +97,8 @@
                         </gml:MultiSurface>
                     </lod2MultiSurface>
                 </con:WallSurface>
-            </boundary>
-            <boundary>
+            </con:constructionSurface>
+            <con:constructionSurface>
                 <con:WallSurface>
                     <lod2MultiSurface>
                         <gml:MultiSurface gml:id="DEBY_LOD2_5744682_1e36b54e-2518-4afe-a2b4-a59ddff93581_msl_N65646">
@@ -114,8 +114,8 @@
                         </gml:MultiSurface>
                     </lod2MultiSurface>
                 </con:WallSurface>
-            </boundary>
-            <boundary>
+            </con:constructionSurface>
+            <con:constructionSurface>
                 <con:WallSurface>
                     <lod2MultiSurface>
                         <gml:MultiSurface gml:id="DEBY_LOD2_5744682_887068cb-0fcb-45f3-b436-d1a1bdef047f_msl_N65658">
@@ -131,8 +131,8 @@
                         </gml:MultiSurface>
                     </lod2MultiSurface>
                 </con:WallSurface>
-            </boundary>
-            <boundary>
+            </con:constructionSurface>
+            <con:constructionSurface>
                 <con:WallSurface>
                     <lod2MultiSurface>
                         <gml:MultiSurface gml:id="DEBY_LOD2_5744682_80ce6c2a-8724-4a2a-89e4-881da9530ecc_msl_N65670">
@@ -148,8 +148,8 @@
                         </gml:MultiSurface>
                     </lod2MultiSurface>
                 </con:WallSurface>
-            </boundary>
-            <boundary>
+            </con:constructionSurface>
+            <con:constructionSurface>
                 <con:WallSurface>
                     <lod2MultiSurface>
                         <gml:MultiSurface gml:id="DEBY_LOD2_5744682_392cb098-6e22-4334-9853-1e8225966156_msl_N65682">
@@ -165,8 +165,8 @@
                         </gml:MultiSurface>
                     </lod2MultiSurface>
                 </con:WallSurface>
-            </boundary>
-            <boundary>
+            </con:constructionSurface>
+            <con:constructionSurface>
                 <con:RoofSurface>
                     <lod2MultiSurface>
                         <gml:MultiSurface gml:id="DEBY_LOD2_5744682_26de5877-57e7-429d-9b9a-274b8ed6aac5_msl_N65694">
@@ -182,8 +182,8 @@
                         </gml:MultiSurface>
                     </lod2MultiSurface>
                 </con:RoofSurface>
-            </boundary>
-            <boundary>
+            </con:constructionSurface>
+            <con:constructionSurface>
                 <con:WallSurface>
                     <lod2MultiSurface>
                         <gml:MultiSurface gml:id="DEBY_LOD2_5744682_dd1b367c-c6d8-4eb2-abe6-0accb0fa91b8_msl_N65706">
@@ -199,8 +199,8 @@
                         </gml:MultiSurface>
                     </lod2MultiSurface>
                 </con:WallSurface>
-            </boundary>
-            <boundary>
+            </con:constructionSurface>
+            <con:constructionSurface>
                 <con:GroundSurface>
                     <lod2MultiSurface>
                         <gml:MultiSurface gml:id="DEBY_LOD2_5744682_58e93bde-fd64-4fec-9626-5824c2e94f0e_msl_N65718">
@@ -216,7 +216,7 @@
                         </gml:MultiSurface>
                     </lod2MultiSurface>
                 </con:GroundSurface>
-            </boundary>
+            </con:constructionSurface>
             <bldg:function>31001_9998</bldg:function>
             <bldg:roofType>3100</bldg:roofType>
             <bldg:address>
